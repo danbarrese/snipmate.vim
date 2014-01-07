@@ -7,9 +7,9 @@ I've modified the SnipMate plugin to suit my needs.
 
 ### New Features
 
-  * Trigger snippets with <space> (optional).
-  * Trigger snippets with <cr>.
-  * Trigger snippets with <c-space>.
+  * Trigger snippets with &lt;space&gt; (optional).
+  * Trigger snippets with &lt;cr&gt;.
+  * Trigger snippets with &lt;c-space&gt;.
   * Capitalize first letter of snippet with shift+trigger.
 
 ### Control via .vimrc
