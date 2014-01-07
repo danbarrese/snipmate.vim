@@ -14,10 +14,10 @@ fun s:RemoveSnippet()
 	aug! snipMateAutocmds
 endf
 
-fun snipMate#expandSnip(snip, col)
+fun snipMate#expandSnip(snip, col, trailingChars, capitalize)
 	let lnum = line('.') | let col = a:col
 
-	let snippet = s:ProcessSnippet(a:snip)
+	let snippet = s:ProcessSnippet(a:snip, a:capitalize)
 	" Avoid error if eval evaluates to nothing
 	if snippet == '' | return '' | endif
 
@@ -41,8 +41,12 @@ fun snipMate#expandSnip(snip, col)
 	call setline(lnum, line.snipLines[0])
 
 	" Autoindent snippet according to previous indentation
-	let indent = matchend(line, '^.\{-}\ze\(\S\|$\)') + 1
-	call append(lnum, map(snipLines[1:], "'".strpart(line, 0, indent - 1)."'.v:val"))
+	if len(snipLines) > 1
+		let indent = matchend(line, '^.\{-}\ze\(\S\|$\)') + 1
+		call append(lnum, map(snipLines[1:], "'".strpart(line, 0, indent - 1)."'.v:val"))
+	else
+		let indent = 1
+	end
 
 	" Open any folds snippet expands into
 	if &fen | sil! exe lnum.','.(lnum + len(snipLines) - 1).'foldopen' | endif
@@ -69,23 +73,22 @@ fun snipMate#expandSnip(snip, col)
 		call cursor(lnum + newlines, indent + len(snipLines[-1]) - len(afterCursor)
 					\ + (newlines ? 0: col - 1))
 	endif
-	return ''
+	" only return trailing newline if needed
+	return a:trailingChars == "\n" ? "\n" : ""
 endf
 
 " Prepare snippet to be processed by s:BuildTabStops
-fun s:ProcessSnippet(snip)
-	let snippet = a:snip
+fun s:ProcessSnippet(snip, capitalize)
+	let snippet = a:capitalize ? substitute(a:snip, '\(\<\w\+\>\)', '\u\1', '') : a:snip
 	" Evaluate eval (`...`) expressions.
-	" Backquotes prefixed with a backslash "\" are ignored.
 	" Using a loop here instead of a regex fixes a bug with nested "\=".
 	if stridx(snippet, '`') != -1
-		while match(snippet, '\(^\|[^\\]\)`.\{-}[^\\]`') != -1
-			let snippet = substitute(snippet, '\(^\|[^\\]\)\zs`.\{-}[^\\]`\ze',
-		                \ substitute(eval(matchstr(snippet, '\(^\|[^\\]\)`\zs.\{-}[^\\]\ze`')),
-		                \ "\n\\%$", '', ''), '')
+		while match(snippet, '`.\{-}`') != -1
+			let snippet = substitute(snippet, '`.\{-}`',
+						\ substitute(eval(matchstr(snippet, '`\zs.\{-}\ze`')),
+						\ "\n\\%$", '', ''), '')
 		endw
 		let snippet = substitute(snippet, "\r", "\n", 'g')
-		let snippet = substitute(snippet, '\\`', '`', 'g')
 	endif
 
 	" Place all text after a colon in a tab stop after the tab stop
@@ -198,7 +201,7 @@ fun snipMate#jumpTabStop(backwards)
 	if s:curPos == s:snipLen
 		let sMode = s:endCol == g:snipPos[s:curPos-1][1]+g:snipPos[s:curPos-1][2]
 		call s:RemoveSnippet()
-		return sMode ? "\<tab>" : TriggerSnippet()
+		return sMode ? "\<tab>" : TriggerSnippet("", 0, 0) "TODO get real values from params somehow
 	endif
 
 	call cursor(g:snipPos[s:curPos][0], g:snipPos[s:curPos][1])

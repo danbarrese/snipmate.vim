@@ -1,19 +1,19 @@
 snippet #!
-	#!/usr/bin/env python
+	#!/usr/bin/python
 
-snippet imp
+snippet im
 	import ${1:module}
 # Module Docstring
 snippet docs
 	'''
 	File: ${1:`Filename('$1.py', 'foo.py')`}
-	Author: ${2:`g:snips_author`}
+	Author: ${2:Dan Barrese (danbarrese.com)}
 	Description: ${3}
 	'''
 snippet wh
 	while ${1:condition}:
 		${2:# code...}
-snippet for
+snippet fo
 	for ${1:needle} in ${2:haystack}:
 		${3:# code...}
 # New Class
@@ -46,9 +46,7 @@ snippet property
 			${4:self._$1 = value}
 # Lambda
 snippet ld
-	${1:var} = lambda ${2:vars} : ${3:action}
-snippet .
-	self.
+	def ${1:f}(${2:x}): ${3}
 snippet try Try/Except
 	try:
 		${1:pass}
@@ -84,3 +82,75 @@ snippet ifmain
 # __magic__
 snippet _
 	__${1:init}__${2}
+snippet if
+	if${1}:
+		${2:pass}
+snippet ife
+	if${1}:
+		${2:pass}
+	el ${3}:
+		${4:pass}
+snippet re
+	return
+snippet p
+	print(${1})
+snippet pp
+	print("${1}")
+snippet fa
+	False
+snippet tr
+	True
+snippet rf
+	return False
+snippet rt
+	return True
+snippet ds
+	"""${1}"""
+snippet s
+	self.
+snippet eqne
+	def __eq__(self, other):
+		${1:pass}
+
+	def __ne__(self, other):
+		return not self.__eq__(other)
+snippet eq
+	def __eq__(self, other):
+		${1:pass}
+snippet el
+	else:
+	   
+snippet ei
+	elif${1}:
+		${2}
+snippet T
+	True
+snippet F
+	False
+snippet pl
+	+
+snippet nl
+	None
+snippet pls
+	+ "${1}"${2}
+snippet nn
+	is not None
+snippet en
+	is None
+snippet cli
+	import argparse
+	parser = argparse.ArgumentParser(description='DESCRIPTION')
+	parser.add_argument('--int', '-i', metavar='I', type=int, nargs=1,
+						dest='integer', default=[0],
+						help='HELP')
+	parser.add_argument('--str', '-s', metavar='S', type=str, nargs=1,
+						dest='string', default=[None],
+						help='HELP')
+	parser.add_argument('--bool', dest='boolean', action='store_true',
+						help='HELP')
+	parser.set_defaults(boolean=True)
+	args = parser.parse_args()
+
+	my_int = args.integer[0]
+	my_string = args.string[0]
+	my_boolean = args.boolean

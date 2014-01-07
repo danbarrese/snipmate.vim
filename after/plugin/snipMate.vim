@@ -5,16 +5,17 @@ if !exists('loaded_snips') || exists('s:did_snips_mappings')
 endif
 let s:did_snips_mappings = 1
 
-" This is put here in the 'after' directory in order for snipMate to override
-" other plugin mappings (e.g., supertab).
-"
-" You can safely adjust these mappings to your preferences (as explained in
-" :help snipMate-remap).
-ino <silent> <tab> <c-r>=TriggerSnippet()<cr>
-snor <silent> <tab> <esc>i<right><c-r>=TriggerSnippet()<cr>
-ino <silent> <s-tab> <c-r>=BackwardsSnippet()<cr>
-snor <silent> <s-tab> <esc>i<right><c-r>=BackwardsSnippet()<cr>
-ino <silent> <c-r><tab> <c-r>=ShowAvailableSnips()<cr>
+"               Trigger(                                            trailing_char,   capitalize_first_letter)
+ino <silent>    <cr> <c-r>=TriggerSnippet(                          "\n",            0)<cr>
+ino <silent>    <c-space> <c-r>=TriggerSnippet(                     "",              0)<cr>
+ino <silent>    <c-s-space> <c-r>=TriggerSnippet(                   "",              1)<cr>
+"ino <silent>    <cr> <c-r>=ForwardsSnippet("\n")<cr>
+"snor <silent>   <cr> <esc>i<right><c-r>=ForwardsSnippet("\n")<cr>
+ino <silent>    <tab> <c-r>=ForwardsSnippet("\t")<cr>
+snor <silent>   <tab> <esc>i<right><c-r>=ForwardsSnippet("\t")<cr>
+ino <silent>    <s-tab> <c-r>=BackwardsSnippet()<cr>
+snor <silent>   <s-tab> <esc>i<right><c-r>=BackwardsSnippet()<cr>
+ino <silent>    <c-r><tab> <c-r>=ShowAvailableSnips()<cr>
 
 " The default mappings for these are annoying & sometimes break snipMate.
 " You can change them back if you want, I've put them here for convenience.

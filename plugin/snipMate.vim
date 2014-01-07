@@ -1,6 +1,7 @@
 " File:          snipMate.vim
 " Author:        Michael Sanders
-" Version:       0.84
+" Last Updated:  July 13, 2009
+" Version:       0.83
 " Description:   snipMate.vim implements some of TextMate's snippets features in
 "                Vim. A snippet is a piece of often-typed text that you can
 "                insert into your document using a trigger word followed by a "<tab>".
@@ -91,33 +92,8 @@ fun! ExtractSnipsFile(file, ft)
 	endfor
 endf
 
-" Reset snippets for filetype.
-fun! ResetSnippets(ft)
-	let ft = a:ft == '' ? '_' : a:ft
-	for dict in [s:snippets, s:multi_snips, g:did_ft]
-		if has_key(dict, ft)
-			unlet dict[ft]
-		endif
-	endfor
-endf
-
-" Reset snippets for all filetypes.
-fun! ResetAllSnippets()
+fun! ResetSnippets()
 	let s:snippets = {} | let s:multi_snips = {} | let g:did_ft = {}
-endf
-
-" Reload snippets for filetype.
-fun! ReloadSnippets(ft)
-	let ft = a:ft == '' ? '_' : a:ft
-	call ResetSnippets(ft)
-	call GetSnippets(g:snippets_dir, ft)
-endf
-
-" Reload snippets for all filetypes.
-fun! ReloadAllSnippets()
-	for ft in keys(g:did_ft)
-		call ReloadSnippets(ft)
-	endfor
 endf
 
 let g:did_ft = {}
@@ -134,6 +110,17 @@ fun! GetSnippets(dir, filetypes)
 	endfor
 endf
 
+" Author: Dan Barrese (danielbarrese@gmail.com)
+" Description: Add snippets to the global '_' snippets in this Vim session.
+" Date: Dec 31, 2013
+fun! AddToGlobalSnippets(dir, filetypes)
+	for ft in split(a:filetypes, '\.')
+		"if has_key(g:did_ft, '_') | continue | endif
+		call s:DefineSnips(a:dir, ft, '_')
+		let g:did_ft[ft] = 1
+	endfor
+endf
+
 " Define "aliasft" snippets for the filetype "realft".
 fun s:DefineSnips(dir, aliasft, realft)
 	for path in split(globpath(a:dir, a:aliasft.'/')."\n".
@@ -146,11 +133,11 @@ fun s:DefineSnips(dir, aliasft, realft)
 	endfor
 endf
 
-fun! TriggerSnippet()
+fun! TriggerSnippet(trailingChars, capitalize)
 	if exists('g:SuperTabMappingForward')
 		if g:SuperTabMappingForward == "<tab>"
 			let SuperTabKey = "\<c-n>"
-		elseif g:SuperTabMappingBackward == "<tab>"
+		elseif g:SuperTabMappingBackward == "<s-tab>"
 			let SuperTabKey = "\<c-p>"
 		endif
 	endif
@@ -160,10 +147,10 @@ fun! TriggerSnippet()
 			call feedkeys(SuperTabKey) | return ''
 		endif
 		call feedkeys("\<esc>a", 'n') " Close completion menu
-		call feedkeys("\<tab>") | return ''
+		call feedkeys("\<space>") | return ''
 	endif
 
-	if exists('g:snipPos') | return snipMate#jumpTabStop(0) | endif
+	"if exists('g:snipPos') | return snipMate#jumpTabStop(0) | endif
 
 	let word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
 	for scope in [bufnr('%')] + split(&ft, '\.') + ['_']
@@ -172,8 +159,8 @@ fun! TriggerSnippet()
 		" the snippet.
 		if snippet != ''
 			let col = col('.') - len(trigger)
-			sil exe 's/\V'.escape(trigger, '/\.').'\%#//'
-			return snipMate#expandSnip(snippet, col)
+			sil exe 's/\V'.escape(trigger, '/.').'\%#//'
+			return snipMate#expandSnip(snippet, col, a:trailingChars, a:capitalize)
 		endif
 	endfor
 
@@ -181,7 +168,24 @@ fun! TriggerSnippet()
 		call feedkeys(SuperTabKey)
 		return ''
 	endif
-	return "\<tab>"
+	return a:trailingChars "executes only if word is not a snippet
+endf
+
+fun! ForwardsSnippet(triggerChar)
+	if exists('g:snipPos') | return snipMate#jumpTabStop(0) | endif
+
+	if exists('g:SuperTabMappingForward')
+		if g:SuperTabMappingBackward == "<s-tab>"
+			let SuperTabKey = "\<c-p>"
+		elseif g:SuperTabMappingForward == "<s-tab>"
+			let SuperTabKey = "\<c-n>"
+		endif
+	endif
+	if exists('SuperTabKey')
+		call feedkeys(SuperTabKey)
+		return ''
+	endif
+	return a:triggerChar
 endf
 
 fun! BackwardsSnippet()
@@ -204,7 +208,8 @@ endf
 " Check if word under cursor is snippet trigger; if it isn't, try checking if
 " the text after non-word characters is (e.g. check for "foo" in "bar.foo")
 fun s:GetSnippet(word, scope)
-	let word = a:word | let snippet = ''
+	let word = a:word
+	let snippet = ''
 	while snippet == ''
 		if exists('s:snippets["'.a:scope.'"]["'.escape(word, '\"').'"]')
 			let snippet = s:snippets[a:scope][word]
