@@ -22,7 +22,7 @@ au FileType snippet setl noet fdm=indent
 let s:snippets = {} | let s:multi_snips = {}
 
 if !exists('snippets_dir')
-	let snippets_dir = substitute(globpath(&rtp, 'snippets/'), "\n", ',', 'g')
+	let g:snippets_dir = substitute(globpath(&rtp, 'snippets/'), "\n", ',', 'g')
 endif
 
 fun! MakeSnip(scope, trigger, content, ...)
@@ -273,4 +273,46 @@ fun! ShowAvailableSnips()
 	call complete(col, matches)
 	return ''
 endf
+
+"##############################################################################
+" Dan Barrese's new functions.
+"##############################################################################
+
+" Unload all snippets, then load snippets for global ('_') and current
+" filetype.
+function! LoadAllSnippets()
+    call ResetSnippets()
+    call GetSnippets(g:snippets_dir, '_')
+    call GetSnippets(g:snippets_dir, &ft)
+endfunction
+command! -nargs=* SnipsLoad call LoadAllSnippets()
+
+" Unload all snippets.
+function! UnloadAllSnippets()
+    call ResetSnippets()
+endfunction
+command! -nargs=* SnipsUnload call UnloadAllSnippets()
+
+" Allow spacebar to trigger snippets.
+function! AllowSpacebarToTriggerSnippet()
+    ino <silent> <space> <c-r>=TriggerSnippet(" ", 0)<cr>
+    ino <silent> <s-space> <c-r>=TriggerSnippet(" ", 1)<cr>
+    ino <silent> <cr> <c-r>=TriggerSnippet("\n", 0)<cr>
+endfunction
+command! -nargs=* SnipsSpaceEnable call AllowSpacebarToTriggerSnippet()
+
+" Disallow spacebar to trigger snippets.
+function! DisallowSpacebarToTriggerSnippet()
+    imap <space>   <space>
+    imap <s-space> <s-space>
+endfunction
+command! -nargs=* SnipsSpaceDisable call DisallowSpacebarToTriggerSnippet()
+
+" Add snippets to global snippets.
+" Warning: BEWARE COLLISIONS with existing global snippets!
+function! SnipsAdd(ft)
+    call AddToGlobalSnippets(g:snippets_dir, a:ft)
+endfunction
+command! -nargs=* SnipsAdd call SnipsAdd('<args>')
+
 " vim:noet:sw=4:ts=4:ft=vim

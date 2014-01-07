@@ -1,5 +1,22 @@
-Quickly install with:
+I've modified the SnipMate plugin to suit my needs.
+-Dan Barrese
 
-    git clone git://github.com/msanders/snipmate.vim.git
-	cd snipmate.vim
-	cp -R * ~/.vim
+### Install with Pathogen
+
+    git clone git://github.com/msanders/snipmate.vim.git ~/.vim/bundle/snipmate.vim
+
+### New Features
+
+    * Trigger snippets with <space> (optional).
+    * Trigger snippets with <cr>.
+    * Trigger snippets with <c-s>.
+
+### Control via .vimrc
+
+    let g:snippets_dir='~/.vim/bundle/snipmate.vim/snippets'
+    map ,ll   :SnipsLoad<cr>
+    map ,lu   :SnipsUnload<cr>
+    map ,lse  :SnipsSpaceEnable<cr>
+    map ,lsd  :SnipsSpaceDisable<cr>
+    map ,lal  :SnipsAdd('acl')<cr>
+    map ,lml  :SnipsAdd('math')<cr>
