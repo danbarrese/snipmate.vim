@@ -11,6 +11,7 @@ I've modified the SnipMate plugin to suit my needs.
   * Trigger snippets with &lt;cr&gt;.
   * Trigger snippets with &lt;c-space&gt;.
   * Capitalize first letter of snippet with shift+trigger.
+  * Snippets trigger when pop-up menu is visible (pumvisible()).
 
 ### Control via .vimrc
 
