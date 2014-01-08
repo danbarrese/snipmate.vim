@@ -6,10 +6,10 @@ endif
 let s:did_snips_mappings = 1
 
 " TriggerSnippet(trailing_char, capitalize_first_letter)
-ino <silent> <cr>        <c-r>=TriggerSnippet("\n", 0)<cr>
-ino <silent> <s-cr>      <c-r>=TriggerSnippet("\n", 1)<cr>
-ino <silent> <c-space>   <c-r>=TriggerSnippet("",   0)<cr>
-ino <silent> <c-s-space> <c-r>=TriggerSnippet("",   1)<cr>
+ino <silent> <expr> <cr>        pumvisible() ? '<c-y><c-r>=TriggerSnippet("\n", 0)<cr>' : '<c-r>=TriggerSnippet("\n", 0)<cr>'
+ino <silent> <expr> <s-cr>      pumvisible() ? '<c-y><c-r>=TriggerSnippet("\n", 1)<cr>' : '<c-r>=TriggerSnippet("\n", 1)<cr>'
+ino <silent> <expr> <c-space>   pumvisible() ? '<c-y><c-r>=TriggerSnippet("",   0)<cr>' : '<c-r>=TriggerSnippet("",   0)<cr>'
+ino <silent> <expr> <c-s-space> pumvisible() ? '<c-y><c-r>=TriggerSnippet("",   1)<cr>' : '<c-r>=TriggerSnippet("",   1)<cr>'
 
 "ino  <silent> <cr>       <c-r>=ForwardsSnippet("\n")<cr>
 "snor <silent> <cr>       <esc>i<right><c-r>=ForwardsSnippet("\n")<cr>

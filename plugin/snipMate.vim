@@ -295,9 +295,8 @@ command! -nargs=* SnipsUnload call UnloadAllSnippets()
 
 " Allow spacebar to trigger snippets.
 function! AllowSpacebarToTriggerSnippet()
-    ino <silent> <space> <c-r>=TriggerSnippet(" ", 0)<cr>
-    ino <silent> <s-space> <c-r>=TriggerSnippet(" ", 1)<cr>
-    ino <silent> <cr> <c-r>=TriggerSnippet("\n", 0)<cr>
+    ino <silent> <expr> <space>     pumvisible() ? '<c-y><c-r>=TriggerSnippet(" ", 0)<cr>' : '<c-r>=TriggerSnippet(" ", 0)<cr>'
+    ino <silent> <expr> <s-space>   pumvisible() ? '<c-y><c-r>=TriggerSnippet(" ", 1)<cr>' : '<c-r>=TriggerSnippet(" ", 1)<cr>'
 endfunction
 command! -nargs=* SnipsSpaceEnable call AllowSpacebarToTriggerSnippet()
 
