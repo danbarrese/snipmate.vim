@@ -1,10 +1,10 @@
-fun! Filename(...)
+fun! Filename(...) "{{{
 	let filename = expand('%:t:r')
 	if filename == '' | return a:0 == 2 ? a:2 : '' | endif
 	return !a:0 || a:1 == '' ? filename : substitute(a:1, '$1', filename, 'g')
-endf
+endf "}}}
 
-fun s:RemoveSnippet()
+fun s:RemoveSnippet() "{{{
 	unl! g:snipPos s:curPos s:snipLen s:endCol s:endLine s:prevLen
 	     \ s:lastBuf s:oldWord
 	if exists('s:update')
@@ -12,9 +12,9 @@ fun s:RemoveSnippet()
 		if exists('s:oldVars') | unl s:oldVars s:oldEndCol | endif
 	endif
 	aug! snipMateAutocmds
-endf
+endf "}}}
 
-fun snipMate#expandSnip(snip, col, trailingChars, capitalize)
+fun snipMate#expandSnip(snip, col, trailingChars, capitalize) "{{{
 	let lnum = line('.') | let col = a:col
 
 	let snippet = s:ProcessSnippet(a:snip, a:capitalize)
@@ -63,10 +63,22 @@ fun snipMate#expandSnip(snip, col, trailingChars, capitalize)
 		let s:endCol = g:snipPos[s:curPos][1]
 		let s:endLine = g:snipPos[s:curPos][0]
 
+		"Reset cursor color if at last tab stop.
+		if s:snipLen == (s:curPos + 1)
+			call snipMate#resetCursorColor()
+		endif
+
 		call cursor(g:snipPos[s:curPos][0], g:snipPos[s:curPos][1])
 		let s:prevLen = [line('$'), col('$')]
-		if g:snipPos[s:curPos][2] != -1 | return s:SelectWord() | endif
+		if g:snipPos[s:curPos][2] != -1
+			"Tab stop with default value (will be selected).
+			return s:SelectWord()
+		else 
+			"Tab stop with no default value.
+		endif
 	else
+		"No tab stops.
+		call snipMate#resetCursorColor()
 		unl g:snipPos s:snipLen
 		" Place cursor at end of snippet if no tab stop is given
 		let newlines = len(snipLines) - 1
@@ -75,10 +87,10 @@ fun snipMate#expandSnip(snip, col, trailingChars, capitalize)
 	endif
 	" only return trailing newline if needed
 	return a:trailingChars == "\n" ? "\n" : ""
-endf
+endf "}}}
 
 " Prepare snippet to be processed by s:BuildTabStops
-fun s:ProcessSnippet(snip, capitalize)
+fun s:ProcessSnippet(snip, capitalize) "{{{
 	let snippet = a:capitalize ? substitute(a:snip, '\(\<\w\+\>\)', '\u\1', '') : a:snip
 	" Evaluate eval (`...`) expressions.
 	" Using a loop here instead of a regex fixes a bug with nested "\=".
@@ -112,10 +124,10 @@ fun s:ProcessSnippet(snip, capitalize)
 		return substitute(snippet, '\t', repeat(' ', &sts ? &sts : &sw), 'g')
 	endif
 	return snippet
-endf
+endf "}}}
 
 " Counts occurences of haystack in needle
-fun s:Count(haystack, needle)
+fun s:Count(haystack, needle) "{{{
 	let counter = 0
 	let index = stridx(a:haystack, a:needle)
 	while index != -1
@@ -123,7 +135,7 @@ fun s:Count(haystack, needle)
 		let counter += 1
 	endw
 	return counter
-endf
+endf "}}}
 
 " Builds a list of a list of each tab stop in the snippet containing:
 " 1.) The tab stop's line number.
@@ -136,7 +148,7 @@ endf
 "     the matches of "$#", to be replaced with the placeholder. This list is
 "     composed the same way as the parent; the first item is the line number,
 "     and the second is the column.
-fun s:BuildTabStops(snip, lnum, col, indent)
+fun s:BuildTabStops(snip, lnum, col, indent) "{{{
 	let snipPos = []
 	let i = 1
 	let withoutVars = substitute(a:snip, '$\d\+', '', 'g')
@@ -169,9 +181,9 @@ fun s:BuildTabStops(snip, lnum, col, indent)
 		let i += 1
 	endw
 	return [snipPos, i - 1]
-endf
+endf "}}}
 
-fun snipMate#jumpTabStop(backwards)
+fun snipMate#jumpTabStop(backwards) "{{{
 	let leftPlaceholder = exists('s:origWordLen')
 	                      \ && s:origWordLen != g:snipPos[s:curPos][2]
 	if leftPlaceholder && exists('s:oldEndCol')
@@ -198,10 +210,18 @@ fun snipMate#jumpTabStop(backwards)
 	" Loop over the snippet when going backwards from the beginning
 	if s:curPos < 0 | let s:curPos = s:snipLen - 1 | endif
 
+	"Reset cursor color if at last tab stop.
+	if s:snipLen == (s:curPos + 1)
+		call snipMate#resetCursorColor()
+	else
+		call snipMate#setCursorColorInSnip()
+	endif
+
 	if s:curPos == s:snipLen
 		let sMode = s:endCol == g:snipPos[s:curPos-1][1]+g:snipPos[s:curPos-1][2]
 		call s:RemoveSnippet()
-		return sMode ? "\<tab>" : TriggerSnippet("", 0, 0) "TODO get real values from params somehow
+		return sMode ? "" : TriggerSnippet("", 0) "TODO get real values from params somehow
+		"return sMode ? "\<tab>" : TriggerSnippet("", 0) "TODO get real values from params somehow
 	endif
 
 	call cursor(g:snipPos[s:curPos][0], g:snipPos[s:curPos][1])
@@ -211,9 +231,9 @@ fun snipMate#jumpTabStop(backwards)
 	let s:prevLen = [line('$'), col('$')]
 
 	return g:snipPos[s:curPos][2] == -1 ? '' : s:SelectWord()
-endf
+endf "}}}
 
-fun s:UpdatePlaceholderTabStops()
+fun s:UpdatePlaceholderTabStops() "{{{
 	let changeLen = s:origWordLen - g:snipPos[s:curPos][2]
 	unl s:startCol s:origWordLen s:update
 	if !exists('s:oldVars') | return | endif
@@ -258,9 +278,9 @@ fun s:UpdatePlaceholderTabStops()
 		endfor
 	endif
 	unl s:endCol s:oldVars s:oldEndCol
-endf
+endf "}}}
 
-fun s:UpdateTabStops()
+fun s:UpdateTabStops() "{{{
 	let changeLine = s:endLine - g:snipPos[s:curPos][0]
 	let changeCol = s:endCol - g:snipPos[s:curPos][1]
 	if exists('s:origWordLen')
@@ -302,9 +322,9 @@ fun s:UpdateTabStops()
 			endfor
 		endfor
 	endif
-endf
+endf "}}}
 
-fun s:SelectWord()
+fun s:SelectWord() "{{{
 	let s:origWordLen = g:snipPos[s:curPos][2]
 	let s:oldWord = strpart(getline('.'), g:snipPos[s:curPos][1] - 1,
 				\ s:origWordLen)
@@ -321,7 +341,7 @@ fun s:SelectWord()
 	endif
 	return s:origWordLen == 1 ? "\<esc>".l.'gh'
 							\ : "\<esc>".l.'v'.(s:origWordLen - 1)."l\<c-g>"
-endf
+endf "}}}
 
 " This updates the snippet as you type when text needs to be inserted
 " into multiple places (e.g. in "${1:default text}foo$1bar$1",
@@ -331,7 +351,7 @@ endf
 "
 " It also automatically quits the snippet if the cursor is moved out of it
 " while in insert mode.
-fun s:UpdateChangedSnip(entering)
+fun s:UpdateChangedSnip(entering) "{{{
 	if exists('g:snipPos') && bufnr(0) != s:lastBuf
 		call s:RemoveSnippet()
 	elseif exists('s:update') " If modifying a placeholder
@@ -385,11 +405,11 @@ fun s:UpdateChangedSnip(entering)
 			call s:RemoveSnippet()
 		endif
 	endif
-endf
+endf "}}}
 
 " This updates the variables in a snippet when a placeholder has been edited.
 " (e.g., each "$1" in "${1:foo} $1bar $1bar")
-fun s:UpdateVars()
+fun s:UpdateVars() "{{{
 	let newWordLen = s:endCol - s:startCol + 1
 	let newWord = strpart(getline('.'), s:startCol, newWordLen)
 	if newWord == s:oldWord || empty(g:snipPos[s:curPos][3])
@@ -434,5 +454,28 @@ fun s:UpdateVars()
 
 	let s:oldWord = newWord
 	let g:snipPos[s:curPos][2] = newWordLen
-endf
+endf "}}}
+
+" Author: Dan Barrese
+" Date: 2014.02.15
+fun! snipMate#resetCursorColor() "{{{
+	if exists('g:snips_cursorBg_orig')
+		exe 'hi Cursor guibg=' . g:snips_cursorBg_orig
+	endif
+	if exists('g:snips_visualBg_inSnip')
+		exe 'hi Visual guibg=' . g:snips_visualBg_orig
+	endif
+endf "}}}
+
+" Author: Dan Barrese
+" Date: 2014.02.15
+fun! snipMate#setCursorColorInSnip() "{{{
+	if exists('g:snips_cursorBg_inSnip')
+		exe 'hi Cursor guibg=' . g:snips_cursorBg_inSnip
+	endif
+	if exists('g:snips_visualBg_inSnip')
+		exe 'hi Visual guibg=' . g:snips_visualBg_inSnip
+	endif
+endf "}}}
+
 " vim:noet:sw=4:ts=4:ft=vim

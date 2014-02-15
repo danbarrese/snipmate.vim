@@ -1,0 +1,199 @@
+## UBIQUITOUS SNIPPETS {{{
+## Conditionals {{{
+snippet if
+	if ${1:condition}
+	{
+		${2:;}
+	}
+snippet ife
+	if ${1:condition}
+	{
+		${2:;}
+	}
+	else
+	{
+		${3:;}
+	}
+snippet ifei
+	if ${1:condition}
+	{
+		${3:;}
+	}
+	else if ${2:condition}
+	{
+		${4:;}
+	}
+	else
+	{
+		${5:;}
+	}
+snippet el
+	else
+	{
+		${1:;}
+	}
+snippet ei
+	else if ${1:condition}
+	{
+		${2:;}
+	}
+#}}}
+## Documentation {{{
+snippet dfile
+	; Name: ${1:name}
+	; Version: ${2:0.01}
+	; Description: ${3:desc}
+	; Author: `g:snips_author`
+	; Date: `strftime("%B %d, %Y")`
+	; Update Log: {{{
+	;   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
+	; }}}
+	; Sources/References:
+	; - None
+snippet dfn
+	; {{{ ${$1:description}
+	; PARAMS:    ?
+	; AUTHOR:    `g:snips_author`
+	; DATE:      `strftime("%B %d, %Y")`
+	;---------------------------------------------------------------------------}}}
+snippet rem
+	; 
+snippet dv
+	; 
+snippet pre
+	; Preconditions:
+	;     * 
+snippet post
+	; Postconditions:
+	;     * 
+snippet start
+	; Name: ${1:name}
+	; Version: ${2:0.01}
+	; Description: ${3:desc}
+	; Author: Dan Barrese (danbarrese.com)
+	; Date: `strftime("%B %d, %Y")`
+	; Update Log:
+	;   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
+	; Sources/References:
+	; - None
+	
+snippet todo
+	; TODO: 
+snippet h1
+	; > ${1:HEADER} {{{
+	;``````````````````````````````````````````````````````````````````````````````
+	${2}
+	;}}}
+#}}}
+## Files {{{
+#snippet filx
+#snippet filr text
+#snippet filw text
+#snippet fila text
+#snippet folx
+#}}}
+## Functions {{{
+snippet fn
+	NOT IMPL YET
+#}}}
+## Loops {{{
+snippet for
+	NOT IMPL YET
+snippet fore
+	NOT IMPL YET
+snippet foref
+	NOT IMPL YET
+snippet wh
+	NOT IMPL YET
+snippet until
+	NOT IMPL YET
+snippet break for
+	NOT IMPL YET
+snippet break do
+	NOT IMPL YET
+#}}}
+## Misc {{{
+snippet slashdir
+	NOT IMPL YET
+snippet nl
+	NOT IMPL YET
+snippet uname
+	%A_UserName%
+#}}}
+## Numbers {{{
+snippet inc
+	NOT IMPL YET
+snippet dec
+	NOT IMPL YET
+#}}}
+## Operators {{{
+snippet and
+	&
+snippet or
+	NOT IMPL YET
+snippet gt
+	> 
+snippet lt
+	< 
+snippet gte
+	>= 
+snippet lte
+	<= 
+snippet eq
+	= 
+snippet ne
+	NOT IMPL YET
+#}}}
+## Printing {{{
+snippet p
+	MsgBox ${1}
+snippet pp
+	MsgBox "${1}"
+#}}}
+## String {{{
+snippet slower
+	NOT IMPL YET
+snippet supper
+	NOT IMPL YET
+snippet slen
+	NOT IMPL YET
+snippet scon
+	NOT IMPL YET
+snippet sstarts
+	NOT IMPL YET
+snippet sends
+	NOT IMPL YET
+snippet chop
+	NOT IMPL YET
+snippet seq
+	NOT IMPL YET
+snippet seqi
+	NOT IMPL YET
+snippet sempty
+	NOT IMPL YET
+snippet sval
+	NOT IMPL YET
+#}}}
+## Variables {{{
+snippet v
+	%${1}%
+#}}}
+## String Actions {{{
+snippet nn
+	NOT IMPL YET
+#}}}
+#}}}
+## AUTOHOTKEY SPECIFIC SNIPPETS {{{
+snippet run
+	Run,${1:explorer}
+snippet alt
+	!
+snippet ctrl
+	^
+snippet shift
+	+
+snippet win
+	#
+snippet remap
+	::${1:shortcut}::${2:action}
+#}}}

@@ -8,6 +8,7 @@ syn match snippet '^snippet.*' transparent contains=multiSnipText,snipKeyword
 syn match multiSnipText '\S\+ \zs.*' contained
 syn match snipKeyword '^snippet'me=s+8 contained
 syn match snipError "^[^#s\t].*$"
+syn match snipLink '\$LINK{\a\+}'
 
 hi link snipComment   Comment
 hi link multiSnipText String
@@ -17,3 +18,4 @@ hi link placeHolder   Special
 hi link tabStop       Special
 hi link snipCommand   String
 hi link snipError     Error
+hi link snipLink      Number

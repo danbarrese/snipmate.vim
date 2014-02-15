@@ -25,20 +25,33 @@ if !exists('snippets_dir')
 	let g:snippets_dir = substitute(globpath(&rtp, 'snippets/'), "\n", ',', 'g')
 endif
 
-fun! MakeSnip(scope, trigger, content, ...)
+fun! MakeSnip(scope, trigger, content, ...) "{{{
 	let multisnip = a:0 && a:1 != ''
 	let var = multisnip ? 's:multi_snips' : 's:snippets'
-	if !has_key({var}, a:scope) | let {var}[a:scope] = {} | endif
+	if !has_key({var}, a:scope)
+		let {var}[a:scope] = {}
+	endif
 	if !has_key({var}[a:scope], a:trigger)
-		let {var}[a:scope][a:trigger] = multisnip ? [[a:1, a:content]] : a:content
-	elseif multisnip | let {var}[a:scope][a:trigger] += [[a:1, a:content]]
+		let g:a=a:1
+		let g:b=a:content
+		if a:content[0:5] == "$LINK{" && a:content[-1:] == "}"
+			"Add snippet link.
+			let a:existingTrigger=a:content[6:-2]
+			let a:existingSnippet={var}[a:scope][a:existingTrigger]
+			let {var}[a:scope][a:trigger] = multisnip ? [[a:1, a:existingSnippet]] : a:existingSnippet
+		else
+			"Add normal snippet.
+			let {var}[a:scope][a:trigger] = multisnip ? [[a:1, a:content]] : a:content
+		endif
+	elseif multisnip
+		let {var}[a:scope][a:trigger] += [[a:1, a:content]]
 	else
 		echom 'Warning in snipMate.vim: Snippet '.a:trigger.' is already defined.'
 				\ .' See :h multi_snip for help on snippets with multiple matches.'
 	endif
-endf
+endf "}}}
 
-fun! ExtractSnips(dir, ft)
+fun! ExtractSnips(dir, ft) "{{{
 	for path in split(globpath(a:dir, '*'), "\n")
 		if isdirectory(path)
 			let pathname = fnamemodify(path, ':t')
@@ -49,11 +62,11 @@ fun! ExtractSnips(dir, ft)
 			call s:ProcessFile(path, a:ft)
 		endif
 	endfor
-endf
+endf "}}}
 
 " Processes a single-snippet file; optionally add the name of the parent
 " directory for a snippet with multiple matches.
-fun s:ProcessFile(file, ft, ...)
+fun s:ProcessFile(file, ft, ...) "{{{
 	let keyword = fnamemodify(a:file, ':t:r')
 	if keyword  == '' | return | endif
 	try
@@ -63,9 +76,9 @@ fun s:ProcessFile(file, ft, ...)
 	endtry
 	return a:0 ? MakeSnip(a:ft, a:1, text, keyword)
 			\  : MakeSnip(a:ft, keyword, text)
-endf
+endf "}}}
 
-fun! ExtractSnipsFile(file, ft)
+fun! ExtractSnipsFile(file, ft) "{{{
 	if !filereadable(a:file) | return | endif
 	let text = readfile(a:file)
 	let inSnip = 0
@@ -90,14 +103,14 @@ fun! ExtractSnipsFile(file, ft)
 			let content = ''
 		endif
 	endfor
-endf
+endf "}}}
 
-fun! ResetSnippets()
+fun! ResetSnippets() "{{{
 	let s:snippets = {} | let s:multi_snips = {} | let g:did_ft = {}
-endf
+endf "}}}
 
 let g:did_ft = {}
-fun! GetSnippets(dir, filetypes)
+fun! GetSnippets(dir, filetypes) "{{{
 	for ft in split(a:filetypes, '\.')
 		if has_key(g:did_ft, ft) | continue | endif
 		call s:DefineSnips(a:dir, ft, ft)
@@ -108,21 +121,21 @@ fun! GetSnippets(dir, filetypes)
 		endif
 		let g:did_ft[ft] = 1
 	endfor
-endf
+endf "}}}
 
 " Author: Dan Barrese (danielbarrese@gmail.com)
 " Description: Add snippets to the global '_' snippets in this Vim session.
 " Date: Dec 31, 2013
-fun! AddToGlobalSnippets(dir, filetypes)
+fun! AddToGlobalSnippets(dir, filetypes) "{{{
 	for ft in split(a:filetypes, '\.')
 		"if has_key(g:did_ft, '_') | continue | endif
 		call s:DefineSnips(a:dir, ft, '_')
 		let g:did_ft[ft] = 1
 	endfor
-endf
+endf "}}}
 
 " Define "aliasft" snippets for the filetype "realft".
-fun s:DefineSnips(dir, aliasft, realft)
+fun s:DefineSnips(dir, aliasft, realft) "{{{
 	for path in split(globpath(a:dir, a:aliasft.'/')."\n".
 					\ globpath(a:dir, a:aliasft.'-*/'), "\n")
 		call ExtractSnips(path, a:realft)
@@ -131,9 +144,11 @@ fun s:DefineSnips(dir, aliasft, realft)
 					\ globpath(a:dir, a:aliasft.'-*.snippets'), "\n")
 		call ExtractSnipsFile(path, a:realft)
 	endfor
-endf
+endf "}}}
 
-fun! TriggerSnippet(trailingChars, capitalize)
+fun! TriggerSnippet(trailingChars, capitalize) "{{{
+	call snipMate#setCursorColorInSnip()
+
 	if exists('g:SuperTabMappingForward')
 		if g:SuperTabMappingForward == "<tab>"
 			let SuperTabKey = "\<c-n>"
@@ -168,11 +183,16 @@ fun! TriggerSnippet(trailingChars, capitalize)
 		call feedkeys(SuperTabKey)
 		return ''
 	endif
+	if exists('g:snips_cursorBg_orig')
+		exe 'hi Cursor guibg=' . g:snips_cursorBg_orig
+	endif
 	return a:trailingChars "executes only if word is not a snippet
-endf
+endf "}}}
 
-fun! ForwardsSnippet(triggerChar)
-	if exists('g:snipPos') | return snipMate#jumpTabStop(0) | endif
+fun! ForwardsSnippet(triggerChar) "{{{
+	if exists('g:snipPos')
+		return snipMate#jumpTabStop(0)
+	endif
 
 	if exists('g:SuperTabMappingForward')
 		if g:SuperTabMappingBackward == "<s-tab>"
@@ -186,10 +206,12 @@ fun! ForwardsSnippet(triggerChar)
 		return ''
 	endif
 	return a:triggerChar
-endf
+endf "}}}
 
-fun! BackwardsSnippet()
-	if exists('g:snipPos') | return snipMate#jumpTabStop(1) | endif
+fun! BackwardsSnippet(triggerChar) "{{{
+	if exists('g:snipPos')
+		return snipMate#jumpTabStop(1)
+	endif
 
 	if exists('g:SuperTabMappingForward')
 		if g:SuperTabMappingBackward == "<s-tab>"
@@ -202,12 +224,13 @@ fun! BackwardsSnippet()
 		call feedkeys(SuperTabKey)
 		return ''
 	endif
-	return "\<s-tab>"
-endf
+	return a:triggerChar
+	"return "\<s-tab>"
+endf "}}}
 
 " Check if word under cursor is snippet trigger; if it isn't, try checking if
 " the text after non-word characters is (e.g. check for "foo" in "bar.foo")
-fun s:GetSnippet(word, scope)
+fun s:GetSnippet(word, scope) "{{{
 	let word = a:word
 	let snippet = ''
 	while snippet == ''
@@ -225,9 +248,9 @@ fun s:GetSnippet(word, scope)
 		let [word, snippet] = s:GetSnippet('.', a:scope)
 	endif
 	return [word, snippet]
-endf
+endf "}}}
 
-fun s:ChooseSnippet(scope, trigger)
+fun s:ChooseSnippet(scope, trigger) "{{{
 	let snippet = []
 	let i = 1
 	for snip in s:multi_snips[a:scope][a:trigger]
@@ -237,9 +260,9 @@ fun s:ChooseSnippet(scope, trigger)
 	if i == 2 | return s:multi_snips[a:scope][a:trigger][0][1] | endif
 	let num = inputlist(snippet) - 1
 	return num == -1 ? '' : s:multi_snips[a:scope][a:trigger][num][1]
-endf
+endf "}}}
 
-fun! ShowAvailableSnips()
+fun! ShowAvailableSnips() "{{{
 	let line  = getline('.')
 	let col   = col('.')
 	let word  = matchstr(getline('.'), '\S\+\%'.col.'c')
@@ -272,7 +295,7 @@ fun! ShowAvailableSnips()
 	call setline(line('.'), substitute(line, repeat('.', matchlen).'\%'.col.'c', '', ''))
 	call complete(col, matches)
 	return ''
-endf
+endf "}}}
 
 "##############################################################################
 " Dan Barrese's new functions.
@@ -280,38 +303,43 @@ endf
 
 " Unload all snippets, then load snippets for global ('_') and current
 " filetype.
-function! LoadAllSnippets()
+" Author: Dan Barrese
+function! LoadAllSnippets() "{{{
     call ResetSnippets()
     call GetSnippets(g:snippets_dir, '_')
     call GetSnippets(g:snippets_dir, &ft)
-endfunction
+endfunction "}}}
 command! -nargs=* SnipsLoad call LoadAllSnippets()
 
 " Unload all snippets.
-function! UnloadAllSnippets()
+" Author: Dan Barrese
+function! UnloadAllSnippets() "{{{
     call ResetSnippets()
-endfunction
+endfunction "}}}
 command! -nargs=* SnipsUnload call UnloadAllSnippets()
 
 " Allow spacebar to trigger snippets.
-function! AllowSpacebarToTriggerSnippet()
-    ino <silent> <expr> <space>     pumvisible() ? '<c-y><c-r>=TriggerSnippet(" ", 0)<cr>' : '<c-r>=TriggerSnippet(" ", 0)<cr>'
-    ino <silent> <expr> <s-space>   pumvisible() ? '<c-y><c-r>=TriggerSnippet(" ", 1)<cr>' : '<c-r>=TriggerSnippet(" ", 1)<cr>'
-endfunction
+" Author: Dan Barrese
+function! AllowSpacebarToTriggerSnippet() "{{{
+    inoremap <silent><expr><space>     (pumvisible() ? '<c-y>' : '') . '<c-r>=TriggerSnippet(" ", 0)<cr>'
+    inoremap <silent><expr><s-space>   (pumvisible() ? '<c-y>' : '') . '<c-r>=TriggerSnippet(" ", 1)<cr>'
+endfunction "}}}
 command! -nargs=* SnipsSpaceEnable call AllowSpacebarToTriggerSnippet()
 
 " Disallow spacebar to trigger snippets.
-function! DisallowSpacebarToTriggerSnippet()
-    imap <space>   <space>
-    imap <s-space> <s-space>
-endfunction
+" Author: Dan Barrese
+function! DisallowSpacebarToTriggerSnippet() "{{{
+    inoremap <space>   <space>
+    inoremap <s-space> <s-space>
+endfunction "}}}
 command! -nargs=* SnipsSpaceDisable call DisallowSpacebarToTriggerSnippet()
 
 " Add snippets to global snippets.
 " Warning: BEWARE COLLISIONS with existing global snippets!
-function! SnipsAdd(ft)
+" Author: Dan Barrese
+function! SnipsAdd(ft) "{{{
     call AddToGlobalSnippets(g:snippets_dir, a:ft)
-endfunction
+endfunction "}}}
 command! -nargs=* SnipsAdd call SnipsAdd('<args>')
 
 " vim:noet:sw=4:ts=4:ft=vim

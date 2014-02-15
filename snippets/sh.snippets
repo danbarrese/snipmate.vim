@@ -1,16 +1,141 @@
-snippet #!
-	#!/bin/bash
-	
+## UBIQUITOUS SNIPPETS
+
+# va arlen aradd arrem if ife ifei el ei case dfile dfn rem dv pre post start todo h1 try filex text filer text filew filea fn for fore foref wh until cli slashdir inc dec and or gt lt gte lte eq ne p slower slen scon sstarts sends chop seq seqi sempty v vb vs vi vn vf vd vc gvim getkeypress math
+
+## Access Modifiers {{{
+#}}}
+## Arrays {{{
+snippet arlen
+	${#${1:ar}[@]}
+snippet aradd
+	${1:ar}[${#$1[@]}+1]=${2:whatever}
+snippet arrem
+	unset ${${1:ar}[${2:0}]}
+#}}}
+## Classes {{{
+#}}}
+## Conditionals {{{
 snippet if
 	if [[ ${1:condition} ]]; then
 		${2:#statements}
 	fi
-snippet elif
+snippet ife
+	if [[ ${1:condition} ]]; then
+		${2:#}
+	else
+		${3:#}
+	fi
+snippet ifei
+	if [[ ${1:condition} ]]; then
+		${3:#}
+	elif [[ ${2:condition} ]]; then
+		${4:#}
+	else
+		${5:#}
+	fi
+snippet el
+	else
+		${1}
+snippet ei
 	elif [[ ${1:condition} ]]; then
 		${2:#statements}
+snippet case
+	case ${1:${var}} in
+		${2:pattern})
+			${3};;
+		"a"|"b") ;;
+		*) ;;
+	esac
+#}}}
+## Debugging {{{
+#}}}
+## Documentation {{{
+snippet dfile
+	# Name: ${1:name}
+	# Version: ${2:0.01}
+	# Description: ${3:desc}
+	# Author: Dan Barrese (danbarrese.com)
+	# Date: `strftime("%B %d, %Y")`
+	# Update Log:
+	#   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
+	# Sources/References:
+	# - None
+snippet dfn
+	# Description: ${1}
+	# Date: `strftime("%B %d, %Y")`
+	# Author: Dan Barrese (danbarrese.com)
+snippet rem
+	# 
+snippet dv
+	# 
+snippet pre
+	# Preconditions:
+	#     * 
+snippet post
+	# Postconditions:
+	#     * 
+snippet start
+	#!/bin/bash
+	# Name: ${1:name}
+	# Version: ${2:0.01}
+	# Description: ${3:desc}
+	# Author: Dan Barrese (danbarrese.com)
+	# Date: `strftime("%B %d, %Y")`
+	# Update Log:
+	#   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
+	# Sources/References:
+	# - None
+	
+snippet todo
+	# TODO: 
+snippet h1
+	# ${1:HEADER} {{{
+	#``````````````````````````````````````````````````````````````````````````````
+	${2}
+	#}}}
+#}}}
+## Error Handling {{{
+snippet try
+	cmd = "${1:command}"
+	$cmd 2>/dev/null
+	if (( $? == 0 )); then
+		echo 'command was successful'
+	else
+		echo 'error'
+	fi
+#}}}
+## Files {{{
+snippet filx text
+	-e ${${1:path}}
+snippet filr text
+	while read -r line; do
+		${1:#}
+	done < "${path}"
+snippet filw
+	> ${${1:path}}
+snippet fila
+	>> ${${1:path}}
+#}}}
+## Functions {{{
+snippet fn
+	function ${1:fun}() {
+		${2:#}
+	}
+#}}}
+## Loops {{{
 snippet for
 	for (( ${2:i} = 0; $2 < ${1:count}; $2++ )); do
 		${3:#statements}
+	done
+snippet fore
+	for ${1:i} in ${${2:ar}[@]}; do
+		${3:printf '%s\n' "$$1"}
+	done
+snippet foref
+	shopt -s nullglob
+	files=(${path}/*)
+	for fname in ${files[@]}; do
+		printf '%s\n' "${fname}"
 	done
 snippet wh
 	while [[ ${1:condition} ]]; do
@@ -20,14 +145,99 @@ snippet until
 	until [[ ${1:condition} ]]; do
 		${2:#statements}
 	done
-snippet case
-	case ${1:word} in
-		${2:pattern})
-			${3};;
-	esac
-snippet gvim
-	gvim -c "call Maximize_Window()"
-snippet $
-	${${1}}
+#}}}
+## Misc {{{
+snippet cli
+	while getopts "w:a:" n; do
+		case ${n} in
+			w)
+				echo ${OPTARG};;
+			a)
+				echo ${OPTARG};;
+		esac
+	done
+snippet slashdir
+	${1:str}="${$1%/}/"
+#}}}
+## Numbers {{{
+snippet inc
+	$((++${1:var}))
+snippet dec
+	$((--${1:var}))
+#}}}
+## Operators {{{
+snippet and
+	&& 
+snippet or
+	|| 
+snippet gt
+	> 
+snippet lt
+	< 
+snippet gte
+	>= 
+snippet lte
+	<= 
+snippet e
+	== 
+snippet ne
+	!= 
+#}}}
+## Printing {{{
+snippet p
+	printf '%s\n' "${1}"
+#}}}
+## String {{{
+# string lower case
+snippet slower
+	${${1},,}
+snippet slen
+	${#${1:str}}
+snippet scon
+	${${1:str}} == *${2:contains}*
+snippet sstarts
+	${${1:str}} == ${2:startswith}*
+snippet sends
+	${${1:str}} == *${2:endswith}
+snippet chop
+	${${1:str}%?}
+snippet seq
+	"X${${1:str}}" == "X${${2:str2}}"
+snippet seqi
+	"X${${1:str,,}}" == "X${${2:str2,,}}"
+snippet sempty
+	${${1:str}} == ""
+#}}}
+## Variables {{{
 snippet v
 	${${1}}
+snippet va
+	declare -a ${1:ar}=(${2:1 2 3})
+snippet vb
+	${1:boolvar}=${2:true}
+snippet vs
+	${1:str}="${2}"
+snippet vi
+	declare -i ${1:i}=0
+snippet vn
+	${1:i}=0
+snippet vf
+	${1:floatvar}=0.00
+snippet vd
+	${1:floatvar}=0.00
+snippet vc
+	readonly ${1:ro}=${2}
+#}}}
+
+## BASH SPECIFIC SNIPPETS {{{
+snippet gvim
+	gvim -c "call Maximize_Window()"
+snippet getkeypress
+	old_tty_setting=$(stty -g)
+	stty -icanon -echo
+	key=$(dd bs=1 count=1 2> /dev/null)
+	stty "${old_tty_setting}"
+	
+snippet math
+	$((${1}))
+#}}}

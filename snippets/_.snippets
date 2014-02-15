@@ -1,24 +1,28 @@
 snippet tdy Jan 01, 1900
-	`strftime("%b %d, %Y")` 
+	`strftime("%b %d, %Y")`
 snippet tdyt Jan 01, 1900 00:00:00
-	`strftime("%b %d, %Y %T")` 
+	`strftime("%b %d, %Y %T")`
 snippet tdyl January 01, 1900
-	`strftime("%B %d, %Y")` 
+	`strftime("%B %d, %Y")`
 snippet tdylt January 01, 1900 00:00:00
-	`strftime("%B %d, %Y %T")` 
+	`strftime("%B %d, %Y %T")`
 snippet date 1900.01.01
-	`strftime("%Y.%m.%d")` 
+	`strftime("%Y.%m.%d")`
 snippet datetime 1900.01.01 00:00:00
-	`strftime("%Y.%m.%d %T")` 
+	`strftime("%Y.%m.%d %T")`
 snippet time 00:00:00
-	`strftime("%T")` 
+	`strftime("%T")`
 snippet dt
-	`strftime("%b %d, %Y %T")` 
+	`strftime("%Y.%m.%d %T")`
 snippet DB
 	Dan Barrese
+snippet DRB
+	Daniel R. Barrese
 snippet sig
 	
 	-Dan
+snippet dan
+	Dan Barrese (danbarrese.com)
 snippet ^
 	▲ 
 snippet >
@@ -48,3 +52,35 @@ snippet cmd
 #option key
 snippet opt
 	⌥
+########################################################
+# @@multi vvv
+snippet ttt cancel
+	
+snippet ttt 2x2
+	${1:-}   ${2:-}
+	${3:-}   ${4:-}
+snippet ttt 3x3
+	${1:-}   ${2:-}   ${3:-}
+	${4:-}   ${5:-}   ${6:-}
+	${7:-}   ${8:-}   ${9:-}
+snippet ttt 4x4
+	${1:-}   ${2:-}   ${3:-}   ${4:-}
+	${5:-}   ${6:-}   ${7:-}   ${8:-}
+	${9:-}   ${10:-}   ${11:-}   ${12:-}
+	${13:-}   ${14:-}   ${15:-}   ${16:-}
+snippet ttt 5x5
+	${1:-}   ${2:-}   ${3:-}   ${4:-}   ${5:-}
+	${6:-}   ${7:-}   ${8:-}   ${9:-}   ${10:-}
+	${11:-}   ${12:-}   ${13:-}   ${14:-}   ${15:-}
+	${16:-}   ${17:-}   ${18:-}   ${19:-}   ${20:-}
+# @@multi ^^^
+########################################################
+snippet bm
+	${1:pagetitle}
+		${2:url} #added:`strftime("%Y.%m.%d")` #last:`strftime("%Y.%m.%d")` 1
+snippet filename
+	`expand('%:t')`
+snippet filepath
+	`escape(expand('%:p:h'), '\').escape(g:fs, '\').expand('%:t')`
+snippet filedir
+	`escape(expand('%:p:h'), '\')`
