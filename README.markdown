@@ -3,7 +3,7 @@ I've modified the SnipMate plugin to suit my needs.
 
 ### Install with Pathogen
 
-    git clone git://github.com/msanders/snipmate.vim.git ~/.vim/bundle/snipmate.vim
+    git clone git://github.com/danbarrese/snipmate.vim.git ~/.vim/bundle/snipmate.vim
 
 ### New Features
 
