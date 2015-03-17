@@ -1,53 +1,4 @@
-# Some useful Unicode entities
-# Non-Breaking Space
-snippet nbs
-	&nbsp;
-# ←
-snippet left
-	&#x2190;
-# →
-snippet right
-	&#x2192;
-# ↑
-snippet up
-	&#x2191;
-# ↓
-snippet down
-	&#x2193;
-# ↩
-snippet return
-	&#x21A9;
-# ⇤
-snippet backtab
-	&#x21E4;
-# ⇥
-snippet tab
-	&#x21E5;
-# ⇧
-snippet shift
-	&#x21E7;
-# ⌃
-snippet control
-	&#x2303;
-# ⌅
-snippet enter
-	&#x2305;
-# ⌘
-snippet command
-	&#x2318;
-# ⌥
-snippet option
-	&#x2325;
-# ⌦
-snippet delete
-	&#x2326;
-# ⌫
-snippet backspace
-	&#x232B;
-# ⎋
-snippet escape
-	&#x238B;
-# Generic Doctype
+# ▶ Doctypes {{{
 snippet doctype HTML 4.01 Strict
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 	"http://www.w3.org/TR/html4/strict.dtd">
@@ -95,6 +46,8 @@ snippet docxt
 snippet docx
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+# }}}
+# ▶ HTML {{{
 snippet html
 	<html>
 	${1}
@@ -116,12 +69,14 @@ snippet head
 	</head>
 snippet title
 	<title>${1:`substitute(Filename('', 'Page Title'), '^.', '\u&', '')`}</title>${2}
-snippet script
+snippet script Literal JS
 	<script type="text/javascript" charset="utf-8">
 		${1}
 	</script>${2}
-snippet scriptsrc
-	<script src="${1}.js" type="text/javascript" charset="utf-8"></script>${2}
+snippet script Include JS
+	<script src="${1}.js" type="text/javascript"></script>${2}
+snippet script Include Dart
+	<script src="${1}.dart" type="application/dart"></script>${2}
 snippet style
 	<style type="text/css" media="${1:screen}">
 		${2}
@@ -188,3 +143,197 @@ snippet table
 	</table>${4}
 snippet textarea
 	<textarea name="${1:Name}" rows="${2:8}" cols="${3:40}">${4}</textarea>${5}
+snippet nl
+	<br/>
+snippet def
+	<span class="def">${1}: </span>${2}
+snippet li
+	<li>${1}</li>
+snippet ul
+	<ul>
+	  <li>${1}</li>
+	</ul>
+snippet lang
+	<span class="langname">${1}</span>
+snippet red
+	<code class="red">${1}</code>
+snippet green
+	<code class="green">${1}</code>
+snippet yellow
+	<code class="yellow">${1}</code>
+# }}}
+# ▶ AngularDart {{{
+# Event Directives (ELEMENT) {{{
+snippet ngelem ng-abort
+	ng-abort="${1:action()}"
+snippet ngelem ng-beforecopy
+	ng-beforecopy="${1:action()}"
+snippet ngelem ng-beforecut
+	ng-beforecut="${1:action()}"
+snippet ngelem ng-beforepaste
+	ng-beforepaste="${1:action()}"
+snippet ngelem ng-blur
+	ng-blur="${1:action()}"
+snippet ngelem ng-change
+	ng-change="${1:action()}"
+snippet ngelem ng-copy
+	ng-copy="${1:action()}"
+snippet ngelem ng-cut
+	ng-cut="${1:action()}"
+snippet ngelem ng-error
+	ng-error="${1:action()}"
+snippet ngelem ng-focus
+	ng-focus="${1:action()}"
+snippet ngelem ng-fullscreenchange
+	ng-fullscreenchange="${1:action()}"
+snippet ngelem ng-fullscreenerror
+	ng-fullscreenerror="${1:action()}"
+snippet ngelem ng-input
+	ng-input="${1:action()}"
+snippet ngelem ng-invalid
+	ng-invalid="${1:action()}"
+snippet ngelem ng-load
+	ng-load="${1:action()}"
+snippet ngelem ng-paste
+	ng-paste="${1:action()}"
+snippet ngelem ng-reset
+	ng-reset="${1:action()}"
+snippet ngelem ng-scroll
+	ng-scroll="${1:action()}"
+snippet ngelem ng-search
+	ng-search="${1:action()}"
+snippet ngelem ng-select
+	ng-select="${1:action()}"
+snippet ngelem ng-selectstart
+	ng-selectstart="${1:action()}"
+snippet ngelem ng-submit
+	ng-submit="${1:action()}"
+# }}}
+# Event Directives (MOUSE) {{{
+snippet ngmouse ng-click
+	ng-click="${1:action()}"
+snippet ngmouse ng-contextmenu
+	ng-contextmenu="${1:action()}"
+snippet ngmouse ng-doubleclick
+	ng-doubleclick="${1:action()}"
+snippet ngmouse ng-drag
+	ng-drag="${1:action()}"
+snippet ngmouse ng-dragend
+	ng-dragend="${1:action()}"
+snippet ngmouse ng-dragenter
+	ng-dragenter="${1:action()}"
+snippet ngmouse ng-dragleave
+	ng-dragleave="${1:action()}"
+snippet ngmouse ng-dragover
+	ng-dragover="${1:action()}"
+snippet ngmouse ng-dragstart
+	ng-dragstart="${1:action()}"
+snippet ngmouse ng-drop
+	ng-drop="${1:action()}"
+snippet ngmouse ng-mousedown
+	ng-mousedown="${1:action()}"
+snippet ngmouse ng-mouseenter
+	ng-mouseenter="${1:action()}"
+snippet ngmouse ng-mouseleave
+	ng-mouseleave="${1:action()}"
+snippet ngmouse ng-mousemove
+	ng-mousemove="${1:action()}"
+snippet ngmouse ng-mouseout
+	ng-mouseout="${1:action()}"
+snippet ngmouse ng-mouseover
+	ng-mouseover="${1:action()}"
+snippet ngmouse ng-mouseup
+	ng-mouseup="${1:action()}"
+snippet ngmouse ng-mousewheel
+	ng-mousewheel="${1:action()}"
+# }}}
+# Event Directives (KEYBOARD) {{{
+snippet ngkey ng-keydown
+	ng-keydown="${1:action()}"
+snippet ngkey ng-keypress
+	ng-keypress="${1:action()}"
+snippet ngkey ng-keyup
+	ng-keyup="${1:action()}"
+# }}}
+# Event Directives (TOUCH) {{{
+snippet ngtouch ng-toucheancel
+	ng-toucheancel="${1:action()}"
+snippet ngtouch ng-touchend
+	ng-touchend="${1:action()}"
+snippet ngtouch ng-touchenter
+	ng-touchenter="${1:action()}"
+snippet ngtouch ng-touchleave
+	ng-touchleave="${1:action()}"
+snippet ngtouch ng-touchmove
+	ng-touchmove="${1:action()}"
+snippet ngtouch ng-touchstart
+	ng-touchstart="${1:action()}"
+# }}}
+# Formatters / Filters {{{
+snippet ngff arrayify
+	arrayify
+snippet ngff currency[:symbol[:leading]]
+	currency[:symbol[:leading]]
+snippet ngff date[:format]
+	date[:format]
+snippet ngff filter:expression[:comparator]
+	filter:expression[:comparator]
+snippet ngff json
+	json
+snippet ngff limitTo:number
+	limitTo:2
+snippet ngff lowercase
+	lowercase
+snippet ngff number[:fractionSize]
+	number[:fractionSize]
+snippet ngff orderBy:predicate[:true]
+	orderBy:predicate[:true]
+snippet ngff stringify
+	stringify
+snippet ngff uppercase
+	uppercase
+# }}}
+# Event Directives (BOOLEAN) {{{
+snippet ngbool ng-checked
+	ng-checked="${1:boolean}"
+snippet ngbool ng-disabled
+	ng-disabled="${1:boolean}"
+snippet ngbool ng-multiple
+	ng-multiple="${1:boolean}"
+snippet ngbool ng-open
+	ng-open="${1:boolean}"
+snippet ngbool ng-readonly
+	ng-readonly="${1:boolean}"
+snippet ngbool ng-required
+	ng-required="${1:boolean}"
+snippet ngbool ng-selected
+	ng-selected="${1:boolean}"
+# }}}
+snippet ngstart
+	<!DOCTYPE html>
+	<html ng-app>
+	<head>
+	<title>Chapter One - Hello, World!</title>
+	<script src="packages/web_components/platform.js"></script>
+	<script src="packages/web_components/dart_support.js"></script>
+	</head>
+	<body>
+	${1:hello world!}
+	<script type="application/dart" src="main.dart"></script>
+	<script type="text/javascript" src="packages/browser/dart.js"></script>
+	</body>
+	</html>
+snippet ngr
+	ng-repeat="${1:recipe in recipes}"
+snippet ngm
+	ng-model="${1}"
+snippet ngs
+	ng-src="${1}"
+snippet ngc
+	ng-cloak
+snippet ngsw
+	<div ng-switch="${1:selection}">
+	    <div ng-switch-when="${2:settings}">${3}</div>
+	    <div ng-switch-default>${4}</div>
+	</div>
+# }}}

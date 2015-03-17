@@ -38,27 +38,6 @@ snippet deft
 	def test_${1:case_name}
 		${2}
 	end
-snippet if
-	if ${1:condition}
-		${2}
-	end
-snippet ife
-	if ${1:condition}
-		${2}
-	else
-		${3}
-	end
-snippet ei
-	elsif ${1:condition}
-		${2}
-snippet unl
-	unless ${1:condition}
-		${2}
-	end
-snippet wh
-	while ${1:condition}
-		${2}
-	end
 snippet for
 	for ${1:e} in ${2:c}
 		${3}
@@ -501,3 +480,347 @@ snippet tas
 	task :${2:task_name => [:dependent, :tasks]} do
 		${3}
 	end
+
+
+
+snippet ms
+	self.
+snippet ar
+	${1:ar} = [${2:csv}]
+snippet aradd
+	${1:ar}.push(${2:val})
+snippet arcon
+	${1:ar}.include?(${2:needle})
+snippet arconcat
+	${1:ar1} + ${2:ar2}
+snippet ardd
+	${1:ar}.uniq!
+snippet arfilter
+	${1:ar}.select { |e| ${2:condition} }
+snippet arget
+	${1:ar}[0]
+snippet arintersect
+	${1:ar1} & ${2:ar2}
+snippet ariter
+	@@val
+	${1:ar}.each { |${2:e}| ${3} }
+	@@val+i
+	${1:ar}.each_with_index do |e, i|
+	    ${2:#}
+	end
+snippet arlen
+	${1:ar}.size
+snippet arlit
+	${1:ar} = [${2:csv}]
+snippet armap
+	${1:ar}.map { |e| ${2:operation} }
+snippet armax
+	${1:ar}.max
+snippet armin
+	${1:ar}.min
+snippet arreduce
+	${1:ar}.inject(${3:baseCase}) { |x,y| ${2:operation} }
+snippet arset
+	${1:ar} = ${2:val}
+snippet arshuffle
+	${1:ar}.shuffle
+snippet arsl
+	${1:ar}[0..1]
+snippet arsor
+	${1:ar}.sort!
+snippet arsplat
+	${1:fun}(${2:args, }*${3:ar})
+snippet arunion
+	${1:ar1} | ${2:ar2}
+snippet ccsleep
+	sleep(${1:1.0})
+snippet ccstart
+	${1:thr} = Thread.new { ${2:sleep(1.0)} }
+snippet ccto
+	# require 'timeout'
+	begin
+	    Timeout.timeout(1) do
+	        sleep(2)
+	    end
+	rescue Timeout::Error
+	end
+snippet ccwait
+	${1:thr}.join
+snippet ei
+	elif ${1:condition}
+	    ${2:#}
+snippet el
+	else
+	    ${1:#}
+snippet if
+	if ${1:condition}
+	    ${2:#}
+	end
+snippet ife
+	if ${1:condition}
+	    ${2:#}
+	else
+	    ${3:#}
+	end
+snippet ifei
+	if ${1:condition}
+	    ${3:#}
+	elif ${2:condition}
+	    ${4:#}
+	else
+	    ${5:#}
+	end
+snippet sw
+	case ${1:value}
+	    when ${2:condition}
+	        ${3:#}
+	    else
+	        ${4:#}
+	end
+snippet unl
+	${2:action} unless ${1:condition}
+snippet dsm
+	${1:dsm} = { ${2:"t" => 1, "f" => 0} }
+snippet dsmget
+	${1:dsm}[${2:key}]
+snippet dsmhaskey
+	${1:dsm}.has_key?(${2:key})
+snippet dsmiter
+	${1:dsm}.each do |key,val|
+	    ${2:#}
+	end
+snippet dsmkeys
+	${1:dsm}.keys
+snippet dsmlen
+	${1:dsm}.size
+snippet dsmlit
+	@LINK{dsm}
+snippet dsmrem
+	${1:dsm}.delete(${2:key})
+snippet dsmsor
+	d.sort_by {|k, v| v}
+snippet dsmvals
+	${1:dsm}.values
+snippet tnow
+	${1:now} = Time.now
+snippet d
+	# 
+snippet dml
+	=begin
+	${1}
+	=end
+snippet decxml
+	#!/usr/bin/env ruby
+	# needed to parse xml
+	require 'rexml/document'
+	# grab the file
+	file = File.new('shop.xml')
+	# load it as an xml document
+	doc = REXML::Document.new(file)
+	# initialize the total to 0 as a float
+	    total = 0.0
+	# cycle through the items
+	    doc.elements.each('shopping/item') do |item|
+	# add the price to the total
+	    total += item.attributes['price'].to_f
+	    end
+	# round the total to the nearest 0.01
+	    total = (total*100.0).round/100.0
+	# pad the output with the proper number of trailing 0's
+	    printf "$%.2f
+	", total
+snippet xdef
+	class ${1:MyException} < Exception
+	    def initialize
+	      super("bam!")
+	    end
+	end
+snippet xfi
+	ensure
+	    ${1:#always executes}
+snippet xh
+	begin
+	    ${1:#}
+	rescue ${2:RuntimeError} => ${3:e}
+	    ${4:#handles exception}
+	ensure
+	    ${5:#always executes}
+	end
+snippet xr
+	raise "${1:msg}"
+snippet fnanamed
+	${1:arg}: ${2:val}
+snippet fnaref
+	${1:foo}
+snippet fncall
+	${1:fun}(${2:args})
+snippet fnclosure
+	def make_counter
+	  i = 0
+	  return lambda { i +=1; i }
+	end
+	foo = make_counter
+	foo.call
+snippet fnpnamed
+	${1:param}=${2:default}
+snippet fnpvar
+	*${1:arg}
+snippet fa
+	false
+snippet nl
+	nil
+snippet tr
+	true
+snippet br
+	break
+snippet cont
+	next
+snippet wh
+	while ${1:condition} do
+	    ${2:#}
+	end
+snippet fnld
+	lambda { |${1:x, y}| ${2:body} }
+snippet fnldcall
+	${1:fun}.call(${2:args})
+snippet in
+	include 
+snippet nabs
+	${1:x}.abs
+snippet ndivf
+	${1:x}.div(${2:y})
+snippet ndivi
+	${1:x} / ${2:y}
+snippet npow
+	${1:base} ** ${2:exp}
+snippet nrandf
+	rand
+snippet nrandi
+	rand(${1:upper})
+snippet nseed
+	srand(${1:17})
+	seed = srand
+	srand(seed)
+snippet nsqrt
+	# include Math
+	sqrt(${1})
+snippet nvalf
+	${1:foo}.to_f
+snippet nvali
+	${1:foo}.to_i
+snippet and
+	&& 
+snippet e
+	== 
+snippet eo
+	== 
+snippet gt
+	> 
+snippet gte
+	>= 
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet me
+	-= 
+snippet n
+	+ 
+snippet ne
+	!= 
+snippet neo
+	!= 
+snippet not
+	! 
+snippet or
+	|| 
+snippet pe
+	+= 
+snippet pf
+	${1:"%s %d %f"} % [${2:"str", 10, 3.14}]
+snippet rxg
+	${1:regex} = /(d{4})-(d{2})-(d{2})/
+	groups = rx.match(${2:"2010-06-03"})
+	yr, mo, dy = groups[1..3]
+snippet rxm
+	${1:regex}.match(${2:str})
+snippet rxs
+	${1:str}.gsub!(${2:regex}, ${3:replacement})
+snippet scap
+	${1:str}.capitalize
+snippet sidx
+	${1:str}.index(${2:needle})
+snippet sidxr
+	${1:str}.rindex(${2:needle})
+snippet sjoin
+	%w(${1:ar}).join(' ')
+snippet slen
+	${1:str}.length
+snippet slit
+	${1:'don	 say "no"'}
+snippet slower
+	${1:str}.downcase
+snippet sml
+	"${1}"
+snippet spadc
+	${1:str}.center(${2:10})
+snippet spadl
+	${1:str}.ljust(${2:10})
+snippet spadr
+	${1:str}.rjust(${2:10})
+snippet ssplit
+	${1:str}.split
+snippet ssub
+	${1:str}[${2:0..1}]
+snippet strim
+	${1:str}.strip
+snippet striml
+	${1:str}.lstrip
+snippet strimr
+	${1:str}.rstrip
+snippet supper
+	${1:str}.upcase
+snippet sval
+	${1:foo}.to_s
+snippet en
+	== nil
+snippet nn
+	!= nil
+snippet free
+	NO
+snippet v
+	EMPTY
+snippet vd
+	@LINK{vv}
+snippet vf
+	@LINK{vv}
+snippet vg
+	@LINK{vv}
+snippet vglobal
+	$${1:foo} = ${2}
+snippet vi
+	@LINK{vv}
+snippet vis
+	#{${1:foo}}
+snippet vl
+	@LINK{vv}
+snippet vld
+	${1:foo} = lambda {|${2:x, y}| ${3:body}}
+snippet vll
+	${1:foo}, ${2:bar} = ${3:csv}
+snippet vn
+	@LINK{vv}
+snippet vr
+	${1:foo} = /${2}/
+snippet vs
+	@LINK{vv}
+snippet vset
+	@LINK{vv}
+snippet vsl
+	@LINK{vv}
+snippet vswap
+	$${1:foo}, $${2:bar} = $2, $1
+snippet vt
+	@LINK{vv}
+snippet vv
+	${1:foo} = ${2}

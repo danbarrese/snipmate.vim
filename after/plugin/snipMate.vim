@@ -6,7 +6,7 @@ endif
 let s:did_snips_mappings = 1
 
 " TriggerSnippet(trailing_char, capitalize_first_letter)
-inoremap <silent><expr> <cr>        (pumvisible() ? '<c-y>' : '') . '<c-r>=TriggerSnippet("\n", 0)<cr>'
+inoremap <silent><expr> <c-cr>        (pumvisible() ? '<c-y>' : '') . '<c-r>=TriggerSnippet("\n", 0)<cr>'
 inoremap <silent><expr> <s-cr>      (pumvisible() ? '<c-y>' : '') . '<c-r>=TriggerSnippet("\n", 1)<cr>'
 inoremap <silent><expr> <c-space>   (pumvisible() ? '<c-y>' : '') . '<c-r>=TriggerSnippet("",   0)<cr>'
 inoremap <silent><expr> <c-s-space> (pumvisible() ? '<c-y>' : '') . '<c-r>=TriggerSnippet("",   1)<cr>'

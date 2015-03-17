@@ -1,22 +1,87 @@
-snippet #!
-	#!/usr/bin/python
-
-snippet im
-	import ${1:module}
-# Module Docstring
-snippet docs
-	'''
-	File: ${1:`Filename('$1.py', 'foo.py')`}
-	Author: ${2:Dan Barrese (danbarrese.com)}
-	Description: ${3}
-	'''
-snippet wh
-	while ${1:condition}:
-		${2:# code...}
-snippet fo
-	for ${1:needle} in ${2:haystack}:
-		${3:# code...}
-# New Class
+# > PYTHON 3 language agnostic snippets {{{
+###############################################################################
+snippet and
+	and 
+snippet ar
+	${1:ar} = [${2:csv}]
+snippet aradd
+	${1:ar}.append(${2:val})
+snippet arcon
+	${2:needle} in ${1:ar}
+snippet arconcat
+	${1:ar1} + ${2:ar2}
+snippet ardd
+	list(set(${1:ar}))
+snippet arfilter
+	[e for e in ${1:ar} if ${2:condition}]
+snippet arget
+	${1:ar}[0]
+snippet arintersect
+	${1:ar1} & ${2:ar2}
+snippet ariter val
+	for ${2:e} in ${1:ar}:
+		${3:#}
+snippet ariter val+i
+	for i, e in enumerate(${1:ar}):
+		${2:#}
+snippet arlen
+	len(${1:ar})
+snippet arlit
+	${1:ar} = [${2:csv}]
+snippet armap
+	[${2:operation} for e in ${1:ar}]
+snippet armax
+	max(${1:ar})
+snippet armin
+	min(${1:ar})
+snippet arreduce
+	# from functools import reduce
+	reduce(lambda x, y: ${2:operation}, ${1:ar}, ${3:baseCase})
+snippet arrem
+	${1:ar}.pop(${2:0})
+snippet arset
+	${1:ar} = ${2:val}
+snippet arshuffle
+	# from random import shuffle, sample
+	shuffle(${1:ar})
+snippet arsl
+	${1:ar}[0:1]
+snippet arsor
+	${1:ar}.sort()
+snippet arsplat
+	${1:fun}(${2:args, }*${3:ar})
+snippet arunion
+	${1:ar1} | ${2:ar2}
+snippet br
+	break
+snippet ccsleep
+	# import time
+	time.sleep(${1:1.0})
+snippet ccstart
+	class ${1:myThreadClass}(threading.Thread):
+	   def run(self):
+		   ${2:time.sleep(1.0)}
+	
+	${3:thr} = $1()
+	$3.start()
+snippet ccto
+	# import signal, time
+	class Timeout(Exception): pass
+	
+	def timeout_handler(signo, fm):
+		raise Timeout()
+	
+	signal.signal(signal.SIGALRM,
+		timeout_handler)
+	
+	try:
+		signal.alarm(1)
+		time.sleep(2)
+	except Timeout:
+		pass
+	signal.alarm(0)
+snippet ccwait
+	${1:thr}.join()
 snippet cl
 	class ${1:ClassName}(${2:object}):
 		"""${3:docstring for $1}"""
@@ -24,119 +89,6 @@ snippet cl
 			${5:super($1, self).__init__()}
 			self.$4 = $4
 			${6}
-# New Function
-snippet def
-	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
-		"""${3:docstring for $1}"""
-		${4:pass}
-snippet deff
-	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
-		${3}
-# New Method
-snippet defs
-	def ${1:mname}(self, ${2:arg}):
-		${3:pass}
-# New Property
-snippet property
-	def ${1:foo}():
-		doc = "${2:The $1 property.}"
-		def fget(self):
-			${3:return self._$1}
-		def fset(self, value):
-			${4:self._$1 = value}
-# Lambda
-snippet ld
-	def ${1:f}(${2:x}): ${3}
-snippet try Try/Except
-	try:
-		${1:pass}
-	except ${2:Exception}, ${3:e}:
-		${4:raise $3}
-snippet try Try/Except/Else
-	try:
-		${1:pass}
-	except ${2:Exception}, ${3:e}:
-		${4:raise $3}
-	else:
-		${5:pass}
-snippet try Try/Except/Finally
-	try:
-		${1:pass}
-	except ${2:Exception}, ${3:e}:
-		${4:raise $3}
-	finally:
-		${5:pass}
-snippet try Try/Except/Else/Finally
-	try:
-		${1:pass}
-	except ${2:Exception}, ${3:e}:
-		${4:raise $3}
-	else:
-		${5:pass}
-	finally:
-		${6:pass}
-# if __name__ == '__main__':
-snippet ifmain
-	if __name__ == '__main__':
-		${1:main()}
-# __magic__
-snippet _
-	__${1:init}__${2}
-snippet if
-	if ${1}:
-		${2:pass}
-snippet ife
-	if ${1}:
-		${2:pass}
-	el ${3}:
-		${4:pass}
-snippet re
-	return
-snippet p
-	print(${1})
-snippet pp
-	print("${1}")
-snippet fa
-	False
-snippet tr
-	True
-snippet rf
-	return False
-snippet rt
-	return True
-snippet ds
-	"""${1}"""
-snippet s
-	self.
-snippet eqne
-	def __eq__(self, other):
-		${1:pass}
-
-	def __ne__(self, other):
-		return not self.__eq__(other)
-snippet eq
-	def __eq__(self, other):
-		${1:pass}
-snippet el
-	else:
-	    ${1:pass}
-snippet ei
-	elif ${1}:
-		${2}
-snippet T
-	True
-snippet F
-	False
-snippet pl
-	+
-snippet nl
-	None
-snippet pls
-	+ "${1}"${2}
-snippet nn
-	is not None
-snippet en
-	is None
 snippet cli
 	import argparse
 	parser = argparse.ArgumentParser(description='DESCRIPTION')
@@ -150,7 +102,368 @@ snippet cli
 						help='HELP')
 	parser.set_defaults(boolean=True)
 	args = parser.parse_args()
-
+	
 	my_int = args.integer[0]
 	my_string = args.string[0]
 	my_boolean = args.boolean
+snippet cont
+	continue
+snippet d
+	# 
+snippet decxml
+	from xml.dom.minidom import parseString
+	document = parseString(${1:xmlString}).documentElement
+	for $2 in document.getElementsByTagName('${2:tagName}')]):
+		${3:pass}
+snippet dml
+	'''
+	${1}
+	'''
+snippet dsm
+	${1:dsm} = { ${2:'t':1, 'f':0} }
+snippet dsmadd
+	${1:dsm}[${2:key}] = ${3}
+snippet dsmget
+	${1:dsm}[${2:key}]
+snippet dsmhaskey
+	${2:key} in ${1:dsm}
+snippet dsmiter
+	for key, val in ${1:dsm}.items():
+		${2:#}
+snippet dsmkeys
+	list(${1:dsm}.keys())
+snippet dsmlen
+	len(${1:dsm})
+snippet dsmrem
+	del ${1:dsm}[${2:key}]
+snippet dsmsor
+	# from operator import itemgetter
+	sorted(${1:dsm}.iteritems(), key=itemgetter(${2:0}))
+snippet dsmvals
+	list(${1:dsm}.values())
+snippet dstart
+	# Name: ${1:name}
+	# Version: ${2:0.01}
+	# Description: ${3:desc}
+	# Author: Dan Barrese (danbarrese.com)
+	# Date: `strftime("%B %d, %Y")`
+	# Update Log:
+	#   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
+	# Sources/References:
+	# - None
+snippet e
+	== 
+snippet ei
+	elif ${1}:
+		${2:pass}
+snippet el
+	else:
+		${1:pass}
+snippet email
+	#import smtplib
+	#import locale
+	#from email.mime.text import MIMEText
+	encoding = locale.getpreferredencoding()
+	from_addr = "${1:from@here.com}"
+	to_addr = "${2:to@there.com}"
+	smtp_servername = "#{3:smtp.server.com}"
+	subject = ${4:"Subject"}
+	body = ${5:"This is the message."}
+	message = MIMEText(body, _charset=encoding)
+	message["From"] = from_addr
+	message["To"] = to_addr
+	message["Subject"] = subject
+	server = smtplib.SMTP(smtp_servername)
+	server.sendmail(from_addr, to_addr, message.as_string())
+snippet en
+	is None
+snippet eo
+	== 
+snippet fa
+	False
+snippet fn
+	def ${1:fun}(`indent('.') ? 'self' : ''`${2}):
+		"""${3: }"""
+		${4:pass}
+snippet fnanamed
+	${1:arg}=${2:val}
+snippet fnaref
+	${1:foo}
+snippet fncall
+	${1:fun}(${2:args})
+snippet fnclosure
+	def counter():
+		i = 0
+		def closure():
+			nonlocal i
+			i += 1
+			return i
+		return counter
+	foo = make_counter()
+snippet fndecorator
+	def ${1:logcall}(f):
+		def wrapper(*a, **opts):
+			print('before ' + f.__name__)
+			f(*a, **opts)
+			print('after ' + f.__name__)
+		return wrapper
+	
+	@$1
+	def square(x):
+		return x * x
+snippet fnld
+	lambda ${1:x, y}: ${2:body}
+snippet fnldcall
+	${1:fun}(${2:args})
+snippet fnpdefault
+	${1:param}=${2:default}
+snippet fnpnamed
+	${1:param}=${2:default}
+snippet fnpvar
+	*${1:arg}
+snippet fore
+	for ${1:beer} in ${2:wall}:
+		${3:pass}
+snippet free
+	NO
+snippet gt
+	> 
+snippet gte
+	>= 
+snippet if
+	if ${1:condition}:
+		${2:pass}
+snippet ife
+	if ${1:condition}:
+		${2:pass}
+	else:
+		${3:pass}
+snippet ifei
+	if ${1:condition}:
+		${3:pass}
+	elif ${2:condition}:
+		${4:pass}
+	else:
+		${5:pass}
+snippet ifet
+	${2:true} if ${1:condition} else ${3:false}
+snippet in
+	import 
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet me
+	-= 
+snippet n
+	+ 
+snippet nabs
+	abs(${1})
+snippet ndivf
+	${1:x} / ${2:y}
+snippet ndivi
+	${1:x} // ${2:y}
+snippet ne
+	!= 
+snippet neo
+	!= 
+snippet nl
+	None
+snippet nn
+	is not None
+snippet not
+	not 
+snippet npow
+	${1:base} ** ${2:exp}
+snippet nrandf
+	# import random
+	random.random()
+snippet nrandi
+	# import random
+	random.randint(${1:lower}, ${1:upper})
+snippet nseed
+	# import random
+	random.seed(${1:17})
+	seed = random.getstate()
+	random.setstate(seed)
+snippet nsqrt
+	# import math
+	math.sqrt(${1})
+snippet nvalf
+	float(${1})
+snippet nvali
+	int(${1})
+snippet or
+	or 
+snippet p
+	print(${1})
+snippet pe
+	+= 
+snippet pf
+	'${1:%s %d %f}' % (${2:'str', 10, 3.14})
+snippet pp
+	print("${1}")
+snippet re
+	return 
+snippet rxg
+	${1:regex} = '(\d{4})-(\d{2})-(\d{2})'
+	groups = re.search($1, ${2:'2010-06-03'})
+	yr, mo, dy = groups.groups()
+snippet rxm
+	re.search(${1:regex}, ${2:str})
+snippet rxs
+	${2:regex}.sub(${3:replacement}, ${1:str})
+snippet scap
+	# import string
+	${1:str}.capitalize()
+	string.capwords($1)
+snippet se
+	x
+snippet sidx
+	${1:str}.find(${2:needle})
+snippet sidxr
+	${1:str}.rfind(${2:needle})
+snippet sjoin
+	' '.join(${1:ar})
+snippet slen
+	len(${1:str})
+snippet slit
+	${1:'don\t say "no"'}
+snippet slower
+	${1:str}.lower()
+snippet sml
+	"""${1}"""
+snippet spadc
+	${1:str}.center(${2:10})
+snippet spadl
+	${1:str}.ljust(${2:10})
+snippet spadr
+	${1:str}.rjust(${2:10})
+snippet ssplit
+	${1:str}.split()
+snippet sstarts
+	${1:str}.startswith(${2})
+snippet ssub
+	${1:str}[${2:0:1}]
+snippet strim
+	${1:str}.strip()
+snippet striml
+	${1:str}.lstrip()
+snippet strimr
+	${1:str}.rstrip()
+snippet supper
+	${1:str}.upper()
+snippet sval
+	str(${1})
+snippet sw
+	NA
+snippet tnow
+	# import datetime
+	${1:now} = datetime.datetime.now()
+snippet tr
+	True
+snippet unl
+	if not ${1:condition}:
+		${2:action}
+snippet v
+	EMPTY
+snippet vb
+	${1:b} = ${2:true}
+snippet vc
+	${1:FOO_BAR} = ${2}
+snippet vglobal
+	${1:foo} = ${2}
+	def access_global():
+		global $1
+snippet vis
+	'{${1:foo}}'.format(**locals())
+snippet vld
+	${1:foo} = ${2:fun}
+snippet vll
+	${1:foo}, ${2:bar} = ${3:csv}
+snippet vr
+	${1:foo} = re.compile('${2}')
+snippet vswap
+	$${1:foo}, $${2:bar} = $2, $1
+snippet vv
+	${1:foo} = ${2}
+snippet wh
+	while ${1:condition}:
+		${2:pass}
+snippet xdef
+	class ${1:MyException}(Exception):
+		def __init__(self):
+			super($1, self).__init__('bam!')
+snippet xfi
+	finally:
+		${1:pass #always executes}
+snippet xh
+	try:
+		${1:pass}
+	except ${2:Exception} as ${3:e}:
+		${4:pass #handles exception}
+	else:
+		${5:pass}
+	finally:
+		${6:pass #always executes}
+snippet xr
+	raise ${1:Exception}(${2:'msg'})
+snippet dsmlit
+	@LINK{dsm}
+snippet vd
+	@LINK{vv}
+snippet vf
+	@LINK{vv}
+snippet vg
+	@LINK{vv}
+snippet vi
+	@LINK{vv}
+snippet vl
+	@LINK{vv}
+snippet vn
+	@LINK{vv}
+snippet vs
+	@LINK{vv}
+snippet vset
+	@LINK{vv}
+snippet vsl
+	@LINK{vv}
+snippet vt
+	@LINK{vv}
+#}}}
+# > Python 3 custom snippets {{{
+###############################################################################
+snippet #!
+	#!/usr/bin/python
+snippet property
+	def ${1:foo}():
+		doc = "${2:The $1 property.}"
+		def fget(self):
+			${3:return self._$1}
+		def fset(self, value):
+			${4:self._$1 = value}
+snippet ifmain
+	if __name__ == '__main__':
+		${1:main()}
+snippet _
+	__${1:init}__${2}
+snippet rf
+	return False
+snippet rt
+	return True
+snippet ds
+	$LINK{sml}
+snippet s
+	self.
+snippet eqne
+	def __eq__(self, other):
+		${1:pass}
+
+	def __ne__(self, other):
+		return not self.__eq__(other)
+snippet eq
+	def __eq__(self, other):
+		${1:pass}
+snippet ns
+	+ "${1}"${2}
+#}}}

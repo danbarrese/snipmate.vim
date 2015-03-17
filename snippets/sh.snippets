@@ -1,80 +1,187 @@
-## UBIQUITOUS SNIPPETS
-
-# va arlen aradd arrem if ife ifei el ei case dfile dfn rem dv pre post start todo h1 try filex text filer text filew filea fn for fore foref wh until cli slashdir inc dec and or gt lt gte lte eq ne p slower slen scon sstarts sends chop seq seqi sempty v vb vs vi vn vf vd vc gvim getkeypress math
-
-## Access Modifiers {{{
-#}}}
-## Arrays {{{
+# > BASH language agnostic snippets {{{
+###############################################################################
+snippet pwin
+	NA
+snippet ms
+	NA
+snippet mt
+	NA
+snippet ar2da
+	NA
+snippet aradd
+	${1:ar}+=(${2:val})
+snippet arcon
+	contains=$(printf '%s\n' "${${1:haystack}[@]}" | grep -xc ${2:needle})
+	if [ ${contains} -gt 0 ]; then
+	    ${3::}
+	fi
+snippet arconcat
+	(${${1:ar1}[@]} ${${ar2}[@]})
+snippet ardd
+	($(printf "%s\n" "${${1:ar}[@]}" | sort -u))
+snippet arfilter
+	(${${1:ar}[@]//${2:match}})
+snippet arget
+	${${1:ar}[${2:0}]}
+snippet ariter
+	for ${1:i} in ${!${2:ar}[@]}; do
+	    ${3:#}
+	done
 snippet arlen
 	${#${1:ar}[@]}
-snippet aradd
-	${1:ar}[${#$1[@]}+1]=${2:whatever}
+snippet arlit
+	@LINK{ar}
+snippet armap
+	for ${1:e} in ${${2:ar}[@]}; do
+	    ${3:#}
+	done
+snippet armax
+	max=${1:ar}[0]
+	for ${2:e} in ${$1}[@]}; do
+	    if [[ $2 > ${e} ]]; then
+	        max=${e}
+	    endif
+	done
+snippet armin
+	min=${1:ar}[0]
+	for ${2:e} in ${$1}[@]}; do
+	    if [[ $2 < ${e} ]]; then
+	        min=${e}
+	    endif
+	done
+snippet arreduce
+	reduce=0
+	for (( ${2:i} = 0; $2 < #${1:ar}[@] - 1; $2++ )); do
+	    reduce=$1[i] + $1[i+1]
+	done
 snippet arrem
-	unset ${${1:ar}[${2:0}]}
-#}}}
-## Classes {{{
-#}}}
-## Conditionals {{{
-snippet if
-	if [[ ${1:condition} ]]; then
-		${2:#statements}
-	fi
-snippet ife
-	if [[ ${1:condition} ]]; then
-		${2:#}
-	else
-		${3:#}
-	fi
-snippet ifei
-	if [[ ${1:condition} ]]; then
-		${3:#}
-	elif [[ ${2:condition} ]]; then
-		${4:#}
-	else
-		${5:#}
-	fi
+	unset ${1:ar}[${2:0}]
+snippet arset
+	${1:ar}[${2:0}]=${3:val}
+snippet arshuffle
+	($(printf "%s
+	" ${${1:ar}[@]} | shuf))
+snippet arsl
+	("${${1:ar}[@]:${2:startIdx}:${3:length}}")
+snippet arsor
+	($(printf "%s
+	" ${${1:ar}[@]} | sort))
+snippet cl
+	NA
+snippet clanon
+	NA
+snippet clmethods
+	NA
+snippet clname
+	NA
+snippet clsub
+	NA
+snippet ccguard
+	xargs -i --max-procs=1 ${1:cmd}
+snippet cclist
+	ps -eLf
+snippet cclock
+	NA
+snippet ccmsgq
+	NA
+snippet ccmsgrx
+	NA
+snippet ccmsgtx
+	NA
+snippet ccsleep
+	sleep ${1:1s}
+snippet ccstart
+	@@single thread
+	${1:cmd} &
+	@@multiple threads
+	xargs -0 --max-procs=${2:4} -n 1 ${1:cmd}
+snippet ccterm
+	kill -9 ${1:pid}
+snippet ccto
+	timeout ${1:5} ${2:cmd}
+snippet ei
+	elif ${1:condition}; then
+	    ${2:#}
 snippet el
 	else
-		${1}
-snippet ei
-	elif [[ ${1:condition} ]]; then
-		${2:#statements}
-snippet case
+	    ${1:#}
+snippet if
+	if ${1:condition}; then
+	    ${2:#statements}
+	fi
+snippet ife
+	if ${1:condition}; then
+	    ${2:#}
+	else
+	    ${3:#}
+	fi
+snippet ifei
+	if ${1:condition}; then
+	    ${3:#}
+	elif ${2:condition}; then
+	    ${4:#}
+	else
+	    ${5:#}
+	fi
+snippet ifet
+	$(${1:condition} && ${2:echo 'true'} ) || ${3:echo 'false'})
+snippet sw
 	case ${1:${var}} in
-		${2:pattern})
-			${3};;
-		"a"|"b") ;;
-		*) ;;
+	    ${2:pattern})
+	        ${3};;
+	    "a"|"b") ;;
+	    *) ;;
 	esac
-#}}}
-## Debugging {{{
-#}}}
-## Documentation {{{
+snippet dsmadd
+	${1:foo}[${2:key}]=${3:val}
+snippet dsmget
+	${${1:foo}[${2:key}]}
+snippet dsmiter
+	for ${1:k} in ${!${2:foo}[@]}; do
+	    ${3:#}
+	done
+snippet dsmkeys
+	${!${1:foo}[@]}
+snippet dsmlen
+	${#${1:foo}[@]}
+snippet dsmrem
+	unset "${1:foo}[${2:key}]"
+snippet dsmset
+	@LINK{dsmadd}
+snippet dsmvals
+	${${1:foo}[@]}
+snippet tnow
+	date
+snippet whoami
+	${FUNCNAME[0]}
+snippet d
+	# 
 snippet dfile
-	# Name: ${1:name}
-	# Version: ${2:0.01}
-	# Description: ${3:desc}
-	# Author: Dan Barrese (danbarrese.com)
-	# Date: `strftime("%B %d, %Y")`
-	# Update Log:
-	#   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
-	# Sources/References:
+	# {{{
+	# NAME: ${1:name}
+	# DESCRIPTION: ${3:desc}
+	# AUTHOR: Dan Barrese
+	# DATE: `strftime("%B %d, %Y")`
+	# UPDATE LOG:
+	#   `strftime("%Y.%m.%d")` [dbarrese] Initial version.
+	# SOURCES/REFERENCES:
 	# - None
+	# }}}
 snippet dfn
-	# Description: ${1}
-	# Date: `strftime("%B %d, %Y")`
-	# Author: Dan Barrese (danbarrese.com)
-snippet rem
+	# ${1} {{{
+	# ARGS:
 	# 
-snippet dv
+	# DATE: `strftime("%B %d, %Y")`
+	# AUTHOR: Dan Barrese }}}
+snippet dl
 	# 
-snippet pre
-	# Preconditions:
-	#     * 
-snippet post
+snippet dpost
 	# Postconditions:
 	#     * 
-snippet start
+snippet dpre
+	# Preconditions:
+	#     * 
+snippet dstart
 	#!/bin/bash
 	# Name: ${1:name}
 	# Version: ${2:0.01}
@@ -86,158 +193,330 @@ snippet start
 	# Sources/References:
 	# - None
 	
-snippet todo
+snippet dtodo
 	# TODO: 
+snippet dv
+	# 
 snippet h1
 	# ${1:HEADER} {{{
 	#``````````````````````````````````````````````````````````````````````````````
 	${2}
 	#}}}
-#}}}
-## Error Handling {{{
-snippet try
+snippet xh
 	cmd = "${1:command}"
 	$cmd 2>/dev/null
 	if (( $? == 0 )); then
-		echo 'command was successful'
+	    echo 'command was successful'
 	else
-		echo 'error'
+	    echo 'error'
 	fi
-#}}}
-## Files {{{
-snippet filx text
-	-e ${${1:path}}
-snippet filr text
-	while read -r line; do
-		${1:#}
-	done < "${path}"
-snippet filw
-	> ${${1:path}}
 snippet fila
 	>> ${${1:path}}
-#}}}
-## Functions {{{
+snippet filcopy
+	mv ${1:src} ${2:dest}
+snippet filexecutable
+	[ -x ${${1:path}} ]
+snippet filr
+	while read -r line; do
+	    ${2:#}
+	done < "${${1:path}}"
+snippet filreadable
+	[ -r ${${1:path}} ]
+snippet filrem
+	rm ${1:file.txt}
+snippet filrename
+	mv ${1:old} ${2:new}
+snippet filtmp
+	mktemp "/tmp/foo.$RANDOM"
+snippet filw
+	> ${${1:path}}
+snippet filwritable
+	[ -w ${${1:path}} ]
+snippet filx
+	[ -e ${${1:path}} ]
+snippet folhome
+	${HOME}
+snippet folmake
+	mkdir 
 snippet fn
-	function ${1:fun}() {
-		${2:#}
+	function ${1:fun} {
+	    ${2:#local foo="bar"}
 	}
-#}}}
-## Loops {{{
+snippet generic
+	${1:foo}=${2}
+snippet inkey
+	old_tty_setting=$(stty -g)
+	stty -icanon -echo
+	key=$(dd bs=1 count=1 2> /dev/null)
+	stty "${old_tty_setting}"
+snippet fa
+	false
+snippet falsehoods
+	''
+snippet nl
+	NA
+snippet re
+	return ${1:0-255}
+snippet rn
+	NA
+snippet s
+	NA
+snippet tr
+	true
+snippet br
+	break
+snippet cont
+	continue
 snippet for
 	for (( ${2:i} = 0; $2 < ${1:count}; $2++ )); do
-		${3:#statements}
+	    ${3:#statements}
 	done
 snippet fore
 	for ${1:i} in ${${2:ar}[@]}; do
-		${3:printf '%s\n' "$$1"}
+	    ${3:#}
 	done
 snippet foref
 	shopt -s nullglob
 	files=(${path}/*)
 	for fname in ${files[@]}; do
-		printf '%s\n' "${fname}"
-	done
-snippet wh
-	while [[ ${1:condition} ]]; do
-		${2:#statements}
+	    printf '%s
+	' "${fname}"
 	done
 snippet until
 	until [[ ${1:condition} ]]; do
-		${2:#statements}
+	    ${2:#statements}
 	done
-#}}}
-## Misc {{{
+snippet wh
+	while [[ ${1:condition} ]]; do
+	    ${2::}
+	done
+snippet argc
+	$#
+snippet argv
+	$@
 snippet cli
 	while getopts "w:a:" n; do
-		case ${n} in
-			w)
-				echo ${OPTARG};;
-			a)
-				echo ${OPTARG};;
-		esac
+	    case ${n} in
+	        w)
+	            echo ${OPTARG};;
+	        a)
+	            echo ${OPTARG};;
+	    esac
 	done
-snippet slashdir
-	${1:str}="${$1%/}/"
-#}}}
-## Numbers {{{
-snippet inc
-	$((++${1:var}))
-snippet dec
+snippet ext
+	command ${1:foo}
+snippet extil
+	$(${1})
+snippet in
+	source "${1}" || exit 1
+snippet ndec
 	$((--${1:var}))
-#}}}
-## Operators {{{
+snippet ndivi
+	$(( ${1:4/2} ))
+snippet ninc
+	$((++${1:var}))
+snippet nrandi
+	${RANDOM}
 snippet and
 	&& 
-snippet or
-	|| 
-snippet gt
-	> 
-snippet lt
-	< 
-snippet gte
-	>= 
-snippet lte
-	<= 
 snippet e
+	@@$(()) (()) ()
 	== 
+	@@[] [[]]
+	-eq
+snippet eo
+	NA
+snippet gt
+	@@$(()) (()) ()
+	> 
+	@@[] [[]]
+	-gt
+snippet gte
+	@@$(()) (()) ()
+	>= 
+	@@[] [[]]
+	-ge
+snippet lt
+	@@$(()) (()) ()
+	< 
+	@@[] [[]]
+	-lt
+snippet lte
+	@@$(()) (()) ()
+	<= 
+	@@[] [[]]
+	-le
+snippet me
+	-= 
+snippet n
+	EMPTY
 snippet ne
 	!= 
-#}}}
-## Printing {{{
+snippet neo
+	NA
+snippet not
+	! 
+snippet or
+	|| 
+snippet pe
+	+= 
 snippet p
+	printf '%s\n' ${1}
+snippet par
+	printf '%s\n' ${${1:ar}[@]}
+snippet pda
+	printf '%s\n' "${${1:foo}[@]}"
+snippet pdsm
+	NA
+snippet pdsq
+	NA
+snippet pdss
+	NA
+snippet pdsst
+	NA
+snippet pf
+	printf '%s\n' ${1}
+snippet pp
 	printf '%s\n' "${1}"
-#}}}
-## String {{{
-# string lower case
-snippet slower
-	${${1},,}
-snippet slen
-	${#${1:str}}
+snippet rxs
+	${${1:foo}/${2:existing}/${3:replacement}}
+snippet rxsg
+	${${1:foo}//${2:existing}/${3:replacement}}
+snippet pwd
+	pwd
+snippet sh
+	${1:ls}
+snippet shexit
+	echo $?
+snippet scap
+	${${1:str}^}
+snippet schop
+	${${1:str}%?}
 snippet scon
 	${${1:str}} == *${2:contains}*
-snippet sstarts
-	${${1:str}} == ${2:startswith}*
-snippet sends
-	${${1:str}} == *${2:endswith}
-snippet chop
-	${${1:str}%?}
-snippet seq
-	"X${${1:str}}" == "X${${2:str2}}"
-snippet seqi
-	"X${${1:str,,}}" == "X${${2:str2,,}}"
+snippet se
+	"X${1:${str}}" == "X${2:${str2}}"
+snippet sei
+	"X${1:${str,,}}" == "X${2:${str2,,}}"
 snippet sempty
 	${${1:str}} == ""
-#}}}
-## Variables {{{
+snippet sends
+	${${1:str}} == *${2:endswith}
+snippet sexe
+	eval '${1:ls}'
+snippet slashdir
+	${1:str}="${$1%/}/"
+snippet slen
+	${#${1:str}}
+snippet slit
+	'${1}'
+snippet slower
+	${${1},,}
+snippet sne
+	"${1:${foo}}" != "${2:${bar}}"
+snippet srpg
+	${${1:foo}##*${2:prefix}}
+snippet srpr
+	${${1:foo}#*${2:prefix}}
+snippet srsg
+	${${1:foo}%%*${2:suffix}}
+snippet srsr
+	${${1:foo}%*${2:suffix}}
+snippet ssplit
+	IFS=$'${1:\n}'; set -f; read -d '' -r -a ${2:tokens} < "${3}"${4}
+snippet sstarts
+	${${1:str}} == ${2:startswith}*
+snippet ssub
+	${${1:str}:${2:offset}:${3:len}}
+snippet supper
+	${${1:str}^^}
+snippet sval
+	"${$[1:foo}[@]}"
+snippet nn
+	NA
 snippet v
 	${${1}}
-snippet va
+snippet vaddr
+	NA
+snippet var
 	declare -a ${1:ar}=(${2:1 2 3})
 snippet vb
 	${1:boolvar}=${2:true}
-snippet vs
-	${1:str}="${2}"
-snippet vi
-	declare -i ${1:i}=0
-snippet vn
-	${1:i}=0
-snippet vf
-	${1:floatvar}=0.00
-snippet vd
-	${1:floatvar}=0.00
 snippet vc
 	readonly ${1:ro}=${2}
+snippet vch
+	NA
+snippet vcur
+	NA
+snippet vd
+	${1:floatvar}=0.00
+snippet vda
+	${1:ar}=()
+snippet vderef
+	NA
+snippet vdsm
+	typeset -A ${1:foo}
+snippet vf
+	${1:floatvar}=0.00
+snippet vg
+	NA
+snippet vglobal
+	${1:foo}=${2:val}
+snippet vi
+	declare -i ${1:i}=0
+snippet vis
+	${${1}}
+snippet vistype
+	NA
+snippet vl
+	${1:foo}=${2:val}
+snippet vn
+	${1:i}=0
+snippet vo
+	NA
+snippet volit
+	NA
+snippet vref
+	NA
+snippet vs
+	${1:str}="${2}"
+snippet vset
+	${1:foo}=${2:val}
+snippet vsl
+	${1:foo}=${2:val}
+snippet vt
+	NA
+snippet vv
+	${1:foo}=${2:val}
+snippet vval
+	"${${1:foo}}"
+snippet vx
+	if [ -z ${${1:foo}+x} ]; then
+	    :# does not exist
+	fi
 #}}}
-
-## BASH SPECIFIC SNIPPETS {{{
+# > BASH custom snippets {{{
 snippet gvim
 	gvim -c "call Maximize_Window()"
-snippet getkeypress
-	old_tty_setting=$(stty -g)
-	stty -icanon -echo
-	key=$(dd bs=1 count=1 2> /dev/null)
-	stty "${old_tty_setting}"
-	
 snippet math
 	$((${1}))
+snippet start
+	#!/bin/bash
+	if [ -z ${BASH_LIB+x} ]; then printf '%s\n' "BASH_LIB environment variable is required."; exit 1; fi
+	source "${BASH_LIB}/depmgr.sh" || exit 1
+	include "${BASH_LIB}/${1}"
+
+	${2}
+snippet filrar
+	IFS=$'\n'; set -f; read -d '' -r -a lines < "${1}"
+snippet cook
+	local ${1:result}=
+	$1=$( ${2:ls} ) \
+		|| { ${3:echo 'failed'; exit 1;} }
+snippet serve
+	serve "${${1:result}[@]}"${2}
+snippet eat
+	result=("${${1:foo}_[@]}")${2}
+snippet pv
+	putvar ${1:JAVA_HOME}
 #}}}

@@ -106,6 +106,7 @@ fun! ExtractSnipsFile(file, ft) "{{{
 endf "}}}
 
 fun! ResetSnippets() "{{{
+	"echo 'Unloading all snippets.'
 	let s:snippets = {} | let s:multi_snips = {} | let g:did_ft = {}
 endf "}}}
 
@@ -113,6 +114,7 @@ let g:did_ft = {}
 fun! GetSnippets(dir, filetypes) "{{{
 	for ft in split(a:filetypes, '\.')
 		if has_key(g:did_ft, ft) | continue | endif
+		"echo 'Loading snippets for ft='.ft
 		call s:DefineSnips(a:dir, ft, ft)
 		if ft == 'objc' || ft == 'cpp' || ft == 'cs'
 			call s:DefineSnips(a:dir, 'c', ft)

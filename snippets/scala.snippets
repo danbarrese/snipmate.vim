@@ -1,0 +1,54 @@
+# > SCALA language agnostic snippets {{{
+###############################################################################
+snippet decxml
+	val data = <shopping>
+	<item name="bread" quantity="3" price="2.50"/>
+	<item name="milk" quantity="2" price="3.50"/>
+	</shopping>
+	
+	val res = for (
+			item <- data \ "item" ;
+			price = (item \ "@price").text.toDouble ;
+			qty = (item \ "@quantity").text.toInt)
+	yield (price * qty)
+	
+		printf("$%.2f\n", res.sum)
+snippet email
+	// requires Java Mail API (mail.jar), which must be in classpath
+	
+	import javax.mail._
+	import javax.mail.internet._
+	import java.util.Properties._
+	
+	// Get the user's message
+	println("Enter the text you wish to send in the message (hit Ctrl-D to finish):")
+	var bodyText = ""
+	var line = readLine
+	while (line != null) {
+		bodyText += line
+			line = readLine
+	}
+	
+	// Confirm they want to send
+	println("Are you sure you want to send the message? [y/N]")
+	val yesOrNo = readLine
+	if (yesOrNo != "y" && yesOrNo != "Y") {
+		println("Aborted")
+			exit
+	}
+	
+	// Set up the mail object
+	val properties = System.getProperties
+		properties.put("mail.smtp.host", "localhost")
+		val session = Session.getDefaultInstance(properties)
+	val message = new MimeMessage(session)
+	
+		// Set the from, to, subject, body text
+		message.setFrom(new InternetAddress("test@example.org"))
+		message.setRecipients(Message.RecipientType.TO, "spam@mopoke.co.uk")
+		message.setSubject("Greetings from langref.org")
+	message.setText(bodyText)
+	
+		// And send it
+	Transport.send(message)
+#}}}

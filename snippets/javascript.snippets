@@ -1,27 +1,346 @@
+# > JS language agnostic snippets {{{
+###############################################################################
+snippet mt
+	this.${1:foo} = ${2:function() {  }}
+snippet ar
+	var ${1:ar} = [${2:1,2,3}];
+snippet ar2da
+	N/A
+snippet aradd
+	${1:ar}.push(${2:4,5,6})
+snippet arcon
+	${1:haystack}.contains(${2:needle})
+snippet arconcat
+	${1:ar1}.concat(${2:ar2})
+snippet arfilter
+	${1:ar}.filter(function(x)
+	{
+	  ${2:return x > 0}
+	});
+snippet arget
+	${1:ar}[${2:0}]
+snippet ariter
+	for (var i = 0; i < ${1:ar}.length; i++ )
+	{
+	  ${2://}
+	}
+snippet arjoin
+	${1:ar}.join(${2:" "})
+snippet arlen
+	${1:ar}.length
+snippet arlit
+	[${1:1,2,3}]
+snippet armap
+	${1:ar}.map(function(x)
+	{
+	  ${2:return x > 0}
+	});
+snippet arreduce
+	${1:ar}.reduce(function(a, b)
+	{
+	  ${3:operation};
+	}, ${2:baseCase});
+snippet arrem
+	delete ${1:ar}[${2:0}]
+snippet arset
+	${1:ar}[${2:0}] = ${3:value}
+snippet arsl
+	${1:ar}.slice(${2:0,1})
+snippet arsor
+	${1:ar}.sort()
+snippet artrim
+	${1:ar}.length = ${2:2}
+snippet ccsleep
+	NA
+snippet ccstart
+	setTimeout(function()
+	{
+	  ${1:// executes asynchronously}
+	}, ${2:0}) // ms
+snippet if
+	if (${1:condition}) {
+	  ${2://}
+	}
+snippet ife
+	if (${1:condition})
+	{
+	  ${2://}
+	}
+	else
+	{
+	  ${3://}
+	}
+snippet ifei
+	if (${1:condition})
+	{
+	  ${2://}
+	}
+	else if (${3:condition})
+	{
+	  ${4://}
+	}
+	else
+	{
+	  ${5://}
+	}
+snippet ifet
+	${1:condition} ? ${2:true} : ${3:false};
+snippet dsdeqiter
+	for (var ${2:key} in ${1:dsm})
+	{
+	  var val = $1[$2];
+	}
+snippet dsm
+	${1:dsm} = { ${2:"t":1, "f":0} };
+snippet dsmget
+	${1:dsm}[${2:key}]
+snippet dsmhaskey
+	${1:dsm}.hasOwnProperty(${2:key});
+snippet dsmlen
+	var ${2:size} = 0;
+	for (var key in ${1:dsm})
+	{
+	  $2++;
+	}
+snippet dsmlit
+	${1:dsm} =
+	{
+	  ${2:"t":1, "f":0}
+	};
+snippet dsmrem
+	delete ${1:dsm}[${2:key}];
+snippet tnow
+	var ${1:now} = new Date();
+snippet dfn
+	/**
+	 * ${1:desc}
+	 * 
+	 * @param ${2:aFoo} ${3}
+	 * 
+	 * @return 
+	 * 
+	 * @author `g:snips_author`
+	 */
+snippet dl
+	// 
+snippet dml
+	/*
+	 * ${1}
+	 */
+snippet dtodo
+	// TODO: 
+snippet xfi
+	finally
+	{
+	  ${1://}
+	}
+snippet xh
+	try
+	{
+	  ${1://}
+	}
+	catch (e)
+	{
+	  // TODO: handle exception
+	}
+	finally
+	{
+	  //
+	}
+snippet xr
+	throw "${1:error}";
+snippet filr
+	var fs = require('fs');
+	fs.readFileSync(${1:path}, "utf8");
+snippet fn
+	function ${1:fun}(${2:aFoo})
+	{
+	  ${3://}
+	}
+snippet fncall
+	${1:fun}(${2:args});
+snippet fnpvar
+	function ${1:fun}(aArgs)
+	{
+	  ${2:aArgs[0];}
+	}
+snippet htgi
+	document.getElementById(${1:'myId'})
+snippet htgn
+	document.getElementsByName(${1:'myName'})
+snippet fa
+	false
+snippet falsehoods
+	false null undefined "" 0 NaN
+snippet nl
+	null
+snippet re
+	return 
+snippet rn
+	return null
+snippet tr
+	true
+snippet br
+	break;
+snippet cont
+	continue;
+snippet for
+	for (int ${1:i} = ${2:0}; $1 < ${3:5}; $1++)
+	{
+	  ${4://}
+	}
+snippet wh
+	while (${1:condition})
+	{
+	  ${2://}
+	}
+snippet argc
+	window.location.search.split("&").length
+snippet argv
+	window.location.search
+snippet clone
+	var ${1:clone} = Object.create(${2:cloneable});
+snippet enum
+	enum k${1:Foo} =
+	{
+	  ${2:BAR, BAZ}
+	};
+snippet fnld
+	${1:lambda} = function(${2:x}) { ${3:return x}; }
+snippet in
+	<script src="${1:path}"/>
+snippet nabs
+	Math.abs(${1})
+snippet nceil
+	Math.ceil(${1})
+snippet nfloor
+	Math.floor(${1})
+snippet npow
+	Math.pow(${1:base}, ${2:exponent})
+snippet nrandf
+	Math.random()
+snippet nrandi
+	Math.floor(Math.random() * 100)
+snippet nround
+	Math.round(${1})
+snippet nsqrt
+	Math.sqrt(${1})
+snippet nvalf
+	parseFloat(${1})
+snippet nvali
+	parseInt(${1}, 10)
+snippet and
+	&& 
+snippet e
+	=== 
+snippet gt
+	> 
+snippet gte
+	>= 
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet me
+	-=
+snippet n
+	+ 
+snippet ne
+	!== 
+snippet not
+	!
+snippet or
+	|| 
+snippet pe
+	+=
+snippet xor
+	^ 
+snippet p
+	sys.puts(${1});
+snippet pf
+	NA
+snippet pp
+	sys.puts("${1}");
+snippet rxg
+	${1:regex} = /^(d{4})-(d{2})-(d{2})$/;
+	groups = $1.exec(${2:'2009-06-03'});
+	yr = groups[1];
+	mo = groups[2];
+	dy = groups[3];
+snippet rxm
+	${1:str}.match(/${2}/)
+snippet rxs
+	${1:str}.replace(/${2}/, ${3:replacement})
+snippet rxsg
+	${1:str}.replace(/${2}/g, ${3:replacement})
+snippet scon
+	${1:str}.indexOf(${2}) > -1
+snippet sidx
+	${1:haystack}.indexOf(${2:needle})
+snippet sjoin
+	${1:['a', 'b']}.join(${2:" "})
+snippet slen
+	${1}.length
+snippet slit
+	'${1}'
+snippet slower
+	${1}.toLowerCase()
+snippet sml
+	${1:str} = "line1
+	line2";
+snippet ssplit
+	${1:str}.split(${2:" "})
+snippet ssub
+	${1:str}.substring(${2:from}, ${3:to})
+snippet strim
+	${1}.trim()
+snippet supper
+	${1}.toUpperCase()
+snippet en
+	${1} === null
+snippet nn
+	!== null
+snippet v
+	EMPTY
+snippet vglobal
+	g${1:Foo} = ${2};
+snippet vis
+	NA
+snippet vistype
+	typeof ${1}
+snippet volit
+	var ${1:o} =
+	{
+	  ${2:score: 21,}
+	  ${3:fun}: function()
+	  {
+	    ${4:return null}
+	  }
+	};
+snippet vr
+	${1:regex} = /${2}/;
+snippet vset
+	${1:definedVar} = ${2:val}
+snippet vsl
+	${1:foo} = ${2};
+snippet vswap
+	tmp = ${1:foo};
+	$1 = ${2:bar};
+	$2 = tmp;
+snippet vv
+	var ${1:foo} = ${2}
+snippet vx
+	typeof ${1:foo} == 'undefined'
+#}}}
+# > JavaScript custom snippets {{{
 # Prototype
 snippet proto
 	${1:class_name}.prototype.${2:method_name} =
 	function(${3:first_argument}) {
 		${4:// body...}
 	};
-# Function
-snippet fun
-	function ${1:function_name} (${2:argument}) {
-		${3:// body...}
-	}
-# Anonymous Function
 snippet f
 	function(${1}) {${2}};
-# if
-snippet if
-	if (${1:true}) {${2}}
-# if ... else
-snippet ife
-	if (${1:true}) {${2}}
-	else{${3}}
-# tertiary conditional
-snippet t
-	${1:/* condition */} ? ${2:a} : ${3:b}
 # switch
 snippet switch
 	switch(${1:expression}) {
@@ -38,21 +357,12 @@ snippet case
 		${2:// code}
 		break;
 	${3}
-# for (...) {...}
-snippet for
-	for (var ${2:i} = 0; $2 < ${1:Things}.length; $2${3:++}) {
-		${4:$1[$2]}
-	};
 # for (...) {...} (Improved Native For-Loop)
 snippet forr
 	for (var ${2:i} = ${1:Things}.length - 1; $2 >= 0; $2${3:--}) {
 		${4:$1[$2]}
 	};
 # while (...) {...}
-snippet wh
-	while (${1:/* condition */}) {
-		${2:/* code */}
-	}
 # do...while
 snippet do
 	do {
@@ -72,3 +382,4 @@ snippet get
 # Get Element
 snippet gett
 	getElementBy${1:Id}('${2}')${3}
+#}}}

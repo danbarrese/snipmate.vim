@@ -1,0 +1,210 @@
+# > PowerShell language agnostic snippets {{{
+###############################################################################
+snippet and
+	-and 
+snippet arconcat
+	$${1:ar1} + $${2:ar2}
+snippet arget
+	$${1:ar}[${2}]
+snippet ariter
+	foreach ($${1:foo} in $${2:ar}) {
+		${3:#}
+	}
+snippet arlen
+	$${1:ar}.Length
+snippet arlit
+	$${1:ar} = @(${2:csv})
+snippet arset
+	$${1:ar}[${2:0}] = ${3:val}
+snippet arsl
+	$${1:ar}[${2:0..1}]
+snippet arsor
+	$${1:ar} | Sort-Object
+snippet br
+	break
+snippet cont
+	continue
+snippet dl
+	# 
+snippet dml
+	<#
+	 # ${1}
+	 #>
+snippet e
+	-eq 
+snippet ei
+	elseif (${1:condition}) {
+	  ${2:#}
+	}
+snippet el
+	else {
+	  ${1:#}
+	}
+snippet en
+	$${1:foo} -eq $null
+snippet env
+	$env:${1:home}
+snippet ext
+	dir
+snippet extil
+	dir
+snippet fa
+	$false
+snippet falsehoods
+	0 0.0 "" ''
+snippet fn
+	function ${1:fun} {
+		param (${2:$a, $b})
+		${3:#}
+	}
+snippet fncall
+	${1:fun}${2: args}
+snippet fnld
+	$${1:lambda} = { ${2} }
+snippet fnldcall
+	$${1:lambda}.invoke()
+snippet fnpdefault
+	$${1:param}=${2:default}
+snippet gt
+	-gt 
+snippet gte
+	-ge 
+snippet if
+	if (${1:condition}) {
+	  ${2:#}
+	}
+snippet ife
+	if (${1:condition}) {
+	  ${2:#}
+	} else {
+	  ${3:#}
+	}
+snippet ifei
+	if (${1:condition}) {
+	  ${3:#}
+	} elseif (${2:condition}) {
+	  ${4:#}
+	} else {
+	  ${5:#}
+	}
+snippet lt
+	-lt 
+snippet lte
+	-le 
+snippet me
+	-= 
+snippet n
+	+ 
+snippet nabs
+	[Math]::abs(${1})
+snippet nceil
+	[Math}::ceiling(${1})
+snippet ndec
+	$${1:foo}--
+snippet ndivf
+	$${1:foo} / $${2:bar}
+snippet ndivi
+	$${1:remainder} = $null
+	$${2:quotient} = [Math]::DivRem($${3:numerator}, $${4:denominator}, [ref] $1)
+snippet ne
+	-ne 
+snippet nfloor
+	[Math}::floor(${1})
+snippet ninc
+	$${1:foo}++
+snippet nl
+	$null
+snippet nme
+	$${1:num} -= ${2:1}
+snippet not
+	-not 
+snippet npe
+	$${1:num} += ${2:1}
+snippet npow
+	[Math]::pow(${1:base}, ${2:exp})
+snippet nrandf
+	random ${1:1.0}
+snippet nrandi
+	random ${1:100}
+snippet nround
+	[Math}::round(${1})
+snippet nrounddown
+	[Math}::truncate(${1})
+snippet nroundup
+	[Math}::truncate(${1} + 1)
+snippet nseed
+	$${1:foo} = random -setseed ${2:17}
+snippet nsqrt
+	[Math]::sqrt(${1})
+snippet or
+	-or 
+snippet p
+	write-host ${1}
+snippet pe
+	+= 
+snippet pf
+	$${1:foo} = ${2:"str", 13, 3.7}
+	"{0} {1} {2}" -f $1
+snippet pp
+	write-host "${1}"
+snippet rxm
+	${1:str} -match ${2:"^a*$"})
+snippet rxsg
+	$${1:str} = $1 -replace ${2:regex}, ${3:replacement}
+snippet se
+	${1:foo} -ceq ${2:bar}
+snippet sei
+	${1:foo} -eq ${2:bar}
+snippet sidx
+	${1:foo}.indexof(${2})
+snippet sjoin
+	${1:str} -join ${2:" "}
+snippet slen
+	${1:foo}.length
+snippet slit
+	${1:don''t say "no"}'
+snippet slower
+	$${1:foo}.tolower()
+snippet sne
+	${1:foo} -cne ${2:bar}
+snippet snei
+	${1:foo} -ne ${2:bar}
+snippet spadl
+	" " * (${2:10} - $1.length) + $${1:foo}
+snippet spadr
+	$${1:foo} + " " * (${2:10} - $1.length)
+snippet ssplit
+	${1:str} -split ${2:" "}
+snippet ssub
+	${1:foo}.substring(${2:4, 3})
+snippet strim
+	$${1:foo}.trim()
+snippet supper
+	$${1:foo}.toupper()
+snippet tr
+	$true
+snippet v
+	$
+snippet vis
+	$(${1})
+snippet vll
+	$${1:foo}, $${2:bar} = ${3:fooval}, ${4:barval}
+snippet vset
+	$${1:foo} = ${2:val}
+snippet vswap
+	$${1:foo}, $${2:bar} = $2, $1
+snippet vv
+	$${1:foo} = ${2:val}
+snippet wh
+	while (${1:condition}) {
+		${2:#}
+	}
+snippet xh
+	try {
+		throw "${1}"
+	} catch {
+		${2:#}
+	}
+snippet xr
+	throw "${1}"
+#}}}

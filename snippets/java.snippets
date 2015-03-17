@@ -1,29 +1,20 @@
-## UBIQUITOUS SNIPPETS
-
-# mp mr ms mt mc ma aradd arlen arrem cl case el ei if ife ifei map deref istype ref now tafter tbefore dcl dfile dfn dv h1 post pre rem start todo try fn fnn nl s i bo re br for fore until wh dowh in lock guard inc dec npe nme and e eo gt gte lt lte or ne neo pe me p pp scon sempty sends seq seqi slen slower sstarts supper sval nn en v va vb vc vch vd vf vg vi vl vn vo vs vsl vt vv Bo main de ca th sy imp ext j.u j.i j.b j.n j.m tc t iface m vvvvv co cos as
-
-## Access Modifiers {{{
-snippet mp
-	public 
-snippet mr
-	private 
-snippet ms
-	static 
-snippet mt
-	protected 
-snippet mc
-	final
-snippet ma
-	abstract
-# }}}
-## Arrays {{{
+# > JAVA language agnostic snippets {{{
+###############################################################################
+snippet and
+	&& 
+snippet ar
+	${1:Object}[] arr = new $1[${2:10}];
 snippet aradd
 	// import java.util.Arrays;
 	int origLength = ${1:origArray}.length;
 	$1 = java.util.Arrays.copyOf($1, origLength + 1);
 	$1[origLength] = ${2:newElement};
+snippet arget
+	${1:ar}[${2:0}]
 snippet arlen
 	${1:array}.length
+snippet arlit
+	new ${1:Type}[]{${2:commaSeparatedList}}
 snippet arrem
 	int origLength = ${1:origArray}.length;
 	${2:Object}[] tempArr = new $2[origLength - 1];
@@ -35,15 +26,26 @@ snippet arrem
 		}
 	}
 	$1 = tempArr;
-# }}}
-## Classes {{{
+snippet arset
+	${1:ar}[${2:0}] = ${3:value}
+snippet bo
+	boolean 
+snippet br
+	break;
+snippet ccguard
+	synchronized (LOCK_${1:FOOBAR}) {
+		//
+	}
+snippet cclock
+	@GuardedBy("LOCK_$1") ${2:private String foobar = "foobar"};
+	final Object LOCK_${1:FOOBAR} = new Object();
+snippet ccsleep
+	Thread.sleep(${1:1000});
 snippet cl
 	class ${1:FooBarClass} {
-
 		public $1(${2}) {
 			//
 		}
-
 		@Override
 		public int hashCode() {
 			org.apache.commons.lang3.builder.HashCodeBuilder hashCodeBuilder;
@@ -51,7 +53,6 @@ snippet cl
 			// hashCodeBuilder.append(foobar);
 			return hashCodeBuilder.toHashCode();
 		}
-
 		@Override
 		public boolean equals(Object o) {
 			if (o == this) return true;
@@ -63,76 +64,57 @@ snippet cl
 			}
 			return true;
 		}
-
 		@Override
 		public String toString() {
 			return ;
 		}
-
 	}
-# }}}
-## Conditionals {{{
-snippet case
-	switch(${1:key}) {
-		case ${2:value}:
-			break;
-		default:
-			break;
-	}
-snippet el
-	else {
-		${1://}
-	}
-snippet ei
-	else if (${1:condition}) {
-		${2://}
-	}
-snippet if
-	if (${1:condition}) {
-		${2://}
-	}
-snippet ife
-	if (${1:condition}) {
-		${2://}
-	} else {
-		${3://}
-	}
-snippet ifei
-	if (${1:condition}) {
-		${3://}
-	} else if (${2:condition}) {
-		${4://}
-	} else {
-		${5://}
-	}
-# }}}
-## Data Structure {{{
-snippet map
-	Map<${1:Object}, ${2:Object}> m = new HashMap<>();
-# }}}
-## Data Type {{{
-snippet istype
-	instanceof ${1:String}
-# }}}
-## Date Time {{{
-snippet now
-	new Date()
-snippet tafter
-	${1:d}.after(${2})
-snippet tbefore
-	${1:d}.before(${2})
-#snippet tomorrow
-#snippet yesterday
-# }}}
-## Debugging {{{
-# }}}
-## Documentation {{{
+snippet d
+	// 
 snippet dcl
 	/**
 	 * ${1:description}
 	 *
 	 * @author `g:snips_author`
 	 */
+snippet decxml
+	// solution uses JAXP and SAX included in Java API since version >= 1.5
+	class ShoppingContentHandler extends DefaultHandler {
+		Double priceSum = 0d;
+		@Override
+			public void startElement(String uri, String localName, String name,
+					Attributes attributes) throws SAXException {
+				if(name.equals("item")) {
+					String quantityString = attributes.getValue(attributes.getIndex("quantity"));
+					String priceString = attributes.getValue(attributes.getIndex("price"));
+					Integer quantity = Integer.parseInt(quantityString);
+					Double price = Double.parseDouble(priceString);
+					priceSum += (quantity * price);
+				}
+			}
+		public Double getPriceSum() {
+			return priceSum;
+		}
+	}
+	
+	SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+	try {
+		SAXParser parser = parserFactory.newSAXParser();
+		XMLReader reader = parser.getXMLReader();
+		ShoppingContentHandler contentHandler = new ShoppingContentHandler();
+		reader.setContentHandler(contentHandler);
+		reader.parse(new InputSource(new FileReader("shopping.xml")));
+		System.out.printf("$%.2f", contentHandler.getPriceSum());
+	
+	} catch (ParserConfigurationException e) {
+		e.printStackTrace();
+	} catch (SAXException e) {
+		e.printStackTrace();
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
 snippet dfile
 	/**
 	 * ${1:description}
@@ -154,42 +136,76 @@ snippet dfn
 	 * @throws
 	 * @author `g:snips_author`
 	 */
-snippet dv
-	/** ${1} */
-snippet h1
-	// ${1} {{{
-	//`````````````````````````````````````````````````````````````````````````````
-# }}}
-snippet post
+snippet dowh
+	do {
+		${2://}
+	} while (${1:condition});
+snippet dpost
 	@Postconditions:
 	<li></li>
-snippet pre
+snippet dpre
 	@Preconditions:
 	<li></li>
-snippet rem
-	// 
-#  TODO: capitalize first letter of filename, if filename exists.
-snippet start
+snippet dstart
+	/**
+	 * Name: ${2:name}
+	 * Version: ${3:0.01}
+	 * Description: ${4:desc}
+	 * Author: Dan Barrese (danbarrese.com)
+	 * Date: `strftime("%B %d, %Y")`
+	 * Update Log:
+	 *   `strftime("%Y.%m.%d")` [$3][DRB] Initial version.
+	 * Sources/References:
+	 * - None
+	 */
 	public class ${1:`Filename("", "FooBarClass")`} {
 		public static void main (String [] args) {
 			//
 		}
 	}
-snippet todo
+snippet dtodo
 	// TODO: 
-# }}}
-## Error Handling {{{
-snippet try
-	try {
-		//
-	} catch (${1:Exception} e) {
-		// TODO: handle exception
+snippet dv
+	/** ${1} */
+snippet e
+	== 
+snippet ei
+	else if (${1:condition}) {
+		${2://}
 	}
-# }}}
-## File {{{
-snippet fila text
+snippet el
+	else {
+		${1://}
+	}
+snippet email
+	// requires Java Mail API (mail.jar), which must be in classpath
+	try {
+		Properties props = System.getProperties();
+		props.put("mail.smtp.host", "smtp.sampledomain.com");
+		Session session = Session.getDefaultInstance(props, null);
+		Message msg = new MimeMessage(session);
+		msg.setFrom(new InternetAddress("gaylord.focker@hollywood.com"));
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("father@family.com"));
+		msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse("mother@family.com"));
+		msg.setSubject("subject");
+		msg.setText("message body");
+		msg.setHeader("X-Mailer", "jAVAmAILER");
+		msg.setSentDate(new Date());
+		Transport.send(msg);
+	} catch (AddressException e) {
+		e.printStackTrace();
+	} catch (MessagingException e) {
+		e.printStackTrace();
+	}
+snippet en
+	== null
+snippet eo
+	${1:obj1}.equals(${2:obj2})
+snippet fa
+	false
+snippet fila
 	fileWriter.append(${1:"\n" + "newline"});
-snippet filr text
+snippet filr
 	// import java.io.BufferedReader;
 	// import java.io.File;
 	// import java.io.FileInputStream;
@@ -219,10 +235,6 @@ snippet filw
 	}
 snippet filx
 	new File(${1:path}).exists()
-snippet folx
-	new File(${1:path}).exists()
-# }}}
-## Functions {{{
 snippet fn
 	private void ${1:fun}(${2}) {
 		${3://}
@@ -231,22 +243,8 @@ snippet fnn
 	${1:fun}(${2}) {
 		${3://}
 	}
-# }}}
-## Keyword {{{
-snippet nl
-	null
-snippet s
-	String 
-snippet i
-	Integer 
-snippet bo
-	boolean 
-snippet re
-	return
-# }}}
-## Loops {{{
-snippet br
-	break;
+snippet folx
+	new File(${1:path}).exists()
 snippet for
 	for (int ${1:i} = ${2:0}; $1 < ${3:5}; $1++) {
 		${4://}
@@ -255,153 +253,193 @@ snippet fore
 	for (${1:Type} ${2:elem} : ${3:coll}) {
 		${4://}
 	}
-#snippet foref
-snippet until
-	do {
-		${2://}
-	} until (${1:condition});
-snippet wh
-	while (${1:condition}) {
-	}
-snippet dowh
-	do {
-		${2://}
-	} while (${1:condition});
-# }}}
-## Misc {{{
-#snippet cli
-#snippet uname
-snippet in
-	import
-# }}}
-## Multithreading {{{
-snippet lock
-	@GuardedBy("LOCK_$1") ${2:private String foobar = "foobar"};
-	final Object LOCK_${1:FOOBAR} = new Object();
-snippet guard
-	synchronized (LOCK_${1:FOOBAR}) {
-		//
-	}
-# }}}
-## Numbers {{{
-snippet inc
-	${1:i}++;
-snippet dec
-	${1:i}--;
-snippet npe
-	${1:i} += ${2:2};
-snippet nme
-	${1:i} -= ${2:2};
-# }}}
-## Operators {{{
-snippet and
-	&& 
-snippet e
-	== 
-snippet eo
-	${1:obj1}.equals(${2:obj2})
+snippet free
+	NO
 snippet gt
 	> 
 snippet gte
 	>= 
+snippet h1
+	// ${1} {{{
+	//````````````````````````````````````````````````````````````````````````````` 
+	//}}}
+snippet if
+	if (${1:condition}) {
+		${2://}
+	}
+snippet ife
+	if (${1:condition}) {
+		${2://}
+	} else {
+		${3://}
+	}
+snippet ifei
+	if (${1:condition}) {
+		${3://}
+	} else if (${2:condition}) {
+		${4://}
+	} else {
+		${5://}
+	}
+snippet in
+	import
+snippet lazy
+	if (${1:var} == null) {
+		$1 = new ${2:Type}();
+	}
+	return $1;
 snippet lt
 	< 
 snippet lte
 	<= 
-snippet or
-	|| 
+snippet ma
+	abstract 
+snippet mc
+	final
+snippet me
+	-= 
+snippet mp
+	public 
+snippet mr
+	private 
+snippet ms
+	static 
+snippet mt
+	protected 
+snippet ndec
+	${1:i}--;
 snippet ne
 	!= 
 snippet neo
 	!${1:obj1}.equals(${2:obj2})
-snippet pe
-	+= 
-snippet me
-	-= 
-# }}}
-## Printing {{{
+snippet ninc
+	${1:i}++;
+snippet nl
+	null
+snippet nme
+	${1:i} -= ${2:2};
+snippet nn
+	!= null
+snippet npe
+	${1:i} += ${2:2};
+snippet or
+	|| 
 snippet p
 	System.out.println(${1:});
+snippet pe
+	+= 
 snippet pp
 	System.out.println("${1:}");
-# }}}
-## String {{{
-#snippet chop
+snippet re
+	return 
+snippet s
+	String 
 snippet scon
 	${1:strVar}.contains(${2})
+snippet se
+	${1:strVar}.equals(${2})
+snippet sei
+	${1:strVar}.equalsIgnoreCase(${2})
 snippet sempty
 	(${1:strVar} == null || $1.trim().isEmpty())
 snippet sends
 	${1:strVar}.endsWith(${2})
-snippet seq
-	${1:strVar}.equals(${2})
-snippet seqi
-	${1:strVar}.equalsIgnoreCase(${2})
-#snippet slashdir
 snippet slen
 	${1:strVar}.length()
 snippet slower
 	${1:strVar}.toLowerCase()
 snippet sstarts
 	${1:strVar}.startsWith(${2})
-#snippet ssub
 snippet supper
 	${1:strVar}.toUpperCase()
 snippet sval
 	String.valueOf(${1:var})
-# }}}
-## Var Actions {{{
-snippet nn
-	!= null
-snippet en
-	== null
-# }}}
-## Variables {{{
+snippet sw
+	switch(${1:key}) {
+		case ${2:value}:
+			break;
+		default:
+			break;
+	}
+snippet tafter
+	${1:d}.after(${2})
+snippet tbefore
+	${1:d}.before(${2})
+snippet testfn
+	@Test
+	public void ${1:test}() throws Exception {
+		${2:// TODO: Implement test.}
+	}
+snippet tnow
+	// import java.util.Date
+	new Date()
+snippet tr
+	true
+snippet until
+	do {
+		${2://}
+	} until (${1:condition});
 snippet v
-	
-snippet va
-	${1:Object}[] arr = new $1[${2:10}];
+	EMPTY
 snippet vb
 	boolean ${1:b} = ${2:false};
 snippet vc
 	final ${1:String} ${2:FOO_BAR} = ${3};
 snippet vch
 	char ${1:c} = ${2:'a'};
-#snippet vcur
+snippet vcur
+	NO
 snippet vd
 	double ${1:d} = ${2:1.0};
+snippet vderef
+	NO
 snippet vf
 	float ${1:f} = ${2:1.0};
-snippet vg
-	Object o = ${1};
 snippet vi
 	int ${1:i} = ${2:1};
+snippet vistype
+	instanceof ${1:String}
 snippet vl
 	long ${1:l} = ${2:1L};
 snippet vn
 	int ${1:i} = ${2:1};
-# TODO: make object name same as class but lowercase first letter.
 snippet vo
-	${1:Object} ${2:o} = new $1();
+	${1:Object} ${2:o} = new $1(${3});
+snippet vref
+	NO
 snippet vs
 	String ${1:s} = ${2:"foobar"};
 snippet vsl
 	single ${1:sl} = ${2:1};
+snippet vswap
+	// import java.util.Date
+	Date ${1:d} = new Date();
 snippet vt
+	// import java.util.Date
 	Date ${1:d} = new Date();
 snippet vv
 	${1:Object} ${2:o} = new $1();
-# }}}
-
-## SPECIFIC SNIPPETS {{{
+snippet wh
+	while (${1:condition}) {
+		${2://}
+	}
+snippet xh
+	try {
+		${2://}
+	} catch (${1:Exception} e) {
+		// TODO: handle exception
+	} finally {
+	}
+snippet xr
+	throw new ${1:Exception}(${2});
+#}}}
+# > Java custom snippets {{{
 snippet Bo
 	Boolean 
 snippet main
 	public static void main (String [] args) {
 		${1://}
 	}
-# }}}
-
 snippet de
 	default:
 		${1}
@@ -441,3 +479,4 @@ snippet cos
 	static public final String ${1:var} = "${2}";${3}
 snippet as
 	assert ${1:test} : "${2:Failure message}";${3}
+#}}}

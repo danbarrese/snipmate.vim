@@ -1,22 +1,51 @@
-## UBIQUITOUS SNIPPETS
-
-# if ife start fn fore wh seq guard
-
-## Access Modifiers {{{
-#}}}
-## Arrays {{{
-#snippet ar
-	declare -a ${1:ar}=(${2:1 2 3})
-#snippet arlen
-	${#${1:ar}[@]}
-#snippet aradd
-	${1:ar}[${#$1[@]}+1]=${2:whatever}
-#snippet arrem
-	unset ${${1:ar}[${2:0}]}
-#}}}
-## Classes {{{
-#}}}
-## Conditionals {{{
+# > VIM language agnostic snippets {{{
+###############################################################################
+snippet and
+	&& 
+snippet cli
+	NO
+snippet dstart
+	" Name: ${1:`expand('%:t')`}
+	" Version: ${2:0.01}
+	" Description: ${3:desc}
+	" Author: ${4:`g:snips_author`}
+	" Date: `strftime("%B %d, %Y")`
+	" Update Log:
+	"   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
+	" Sources/References:
+	" - None
+snippet dtodo
+	" TODO: 
+snippet e
+	== 
+snippet ei
+	elseif ${1:condition}
+		${2:"}
+snippet el
+	else
+		${1:"}
+snippet env
+	$${1:JAVA_HOME}
+snippet fn
+	function ${1:Fun}(${2})
+		${3:"}
+	endfunction
+snippet fncall
+	call ${1:Fun}(${2:args})
+snippet for
+	for s:i in range(${1:0, 4})
+		${2:"}
+	endfor
+snippet fore
+	for ${1:needle} in ${2:haystack}
+		${3:"}
+	endfor
+snippet free
+	unlet! ${1:foo}
+snippet gt
+	> 
+snippet gte
+	>= 
 snippet if
 	if ${1:condition}
 		${2:"}
@@ -27,212 +56,108 @@ snippet ife
 	else
 		${3:"}
 	endif
-#snippet ifei
-	if [[ ${1:condition} ]]; then
-		${3:#}
-	elif [[ ${2:condition} ]]; then
-		${4:#}
-	else
-		${5:#}
-	fi
-#snippet el
-	else
-		${1}
-#snippet elif
-	elif [[ ${1:condition} ]]; then
-		${2:#statements}
-#snippet case
-	case ${1:${var}} in
-		${2:pattern})
-			${3};;
-		"a"|"b") ;;
-		*) ;;
-	esac
-#}}}
-## Debugging {{{
-#}}}
-## Documentation {{{
-#snippet dfile
-	# Name: ${1:name}
-	# Version: ${2:0.01}
-	# Description: ${3:desc}
-	# Author: Dan Barrese (danbarrese.com)
-	# Date: `strftime("%B %d, %Y")`
-	# Update Log:
-	#   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
-	# Sources/References:
-	# - None
-#snippet dfn
-	# Description: ${1}
-	# Date: `strftime("%B %d, %Y")`
-	# Author: Dan Barrese (danbarrese.com)
-#snippet rem
-	# 
-#snippet dv
-	# 
-#snippet pre
-	# Preconditions:
-	#     * 
-#snippet post
-	# Postconditions:
-	#     * 
-snippet start
-	" Name: ${1:`expand('%:t')`}
-	" Version: ${2:0.01}
-	" Description: ${3:desc}
-	" Author: ${4:`g:snips_author`}
-	" Date: `strftime("%B %d, %Y")`
-	# Update Log:
-	#   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
-	# Sources/References:
-	# - None
-	
-#snippet todo
-	# TODO: 
-#snippet h1
-	# ${1:HEADER} {{{
-	${2}
-	#}}}
-#}}}
-## Error Handling {{{
-#snippet try
-	cmd = "${1:command}"
-	$cmd 2>/dev/null
-	if (( $? == 0 )); then
-		echo 'command was successful'
-	else
-		echo 'error'
-	fi
-#}}}
-## Files {{{
-#snippet filex text
-	-e ${${1:path}}
-#snippet filer text
-	while read -r line; do
-		${1:#}
-	done < "${path}"
-#snippet filew
-	> ${${1:path}}
-#snippet filea
-	>> ${${1:path}}
-#}}}
-## Functions {{{
-snippet fn
-	function ${1:fun}(${2})
+snippet ifei
+	if ${1:condition}
 		${3:"}
-	endfunction
-#}}}
-## Loops {{{
-#snippet for
-	for (( ${2:i} = 0; $2 < ${1:count}; $2++ )); do
-		${3:#statements}
-	done
-snippet fore
-	for ${1:needle} in ${2:haystack}
-		${3:"}
-	endfor
-#snippet foref
-	shopt -s nullglob
-	files=(${path}/*)
-	for fname in ${files[@]}; do
-		printf '%s\n' "${fname}"
-	done
+	elseif ${2:condition}
+		${4:"}
+	else
+		${5:"}
+snippet ifet
+	${1:condition} ? ${2:true} : ${3:false}
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet n
+	. 
+snippet ndivf
+	${1:x} / ${2:y}
+snippet ne
+	!= 
+snippet not
+	! 
+snippet nvalf
+	str2float(${1})
+snippet nvali
+	str2nr(${1})
+snippet or
+	|| 
+snippet p
+	echo ${1}
+snippet pf
+	printf("%s", ${2:str})
+snippet pp
+	echo '${1}'
+snippet rxm
+	match(${1:regex}, ${2:str})
+snippet rxs
+	substitute(${1:str}, ${2:regex}, ${3:replacement}${4:, flags})
+snippet rxsg
+	substitute(${1:str}, ${2:regex}, ${3:replacement}, "g")
+snippet se
+	${1:str} == ${2:str2}
+snippet sexe command
+	exe ${1:str}
+snippet sexe expression
+	eval(${1:str})
+snippet sidx
+	stridx(${1:str}, ${2:needle})
+snippet sidxr
+	strridx(${1:str}, ${2:needle})
+snippet slen
+	strlen(${1:str})
+snippet slit
+	${1:'don''t say "no"'}
+snippet slower
+	tolower(${1})
+snippet supper
+	toupper(${1})
+snippet v scope: buffer
+	b:${1:foo}
+snippet v scope: global
+	g:${1:foo}
+snippet v scope: local (function)
+	${1:foo}
+snippet v scope: parameter of function
+	a:${1:foo}
+snippet v scope: script
+	s:${1:foo}
+snippet v scope: tab
+	t:${1:foo}
+snippet v scope: vim predefined
+	v:${1:foo}
+snippet v scope: window
+	w:${1:foo}
+snippet vglobal
+	let g:${1:foo} = ${2:val}
+snippet vs
+	let ${1:foo} = "${2:val}"
+snippet vset scope: buffer
+	let b:${1:foo} = ${2:val}
+snippet vset scope: function
+	let l:${1:foo} = ${2:val}
+snippet vset scope: global
+	let g:${1:foo} = ${2:val}
+snippet vset scope: script
+	let s:${1:foo} = ${2:val}
+snippet vset scope: tab
+	let t:${1:foo} = ${2:val}
+snippet vset scope: window
+	let w:${1:foo} = ${2:val}
+snippet vx
+	exists("${1:foo}")
 snippet wh
 	while ${1:condition}
 		${2:"}
 	endw
-#snippet until
-	until [[ ${1:condition} ]]; do
-		${2:#statements}
-	done
 #}}}
-## Misc {{{
-#snippet cli
-	while getopts "w:a:" n; do
-		case ${n} in
-			w)
-				echo ${OPTARG};;
-			a)
-				echo ${OPTARG};;
-		esac
-	done
-#snippet slashdir
-	${1:str}="${$1%/}/"
-snippet cat
-	. 
-#}}}
-## Numbers {{{
-#snippet inc
-	$((++${1:var}))
-#snippet dec
-	$((--${1:var}))
-#}}}
-## Operators {{{
-#snippet and
-	&& 
-#snippet or
-	|| 
-#snippet gt
-	> 
-#snippet lt
-	< 
-#snippet gte
-	>= 
-#snippet lte
-	<= 
-#snippet eq
-	== 
-#snippet ne
-	!= 
-#}}}
-## Printing {{{
-#snippet p
-	printf '%s\n' "${1}"
-#}}}
-## String {{{
-# string lower case
-#snippet slower
-	${${1},,}
-#snippet slen
-	${#${1:str}}
-#snippet scon
-	${${1:str}} == *${2:contains}*
-#snippet sstarts
-	${${1:str}} == ${2:startswith}*
-#snippet sends
-	${${1:str}} == *${2:endswith}
-#snippet chop
-	${${1:str}%?}
-snippet seq
-	${1:str} == ${2:str2}
-#snippet seqi
-	"X${${1:str,,}}" == "X${${2:str2,,}}"
-#snippet sempty
-	${${1:str}} == ""
-#}}}
-## Variables {{{
-#snippet v
-	${${1}}
-#snippet bo
-	${1:boolvar}=${2:true}
-#snippet s
-	${1:str}="${2}"
-#snippet i
-	declare -i ${1:i}=0
-#snippet n
-	${1:i}=0
-#snippet f
-	${1:floatvar}=0.00
-#snippet db
-	${1:floatvar}=0.00
-#snippet const
-	readonly ${1:ro}=${2}
-#}}}
-
-## LANGUAGE SPECIFIC SNIPPETS {{{
+# > Vim custom snippets {{{
 snippet guard
 	if exists('${1:did_`Filename()`}') || &cp${2: || version < 700}
 		finish
 	endif
 	let $1 = 1${3}
+snippet nor
+	normal 
 #}}}

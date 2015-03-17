@@ -1,19 +1,14 @@
-## UBIQUITOUS SNIPPETS
-
-# mp mr va arlen aradd arrem cl if ife ifei el elif case ref deref map now dfile dfn rem dv pre post start todo h1 try filx filw text fila text folx fn for fore wh until break for break do nl uname inc dec and or gt lt gte lte eq ne p pp slower supper slen scon sstarts sends seq seqi sempty sval v vv vi vl vsl vd vch vcur vt vs vo vb vn vc vf nn nls sub
-
-## Access Modifiers {{{
-snippet mp
-	Public 
-snippet mr
-	Private 
-#}}}
-## Arrays {{{
+# > VBS language agnostic snippets {{{
+###############################################################################
+snippet and
+	And 
+snippet ar
+	xDim ${1:ar}(${2})
+snippet aradd
+	ReDim Preserve ${1:ar}[UBound($1) + 1]
+	$1(UBound($1)) = ${2:foo}
 snippet arlen
 	UBound(${${1:ar}})
-snippet aradd
-	ReDim Preserve ${1:ar}[UBound($1)+1]
-	$1(UBound($1)) = ${2:foo}
 snippet arrem
 	Dim ${1:iRemoveIndex}: $1 = ${2:0}
 	Dim i
@@ -21,8 +16,9 @@ snippet arrem
 		$3(i) = $3(i + 1)
 	Next
 	ReDim Preserve $3(UBound($3) - 1)
-#}}}
-## Classes {{{
+snippet br
+	$${for}Exit For
+	$${do}Exit Do
 snippet cl
 	Class ${1:foo} '{{{
 		Private Sub Class_Initialize() '{{{
@@ -37,8 +33,103 @@ snippet cl
 			'
 		End Sub '}}}
 	'}}}
-#}}}
-## Conditionals {{{
+snippet d
+	' 
+snippet dfile
+	' Name: ${1:name}
+	' Version: ${2:0.01}
+	' Description: ${3:desc}
+	' Author: Dan Barrese (danbarrese.com)
+	' Date: `strftime("%B %d, %Y")`
+	' Update Log: {{{
+	'   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
+	' }}}
+	' Sources/References:
+	' - None
+snippet dfn
+	' {{{ ${$1:description}
+	' PARAMS:	?
+	' RETURNS:   ?
+	' AUTHOR:	Dan Barrese
+	' DATE:	  `strftime("%B %d, %Y")`
+	'---------------------------------------------------------------------------}}}
+snippet dpost
+	' Postconditions:
+	'	 * 
+snippet dpre
+	' Preconditions:
+	'	 * 
+snippet dsm
+	Dim d_${1}:Set d_$1 = CreateObject("Scripting.Dictionary")
+snippet dstart
+	' Option Explicit
+	' Name: ${1:name}
+	' Version: ${2:0.01}
+	' Description: ${3:desc}
+	' Author: Dan Barrese (danbarrese.com)
+	' Date: `strftime("%B %d, %Y")`
+	' Update Log:
+	'   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
+	' Sources/References:
+	' - None
+snippet dtodo
+	' TODO: 
+snippet dv
+	' 
+snippet e
+	= 
+snippet ei
+	ElseIf ${1:condition} Then
+		${2:'}
+snippet el
+	Else
+		${1:'}
+snippet fila
+	${1:textFile}.Write(${2:str})
+snippet filw
+	Dim ${1:textFile}:Set $1 = oFSO.OpenTextFile(${2:path}, 2, True)
+	$1.Write(${3:str})
+	$1.Close
+snippet filx
+	Dim o_fso: Set o_fso = CreateObject("Scripting.FileSystemObject")
+	Dim b_fileExists: b_fileExists = o_fso.FileExists(${1:path})
+	If b_fileExists Then
+		${2:'}
+	End If
+	while read -r line; do
+		${1:'}
+	done < "${path}"
+snippet fn
+	Function ${1:fun}(${2}) '{{{
+		${3:'}
+	End Function '}}}
+snippet fnpref
+	ByRef 
+snippet fnpval
+	ByVal 
+snippet folx
+	Dim o_fso: Set o_fso = CreateObject("Scripting.FileSystemObject")
+	Dim b_folderExists: b_folderExists = o_fso.FolderExists(${1:path})
+	If b_folderExists Then
+		${2:'}
+	End If
+snippet for
+	For ${1:i} = ${2:0} To ${3:i_count}
+		${4:'}
+	Next
+snippet fore
+	For Each ${1:var} In ${2:coll}
+		${3:'}
+	Next
+snippet gt
+	> 
+snippet gte
+	>= 
+snippet h1
+	' > ${1:HEADER} {{{
+	'``````````````````````````````````````````````````````````````````````````````
+	${2}
+	'}}}
 snippet if
 	If ${1:condition} Then
 		${2:'}
@@ -57,13 +148,61 @@ snippet ifei
 	Else
 		${5:'}
 	End If
-snippet el
-	Else
-		${1}
-snippet elif
-	ElseIf ${1:condition} Then
-		${2:'}
-snippet case
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet ma
+	NO
+snippet mc
+	const 
+snippet mp
+	Public 
+snippet mr
+	Private 
+snippet ms
+	NO
+snippet mt
+	NO
+snippet ndec
+	${1:var} = $1 - 1
+snippet ne
+	<> 
+snippet ninc
+	${1:var} = $1 + 1
+snippet nl
+	vbNull
+snippet nn
+	Not isEmpty(${1:var})
+snippet or
+	Or 
+snippet p
+	WScript.Echo ${1}
+snippet pp
+	WScript.Echo "${1}"
+snippet re
+	${1:functionName} = 
+snippet scon
+	(InStr(""&CStr(${1:str}), ""&CStr(${2:contains})) <> 0)
+snippet se
+	${1:str} = ${2:str2}
+snippet sei
+	LCase(${1:str}) = LCase(${2:str2})
+snippet sempty
+	${1:str} = vbNullString
+snippet sends
+	(InStrRev(""&CStr(${1:str}), ""&CStr(${2:contains})) <> 0)
+snippet slen
+	Len(${1:str})
+snippet slower
+	LCase(${1})
+snippet sstarts
+	(InStr(""&CStr(${1:str}), ""&CStr(${2:contains})) = 1)
+snippet supper
+	UCase(${1})
+snippet sval
+	CStr(${1:var})
+snippet sw
 	Select Case ${1:foo}
 		Case 0
 			'
@@ -74,252 +213,59 @@ snippet case
 		Case Else
 			'
 	End Select
-#}}}
-## Data Types {{{
-snippet ref
-	ByRef 
-snippet deref
-	ByVal 
-#}}}
-## Data Structures {{{
-snippet map
-	Dim d_${1}:Set d_$1 = CreateObject("Scripting.Dictionary")
-#}}}
-## Dates Times {{{
-snippet now
+snippet tnow
 	Now
-#}}}
-## Debugging {{{
-#}}}
-## Documentation {{{
-snippet dfile
-	' Name: ${1:name}
-	' Version: ${2:0.01}
-	' Description: ${3:desc}
-	' Author: Dan Barrese (danbarrese.com)
-	' Date: `strftime("%B %d, %Y")`
-	' Update Log: {{{
-	'   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
-	' }}}
-	' Sources/References:
-	' - None
-snippet dfn
-	' {{{ ${$1:description}
-	' PARAMS:    ?
-	' RETURNS:   ?
-	' AUTHOR:    Dan Barrese
-	' DATE:      `strftime("%B %d, %Y")`
-	'---------------------------------------------------------------------------}}}
-snippet rem
-	' 
-snippet dv
-	' 
-snippet pre
-	' Preconditions:
-	'     * 
-snippet post
-	' Postconditions:
-	'     * 
-snippet start
-	Option Explicit
-	' Name: ${1:name}
-	' Version: ${2:0.01}
-	' Description: ${3:desc}
-	' Author: Dan Barrese (danbarrese.com)
-	' Date: `strftime("%B %d, %Y")`
-	' Update Log:
-	'   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
-	' Sources/References:
-	' - None
-	
-snippet todo
-	' TODO: 
-snippet h1
-	' > ${1:HEADER} {{{
-	'``````````````````````````````````````````````````````````````````````````````
-	${2}
-	'}}}
-#}}}
-## Error Handling {{{
-snippet try
+snippet uname
+	Dim o_network: Set o_network = CreateObject("Wscript.Network")
+	Dim s_username: s_username = o_network.UserName
+snippet until
+	Do Until ${1:condition}
+		${2:'}
+	Loop 
+snippet v
+	EMPTY
+snippet vb
+	xDim b_${1}: b_$1 = ${2:True}
+snippet vc
+	xConst ${1:foo} = ${2}
+snippet vch
+	xDim ch_${1}: ch_$1 = "${2}"
+snippet vcur
+	xDim cur_${1}: cur_$1 = '${2}'
+snippet vd
+	xDim d_${1}: d_$1 = ${2:0.0}
+snippet vf
+	Dim d_${1}: d_$1 = ${2:0.0}
+snippet vi
+	xDim i_${1}: i_$1 = ${2:0}
+snippet vl
+	xDim l_${1}: l_$1 = ${2:0}
+snippet vn
+	xDim n_${1}: n_$1 = ${2:0}
+snippet vo
+	xDim o_${1}:Set o_$1 = New $1
+snippet vs
+	xDim s_${1}: s_$1 = "${2}"
+snippet vsl
+	xDim sl_${1}: sl_$1 = ${2:0.0}
+snippet vt
+	xDim t_${1}: t_$1 = ${2:Now}
+snippet vv
+	xDim ${1}
+snippet wh
+	Do While ${1:condition}
+		${2:'}
+	Loop
+snippet xh
 	On Error Resume Next
-	'statements
+	${1:'statements}
 	If Err Then
 		'Err.Description
 		'Err.Clear
 	End If
 	On Error GoTo 0
 #}}}
-## Files {{{
-snippet filx
-	Dim o_fso: Set o_fso = CreateObject("Scripting.FileSystemObject")
-	Dim b_fileExists: b_fileExists = o_fso.FileExists(${1:path})
-	If b_fileExists Then
-		${2:'}
-	End If
-#snippet filr text
-	while read -r line; do
-		${1:'}
-	done < "${path}"
-snippet filw text
-	Dim ${1:textFile}:Set $1 = oFSO.OpenTextFile(${2:path}, 2, True)
-	$1.Write(${3:str})
-	$1.Close
-snippet fila text
-	${1:textFile}.Write(${2:str})
-snippet folx
-	Dim o_fso: Set o_fso = CreateObject("Scripting.FileSystemObject")
-	Dim b_folderExists: b_folderExists = o_fso.FolderExists(${1:path})
-	If b_folderExists Then
-		${2:'}
-	End If
-#}}}
-## Functions {{{
-snippet fn
-	Function ${1:fun}(${2}) '{{{
-		${3:'}
-	End Function '}}}
-#}}}
-## Loops {{{
-snippet for
-	For ${1:i} = ${2:0} To ${3:i_count}
-		${4:'}
-	Next
-snippet fore
-	For Each ${1:var} In ${2:coll}
-		${3:'}
-	Next
-#snippet foref
-	shopt -s nullglob
-	files=(${path}/*)
-	for fname in ${files[@]}; do
-		printf '%s\n' "${fname}"
-	done
-snippet wh
-	Do While ${1:condition}
-		${2:'}
-	Loop
-snippet until
-	Do Until ${1:condition}
-		${2:'}
-	Loop 
-snippet br for
-	Exit For
-snippet br do
-	Exit Do
-#}}}
-## Misc {{{
-#snippet cli
-	while getopts "w:a:" n; do
-		case ${n} in
-			w)
-				echo ${OPTARG};;
-			a)
-				echo ${OPTARG};;
-		esac
-	done
-#snippet slashdir
-	${1:str}="${$1%/}/"
-snippet nl
-	vbNull
-snippet uname
-	Dim o_network: Set o_network = CreateObject("Wscript.Network")
-	Dim s_username: s_username = o_network.UserName
-#}}}
-## Numbers {{{
-snippet inc
-	${1:var} = $1 + 1
-snippet dec
-	${1:var} = $1 - 1
-#}}}
-## Operators {{{
-snippet and
-	And
-snippet or
-	Or
-snippet gt
-	> 
-snippet lt
-	< 
-snippet gte
-	>= 
-snippet lte
-	<= 
-snippet e
-	= 
-snippet ne
-	<>
-#}}}
-## Printing {{{
-snippet p
-	WScript.Echo ${1}
-snippet pp
-	WScript.Echo "${1}"
-#}}}
-## String {{{
-snippet slower
-	LCase(${1})
-snippet supper
-	UCase(${1})
-snippet slen
-	Len(${1:str})
-snippet scon
-	(InStr(""&CStr(${1:str}), ""&CStr(${2:contains})) <> 0)
-snippet sstarts
-	(InStr(""&CStr(${1:str}), ""&CStr(${2:contains})) = 1)
-snippet sends
-	(InStrRev(""&CStr(${1:str}), ""&CStr(${2:contains})) <> 0)
-#snippet chop
-snippet seq
-	${1:str} = ${2:str2}
-snippet seqi
-	LCase(${1:str}) = LCase(${2:str2})
-snippet sempty
-	${1:str} = vbNullString
-snippet sval
-	CStr(${1:var})
-#}}}
-## Variables {{{
-snippet v
-	
-snippet va
-	Dim ${1:ar}(${2})
-snippet vv
-	Dim ${1}
-snippet vi
-	Dim i_${1}: i_$1 = ${2:0}
-snippet vl
-	Dim l_${1}: l_$1 = ${2:0}
-snippet vsl
-	Dim sl_${1}: sl_$1 = ${2:0.0}
-snippet vd
-	Dim d_${1}: d_$1 = ${2:0.0}
-snippet vch
-	Dim ch_${1}: ch_$1 = "${2}"
-snippet vcur
-	Dim cur_${1}: cur_$1 = '${2}'
-snippet vt
-	Dim t_${1}: t_$1 = ${2:Now}
-snippet vs
-	Dim s_${1}: s_$1 = "${2}"
-# TODO: upper case first letter of $1
-snippet vo
-	Dim o_${1}:Set o_$1 = New $1
-snippet vb
-	Dim b_${1}: b_$1 = ${2:True}
-snippet vn
-	Dim n_${1}: n_$1 = ${2:0}
-snippet vc
-	Const ${1:foo} = ${2}
-snippet vf
-	Dim d_${1}: d_$1 = ${2:0.0}
-#}}}
-## String Actions {{{
-snippet nn
-	Not isEmpty(${1:var})
-#}}}
-
-## VB(S) SPECIFIC SNIPPETS {{{
+# > VBScript custom snippets {{{
 snippet nls
 	vbNullString
 snippet sub

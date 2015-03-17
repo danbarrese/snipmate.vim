@@ -1,0 +1,224 @@
+# > Groovy language agnostic snippets {{{
+###############################################################################
+snippet and
+	&& 
+snippet arconcat
+	${1:ar1} + ${2:ar2}
+snippet ardd
+	${1:ar}.unique()
+snippet arfilter
+	${1:ar}.findAll() { x -> ${2:x > 0} }
+snippet arget
+	${1:ar}[${2:0}]
+snippet argv
+	args
+snippet arintersect
+	${1:ar}.intersect(${2:ar2})
+snippet ariter
+	for (i in ${1:ar}) {
+		${2://}
+	}
+snippet arlen
+	${1:ar}.size
+snippet armap
+	${1:ar}.collect() { x -> ${2:x > 0} }
+snippet arreduce
+	${1:ar}.inject(${2:baseCase}) { x, y -> ${3:operation} }
+snippet arset
+	${1:ar}[${2:0}] = ${3:value}
+snippet arshuffle
+	Collections.shuffle(${1:ar})
+snippet arsl
+	${1:ar}[${2:0..1}]
+snippet arsor
+	${1:ar}.sort()
+snippet arunion
+	(${1:ar1} + ${2:ar2}).unique()
+snippet br
+	break
+snippet ccsleep
+	Thread.sleep(${1:1000});
+snippet cl
+	class ${1:FooBarClass} {
+		$1(${2}) {
+			//
+		}
+	}
+snippet cont
+	continue
+snippet dl
+	// 
+snippet dml
+	/* ${1} */
+snippet dsm
+	${1:dsm} = [${2:"t": 1, "f": 0}]
+snippet dsmget
+	${1:dsm}[${2:key}]
+snippet dsmhaskey
+	${1:dsm}.containsKey(${2:key})
+snippet dsmlen
+	${1:dsm}.size()
+snippet dsmlit
+	${1:dsm} = [${2:"t": 1, "f": 0}]
+snippet e
+	== 
+snippet en
+	${1} === null
+snippet env
+	System.getenv(${1:JAVA_HOME})
+snippet fa
+	false
+snippet falsehoods
+	false null 0 0.0 "" [] [:]
+snippet filexecutable
+	new File(${1:path}).canExecute()
+snippet filreadable
+	new File(${1:path}).canRead()
+snippet filsize
+	new File(${1:path}).size()
+snippet filwritable
+	new File(${1:path}).canWrite()
+snippet filx
+	new File(${1:path}).exists()
+snippet fn
+	def ${1:fun}(${2}) {
+		${3://}
+	}
+snippet fncall
+	${1:fun}(${2:args});
+snippet fnld
+	${1:lambda} = { ${2:x} -> ${3:return x} }
+snippet for
+	for (int ${1:i} = ${2:0}; $1 < ${3:5}; $1++) {
+		${4://}
+	}
+snippet gt
+	> 
+snippet gte
+	>= 
+snippet if
+	if (${1:condition}) {
+		${2://}
+	}
+snippet ife
+	if (${1:condition}) {
+		${2://}
+	} else {
+		${3://}
+	}
+snippet ifei
+	if (${1:condition}) {
+		${2://}
+	} else if (${3:condition}) {
+		${4://}
+	} else {
+		${5://}
+	}
+snippet ifet
+	${1:condition} ? ${2:true} : ${3:false};
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet n
+	+ 
+snippet nabs
+	Math.abs(${1})
+snippet nceil
+	(int) Math.ceil(${1})
+snippet ne
+	!= 
+snippet nfloor
+	(int) Math.floor(${1})
+snippet nl
+	null
+snippet not
+	!
+snippet npow
+	${1:base} ** ${2:exponent}
+snippet nrandf
+	rnd = new Random()
+	rnd.nextDouble()
+snippet nrandi
+	${1:rand} = new Random()
+	$1.nextInt(100)
+snippet nround
+	Math.round(${1})
+snippet nsqrt
+	Math.sqrt(${1})
+snippet nvalf
+	Double.parseDouble(${1})
+snippet nvali
+	Integer.parseInt(${1})
+snippet or
+	|| 
+snippet p
+	println(${1})
+snippet pf
+	String.format(${1:formatstr}, ${2:csv})
+snippet pp
+	println("${1}")
+snippet re
+	return 
+snippet rn
+	null
+snippet rxg
+	${1:str} = "2010-06-03"
+	groups = $1 =~ /(\d{4})-(\d{2})-(\d{2})/
+	yr = groups.group(1)
+	mo = groups.group(2)
+	dy = groups.group(3)
+snippet rxm
+	${1:str} =~ /${2}/
+snippet rxsg
+	${1:str}.replaceAll(/${2}/, ${3:replacement})
+snippet sidx
+	${1:haystack}.indexOf(${2:needle})
+snippet sjoin
+	${1:['a', 'b']}.join(${2:" "})
+snippet slen
+	${1}.length()
+snippet slit
+	'${1}'
+snippet slower
+	${1}.toLowerCase()
+snippet sml
+	${1:str} = """line1
+	line2"""
+snippet spadc
+	${1}.center(${2:1})
+snippet spadl
+	${1}.padLeft(${2:1})
+snippet spadr
+	${1}.padRight(${2:1})
+snippet ssplit
+	${1:str}.split(${2})
+snippet ssub
+	${1:str}.substring(${2:from}, ${3:to})
+snippet strim
+	${1}.trim()
+snippet supper
+	${1}.toUpperCase()
+snippet sval
+	String.valueOf(${1})
+snippet tnow
+	${1:now} = new Date()
+snippet tr
+	true
+snippet vis
+	${${1}}
+snippet vll
+	(${1:foo, bar, baz}) = [${2:1, 2, 3}]
+snippet vo
+	${1:Object} ${2:o} = new $1(${3});
+snippet vr
+	NA
+snippet vswap
+	(${1:foo}, ${2:bar}) = [$2, $1]
+snippet wh
+	while (${1:condition}) {
+		${2://}
+	}
+snippet xr
+	throw new ${1:Exception}(${2});
+#}}}

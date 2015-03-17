@@ -1,0 +1,381 @@
+# NON-PLAD SNIPPETS {{{
+snippet decorator
+	@Decorator(selector: '[${1:attributeName}]')
+	class MyDecorator {
+	  @NgOneWay('$1')
+	  Model model;
+	  // ...
+	  MyDecorator(/* Optional arguments */) {
+		  // ...
+	  }
+	  // ...
+	}
+snippet component
+	@Component(
+		selector: '${1:html-tag-name}',
+		templateUrl: '${2:my_component}.html')
+	class ${3:MyComponent} {
+		${4://}
+	}
+# }}}
+snippet get
+	// Getters are implicit.
+snippet getset
+	// Getters/setters are implicit.
+snippet set
+	// Setters are implicit.
+snippet dafind
+	${1:haystack}.indexOf(${2:needle})
+snippet dalit
+	[${2}]
+snippet ma
+	abstract 
+snippet ms
+	static 
+snippet mt
+	NA
+snippet aradd
+	${1:ar}.add(${2:elem});
+snippet arconcat
+	${1:ar}.addAll(${2:otherAr});
+snippet arget
+	${1:ar}[${2:0}]
+snippet ariter
+	${1:ar}.forEach((${2:e}) => ${3:doSomething});
+snippet arlen
+	${1:ar}.length
+snippet arlit
+	[${1}]
+snippet arrem
+	${1:ar}.removeAt(${2:0});
+snippet arset
+	${1:ar}[${2:0}] = ${3:val};
+snippet asf
+	assert(!${1:condition});
+snippet asn
+	assert(${1:condition} == null);
+snippet asnn
+	assert(${1:condition} != null);
+snippet ast
+	assert(${1:condition});
+snippet c
+	${1:foo} as ${2:Type}
+snippet citos
+	5.toString()
+snippet cstod
+	double.parse(${1:0.5})
+snippet cstoi
+	int.parse(${1:'5'})
+snippet cl
+	class ${1:MyClass} {
+	    String str;
+	
+	    $1(this.str);
+	}
+snippet ccguard
+	NA
+snippet ccterm
+	NA
+snippet ccwait
+	await 
+snippet ei
+	else if (${1:condition}) {
+	    ${2://}
+	}
+snippet el
+	else {
+	    ${1://}
+snippet if
+	if (${1:condition}) {
+	    ${2://}
+	}
+snippet ife
+	if (${1:condition}) {
+	    ${2://}
+	} else {
+	    ${3://}
+	}
+snippet ifei
+	if (${1:condition}) {
+	    ${2://}
+	} else if (${3:condition}) {
+	    ${4://}
+	} else {
+	    ${5://}
+	}
+snippet ifet
+	${1:condition} ? ${2:true} : ${3:false};
+snippet sw
+	switch (${1:int,string,const}) {
+	    case ${2:'foo'}:
+	        ${3://}
+	        break;
+	    default:
+	        ${4://}
+	}
+snippet dsmadd
+	${1:map}[${2:'key'}] = ${3:'value'};
+snippet dsmget
+	${1:map}[${2:'key'}]
+snippet dsmhaskey
+	${1:map}.containsKey(${2:'key'})
+snippet dsmhasval
+	${1:map}.values.contains(${2:'value'})
+snippet dsmiter
+	for (var ${2:key} in ${1:map}.keys) {
+	    // var val = $1[$2];${3}
+	}
+	
+snippet dsmkeys
+	${1:map}.keys
+snippet dsmlen
+	${1:map}.length
+snippet dsmlit
+	{ ${2:'key' : ['val1', 'val2']} }
+snippet dsmset
+	${1:map}[${2:'key'}] = ${3:'value'};
+snippet dsmvals
+	${1:map}.values
+snippet dssadd
+	${1:set}.add(${2});
+snippet dsscon
+	${1:haystack}.contains(${2:needle});
+snippet dssintersect
+	${1:set1}.intersection(${2:set2});
+snippet dsslen
+	${1:set}.length
+snippet dssrem
+	${1:set}.remove(${2:needle});
+snippet d
+	// ${1}
+snippet dcl
+	/// ${1}
+snippet dfile
+	/// ${1}
+snippet dfn
+	/// ${1:One sentence description.}
+	///
+	/// ${2:Longer description.}
+snippet dl
+	// ${1}
+snippet dml
+	/*
+	 * ${1}
+	*/
+snippet dtodo
+	// TODO: 
+snippet dv
+	/// ${1}
+snippet da2ar
+	NA
+snippet daadd
+	${1:list}.add(${2:elem});
+snippet daconcat
+	${1:list}.addAll(${2:otherList});
+snippet daget
+	${1:list}[${2:0}]
+snippet dainit
+	new List.from(${1:otherList};
+snippet daiter
+	${1:list}.forEach((${2:e}) => ${3:doSomething});
+snippet dalen
+	${1:list}.length
+snippet darem
+	${1:list}.removeAt(${2:0});
+snippet daset
+	${1:list}[${2:0}] = ${3:val};
+snippet xca
+	try {
+	    ${1://}
+	} catch (e) {
+	    ${2:// TODO: handle exception}
+	}
+snippet xfi
+	finally {
+	    ${1://}
+	}
+snippet xh
+	try {
+	    ${2://}
+	} on ${1:Exception} catch (e) {
+	    ${3:// TODO: handle exception}
+	}
+snippet xr
+	throw new ${1:Exception}(${2});
+snippet fn
+	${1:void} ${2:fun}(${3}) {
+	    ${4://}
+	}
+snippet fncall
+	${1:fun()}
+snippet fnclosure
+	${1:fun} => ${2};
+snippet fnn
+	${1:foo}(${2}) {
+	    ${3://}
+	}
+snippet fnpdefault
+	{${1:name}${2:: default}}
+snippet fnpnamed
+	{${1:name}${2:: default}}
+snippet fnpopt
+	[${1:String foo = 'default'}]
+snippet bo
+	bool
+snippet falsehoods
+	// Anything but true boolean value.
+snippet nl
+	null
+snippet br
+	break;
+snippet cont
+	continue;
+snippet dowh
+	do {
+	    ${2://}
+	} while (${1:condition});
+snippet for
+	for (var ${1:i} = 0; $1 < ${2:10}; $1++) {
+	    ${3://}
+	}
+snippet fore
+	for (var ${1:v} in ${2:collection}) {
+	    ${3:// do something}
+	}
+snippet wh
+	while (${1:condition}) {
+	    ${2://}
+	}
+snippet cli
+	// see ArgParser documentation
+snippet enum
+	enum ${1:MyEnum} {
+	   ${2:val1, val2}
+	}
+snippet in
+	import '${1:dart:io}';
+snippet intxt
+	part '${1:src/foo.dart}';
+snippet ndec
+	${1:num}--
+snippet ninc
+	${1:num}++
+snippet npe
+	${1:num} += ${2:2};
+snippet and
+	&& 
+snippet e
+	== 
+snippet eo
+	== 
+snippet gt
+	> 
+snippet gte
+	>= 
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet me
+	-= 
+snippet n
+	+ 
+snippet ne
+	!= 
+snippet neo
+	!= 
+snippet not
+	!
+snippet or
+	|| 
+snippet pe
+	+= 
+snippet p
+	print(${1});
+snippet par
+	print(${1:ar});
+snippet pda
+	print(${1:list});
+snippet pdsm
+	print(${1:map});
+snippet pp
+	print("${1}");
+snippet rxg
+	var matches = ${1:regex}.allMatches(${2:needle});
+snippet rxm
+	${1:regex}.hasMatch(${2:strNeedle});
+snippet rxsg
+	var regex = new RegExp('${3:NEW}');
+	${1:str}.replaceAll(regex, ${2:'OLD'});
+snippet scon
+	${1:str}.contains(${2:'needle'});
+snippet se
+	${1:str} == ${2}
+snippet sempty
+	${1:str}.isEmpty
+snippet sends
+	${1:str}.endsWith(${2:'needle'});
+snippet sidx
+	${1:str}.indexOf(${2:'needle'});
+snippet slen
+	${1:str}.length
+snippet slit
+	r"${1}"
+snippet slower
+	${1:str}.toLowerCase()
+snippet sml
+	'''${1}''';
+snippet ssplit
+	${1:str}.split(${2:' '});
+snippet sstarts
+	${1:str}.startsWith(${2:'needle'});
+snippet ssub
+	${1:str}.substring(${2:0, 3});
+snippet strim
+	${1:str}.trim()
+snippet supper
+	${1:str}.toUpperCase()
+snippet en
+	== null
+snippet nn
+	!= null
+snippet v
+	${1:foo}
+snippet var
+	var ${1:foo} = new List${2}();${3}
+snippet vb
+	bool ${1:foo} = ${2:true};
+snippet vc
+	final 
+snippet vd
+	double ${1:foo} = ${2:1.0};
+snippet vda
+	var ${1:foo} = new List${2}();${3}
+snippet vderef
+	NA
+snippet vdsm
+	var ${1:map} = new Map<${2:int}, ${3:String}>();${4}
+snippet vdss
+	var ${1:set} = new Set${2}();${3}
+snippet vi
+	int ${1:foo} = ${2:0};
+snippet vis
+	$${1}
+snippet vistype
+	is ${1:String}
+snippet vl
+	int ${1:foo} = ${2:0};
+snippet vld
+	var ${1:fun} = (${2:_}) => ${3:expression};
+snippet vn
+	num ${1:foo} = ${2};
+snippet vo
+	${1:Type} ${2:o} = new $1();
+snippet vr
+	var ${1:regex} = new RegExp(${2});
+snippet vs
+	String ${1:foo} = ${2:'bar'};
+snippet vset
+	${1:foo} = ${2:value};
+snippet vv
+	var ${1:foo} = ${2:bar};
