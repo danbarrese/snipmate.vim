@@ -1,5 +1,91 @@
+# > BASH custom snippets {{{
+snippet gvim
+	gvim -c "call Maximize_Window()"
+snippet math
+	$((${1}))
+snippet start
+	#!/bin/bash
+	if [ -z ${BASH_LIB+x} ]; then printf '%s\n' "BASH_LIB environment variable is required."; exit 1; fi
+	source "${BASH_LIB}/depmgr.sh" || exit 1
+	include "${BASH_LIB}/${1}"
+
+	${2}
+snippet filrar
+	IFS=$'\n'; set -f; read -d '' -r -a lines < "${1}"
+snippet pv
+	putvar ${1:JAVA_HOME}
+snippet build
+	#!/bin/bash
+	source "${BASH_LIB}/pre-build.sh" || exit 1
+
+	ws="${DEV_WORKSPACE%/}"
+	projects=(
+		"${ws}/common-customer-module"
+		"${ws}/portal-core"
+		"${ws}/portal-swc"
+		"${ws}/trustwave-parent"
+		"${ws}/sessionadmin-module"
+	)
+
+	source "${BASH_LIB}/post-build.sh"
+
+	exit
+snippet cmx
+	type ${1:foo} >/dev/null 2>&1 || { echo >&2 "${1} is required."; exit 1; }
+snippet cmdx
+	type ${1:foo} >/dev/null 2>&1 || { echo >&2 "${1} is required."; exit 1; }
+snippet ifse
+	if test ! "${1}"; then
+		${2::}
+	fi
+snippet if[
+	if [ ${1} ]; then
+		${2::}
+	fi
+snippet if[[
+	if [[ ${1} ]]; then
+		${2::}
+	fi
+snippet usage
+	function usage {
+		printf '%s\n' "usage: $(basename $0) <-e ENV>"
+		printf '%s\n' "    -e Environment, one of {c,b,a,s,p}"
+	}
+snippet die
+	function die {
+		if (( $# > 0 )); then
+			>&2 printf '%s\n' "$@"
+		fi
+		exit 1
+	}
+snippet colors
+	COLOR_BOLD='\033[1m'
+	COLOR_END='\033[0m'
+	COLOR_FAIL='\033[91m'
+	COLOR_GRAY='\033[2m'
+	COLOR_GREY='\033[2m'
+	COLOR_HEADER='\033[95m'
+	COLOR_ITALIC='\033[3m'
+	COLOR_OKBLUE='\033[94m'
+	COLOR_OKGREEN='\033[92m'
+	COLOR_UNDERLINE='\033[4m'
+	COLOR_VIOLET='\033[57m'
+	COLOR_WARNING='\033[93m'
+	COLOR_WHITE='\033[321m'
+	COLOR_BLACK='\033[38;5;232m'
+	COLOR_PURPLE='\033[38;5;92m'
+	COLOR_LIGHT_PURPLE='\033[38;5;134m'
+	COLOR_BG_PURPLE='\033[48;5;92m'
+	COLOR_BG_BLUE='\033[48;5;33m'
+	COLOR_BG_GREEN='\033[48;5;77m'
+	COLOR_BG_YELLOW='\033[48;5;3m'
+	COLOR_BG_ORANGE='\033[48;5;208m'
+	COLOR_BG_RED='\033[48;5;124m'
+#}}}
 # > BASH language agnostic snippets {{{
 ###############################################################################
+snippet kill
+	DELETE ME
 snippet pwin
 	NA
 snippet ms
@@ -96,7 +182,15 @@ snippet ccstart
 	@@multiple threads
 	xargs -0 --max-procs=${2:4} -n 1 ${1:cmd}
 snippet ccterm
-	kill -9 ${1:pid}
+	kill -0 ${1:${pid}} &gt;/dev/null 2&gt;&amp;1
+	running=$(echo $?)
+	if [ ${running} -eq 0 ]; then
+	    while true; do
+	        kill $1 &gt;/dev/null 2&gt;&amp;1 || break
+	        sleep 1
+	    done
+	    printf '%s\n' "Killed PID $1"
+	fi
 snippet ccto
 	timeout ${1:5} ${2:cmd}
 snippet ei
@@ -227,7 +321,8 @@ snippet filrem
 snippet filrename
 	mv ${1:old} ${2:new}
 snippet filtmp
-	mktemp "/tmp/foo.$RANDOM"
+	tempfile=$(mktemp "/tmp/foo.$RANDOM")
+	trap "rm -rf $tempfile" EXIT
 snippet filw
 	> ${${1:path}}
 snippet filwritable
@@ -249,6 +344,19 @@ snippet inkey
 	stty -icanon -echo
 	key=$(dd bs=1 count=1 2> /dev/null)
 	stty "${old_tty_setting}"
+snippet inline
+	read input
+	printf '%s\n' "${input}"
+snippet inr
+	read input
+	printf '%s\n' "${input}"
+snippet inra
+	input=$(cat "-")
+	IFS=$'\n'
+	for line in ${input[@]}; do
+	    printf '%s\n' "__ ${line}"
+	done
+	unset IFS
 snippet fa
 	false
 snippet falsehoods
@@ -295,14 +403,13 @@ snippet argc
 snippet argv
 	$@
 snippet cli
-	while getopts "w:a:" n; do
+	param=
+	while getopts "p:" n; do
 	    case ${n} in
-	        w)
-	            echo ${OPTARG};;
-	        a)
-	            echo ${OPTARG};;
+	        p) param="${OPTARG}" ;;
 	    esac
 	done
+	test "${param}" || { >&2 printf '%s\n' "param cannot be empty"; exit 1; }
 snippet ext
 	command ${1:foo}
 snippet extil
@@ -310,11 +417,11 @@ snippet extil
 snippet in
 	source "${1}" || exit 1
 snippet ndec
-	$((--${1:var}))
+	(( ${1:var}-- ))
 snippet ndivi
-	$(( ${1:4/2} ))
+	(( ${1:4/2} ))
 snippet ninc
-	$((++${1:var}))
+	(( ${1:var}++ ))
 snippet nrandi
 	${RANDOM}
 snippet and
@@ -374,10 +481,14 @@ snippet pdss
 	NA
 snippet pdsst
 	NA
+snippet per
+	>&2 printf '%s\n' ${1:foo}
 snippet pf
 	printf '%s\n' ${1}
 snippet pp
 	printf '%s\n' "${1}"
+snippet pper
+	>&2 printf '%s\n' "${1:foo}"
 snippet rxs
 	${${1:foo}/${2:existing}/${3:replacement}}
 snippet rxsg
@@ -432,6 +543,12 @@ snippet supper
 	${${1:str}^^}
 snippet sval
 	"${$[1:foo}[@]}"
+snippet trapexit
+	function on_exit {
+	    ${1:# this will be executed when the script exits}
+	}
+	trap on_exit EXIT
+	
 snippet nn
 	NA
 snippet v
@@ -450,12 +567,10 @@ snippet vcur
 	NA
 snippet vd
 	${1:floatvar}=0.00
-snippet vda
-	${1:ar}=()
 snippet vderef
 	NA
-snippet vdsm
-	typeset -A ${1:foo}
+snippet vdyn
+	${1:foo}=${2:val}
 snippet vf
 	${1:floatvar}=0.00
 snippet vg
@@ -469,7 +584,11 @@ snippet vis
 snippet vistype
 	NA
 snippet vl
+	${1:ar}=()
+snippet vlo
 	${1:foo}=${2:val}
+snippet vm
+	typeset -A ${1:foo}
 snippet vn
 	${1:i}=0
 snippet vo
@@ -480,8 +599,6 @@ snippet vref
 	NA
 snippet vs
 	${1:str}="${2}"
-snippet vset
-	${1:foo}=${2:val}
 snippet vsl
 	${1:foo}=${2:val}
 snippet vt
@@ -494,29 +611,4 @@ snippet vx
 	if [ -z ${${1:foo}+x} ]; then
 	    :# does not exist
 	fi
-#}}}
-# > BASH custom snippets {{{
-snippet gvim
-	gvim -c "call Maximize_Window()"
-snippet math
-	$((${1}))
-snippet start
-	#!/bin/bash
-	if [ -z ${BASH_LIB+x} ]; then printf '%s\n' "BASH_LIB environment variable is required."; exit 1; fi
-	source "${BASH_LIB}/depmgr.sh" || exit 1
-	include "${BASH_LIB}/${1}"
-
-	${2}
-snippet filrar
-	IFS=$'\n'; set -f; read -d '' -r -a lines < "${1}"
-snippet cook
-	local ${1:result}=
-	$1=$( ${2:ls} ) \
-		|| { ${3:echo 'failed'; exit 1;} }
-snippet serve
-	serve "${${1:result}[@]}"${2}
-snippet eat
-	result=("${${1:foo}_[@]}")${2}
-snippet pv
-	putvar ${1:JAVA_HOME}
 #}}}

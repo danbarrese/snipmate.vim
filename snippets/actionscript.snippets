@@ -1,0 +1,152 @@
+snippet pwin
+	Alert.show(${1:"foo"});
+snippet ms
+	static 
+snippet mt
+	protected 
+snippet arcon
+	${1:ar}.indexOf(${2:needle}) >= 0
+snippet arget
+	${1:ar}[${2:0}]
+snippet arlen
+	${1:ar}.length
+snippet arlit
+	var ${1:ar}:Array = [ ${3:1, 2, 3} ];
+snippet armap
+	${1:ar}.map(${2:fn});
+snippet arset
+	${1:ar}[${2:0}] = ${3:value};
+snippet arsplat
+	${1:ar}.forEach(${2:fn});
+snippet el
+	else {
+	    ${1://}
+	}
+snippet if
+	if (${1}) {
+	    ${2://}
+	}
+snippet dstart
+	package {
+	    import flash.display.*;
+	    import flash.text.*;
+	
+	    public class HelloWorld extends Sprite {
+	
+	        private var greeting:TextField = new TextField();
+	
+	        public function HelloWorld() {	  
+	            greeting.text = "Check flashlog.txt";
+	            greeting.x = 0;
+	            greeting.y = 100;
+	            addChild(greeting);
+	
+	            trace("hello world");
+	        }
+	
+	    }
+	
+	}
+	
+snippet decurl
+	decodeURI(${1:encoded})
+snippet encurl
+	encode(${1:url})
+snippet fn
+	public function ${1:fun}():${2:void} {
+	    ${3://}
+	}
+snippet falsehoods
+	0, NaN, "", null, undefined
+snippet re
+	return 
+snippet rn
+	return null;
+snippet s
+	String
+snippet nvali
+	parseInt(${1:"5"})
+snippet and
+	&& 
+snippet e
+	== 
+snippet eo
+	== 
+snippet gt
+	> 
+snippet gte
+	>= 
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet me
+	-= 
+snippet n
+	+ 
+snippet ne
+	!= 
+snippet neo
+	!= 
+snippet not
+	!
+snippet or
+	|| 
+snippet pe
+	+= 
+snippet p
+	trace(${1});
+snippet pp
+	trace("${1}");
+snippet rxm
+	${1:str}.match(${2:/regex/})
+snippet rxs
+	${1:haystack}.replace(${2:/needle/}, ${3:"replacement"})
+snippet schop
+	${1:str} = $1.slice(0, -1);
+snippet scon
+	${1:str}.search("needle") >= 0
+snippet se
+	${1:str} == ${2}
+snippet sei
+	${1:a}.toLowerCase() == ${2:b}.toLowerCase()
+snippet sempty
+	(${1:str} == null || $1.length == 0)
+snippet sexe
+	eval(${1:str});
+snippet sidx
+	${1:str}.indexOf(${2:"a"})
+snippet sidxr
+	${1:str}.lastIndexOf(${2:"a"})
+snippet sjoin
+	${1:ar}.join()
+snippet slen
+	${1:str}.length
+snippet slit
+	"${1}"
+snippet slower
+	${1:str}.toLowerCase()
+snippet sml
+	(&lt;![CDATA[multi
+	line
+	string]]&gt;).toString();
+snippet sne
+	${1:str} != ${2}
+snippet snei
+	${1:a}.toLowerCase() 1= ${2:b}.toLowerCase()
+snippet ssplit
+	${1:str}.split(${2:/regexOrString/})
+snippet ssub
+	${1:str}.slice(${2:5, -1})
+snippet supper
+	${1:str}.toUpperCase()
+snippet en
+	== null
+snippet var
+	var ${1:ar}:Array = [ ${3:1, 2, 3} ];
+snippet vg
+	var ${1:foo}:${2:Object} = new $2(${3});
+snippet vs
+	var ${1:str}:String = ${2:""};
+snippet vv
+	var ${1:foo}:*;

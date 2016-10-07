@@ -1,9 +1,30 @@
 # > VIM language agnostic snippets {{{
 ###############################################################################
-snippet and
-	&& 
-snippet cli
-	NO
+snippet ei
+	elseif ${1:condition}
+	    ${2:"}
+snippet el
+	else
+	    ${1:"}
+snippet if
+	if ${1:condition}
+	    ${2:"}
+	endif
+snippet ife
+	if ${1:condition}
+	    ${2:"}
+	else
+	    ${3:"}
+	endif
+snippet ifei
+	if ${1:condition}
+	    ${3:"}
+	elseif ${2:condition}
+	    ${4:"}
+	else
+	    ${5:"}
+snippet ifet
+	${1:condition} ? ${2:true} : ${3:false}
 snippet dstart
 	" Name: ${1:`expand('%:t')`}
 	" Version: ${2:0.01}
@@ -14,73 +35,55 @@ snippet dstart
 	"   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
 	" Sources/References:
 	" - None
+	
 snippet dtodo
 	" TODO: 
-snippet e
-	== 
-snippet ei
-	elseif ${1:condition}
-		${2:"}
-snippet el
-	else
-		${1:"}
-snippet env
-	$${1:JAVA_HOME}
 snippet fn
 	function ${1:Fun}(${2})
-		${3:"}
+	    ${3:"}
 	endfunction
 snippet fncall
 	call ${1:Fun}(${2:args})
 snippet for
 	for s:i in range(${1:0, 4})
-		${2:"}
+	    ${2:"}
 	endfor
 snippet fore
 	for ${1:needle} in ${2:haystack}
-		${3:"}
+	    ${3:"}
 	endfor
-snippet free
-	unlet! ${1:foo}
+snippet wh
+	while ${1:condition}
+	    ${2:"}
+	endw
+snippet cli
+	NO
+snippet env
+	$${1:JAVA_HOME}
+snippet ndivf
+	${1:x} / ${2:y}
+snippet nvalf
+	str2float(${1})
+snippet nvali
+	str2nr(${1})
+snippet and
+	&& 
+snippet e
+	== 
 snippet gt
 	> 
 snippet gte
 	>= 
-snippet if
-	if ${1:condition}
-		${2:"}
-	endif
-snippet ife
-	if ${1:condition}
-		${2:"}
-	else
-		${3:"}
-	endif
-snippet ifei
-	if ${1:condition}
-		${3:"}
-	elseif ${2:condition}
-		${4:"}
-	else
-		${5:"}
-snippet ifet
-	${1:condition} ? ${2:true} : ${3:false}
 snippet lt
 	< 
 snippet lte
 	<= 
 snippet n
 	. 
-snippet ndivf
-	${1:x} / ${2:y}
 snippet ne
 	!= 
 snippet not
 	! 
-snippet nvalf
-	str2float(${1})
-snippet nvali
-	str2nr(${1})
 snippet or
 	|| 
 snippet p
@@ -97,9 +100,10 @@ snippet rxsg
 	substitute(${1:str}, ${2:regex}, ${3:replacement}, "g")
 snippet se
 	${1:str} == ${2:str2}
-snippet sexe command
+snippet sexe
+	@@command
 	exe ${1:str}
-snippet sexe expression
+	@@expression
 	eval(${1:str})
 snippet sidx
 	stridx(${1:str}, ${2:needle})
@@ -113,44 +117,44 @@ snippet slower
 	tolower(${1})
 snippet supper
 	toupper(${1})
-snippet v scope: buffer
-	b:${1:foo}
-snippet v scope: global
-	g:${1:foo}
-snippet v scope: local (function)
-	${1:foo}
-snippet v scope: parameter of function
+snippet free
+	unlet! ${1:foo}
+snippet v
+	@@scope: parameter of function
 	a:${1:foo}
-snippet v scope: script
+	@@scope: buffer
+	b:${1:foo}
+	@@scope: global
+	g:${1:foo}
+	@@scope: local (function)
+	${1:foo}
+	@@scope: script
 	s:${1:foo}
-snippet v scope: tab
+	@@scope: tab
 	t:${1:foo}
-snippet v scope: vim predefined
+	@@scope: vim predefined
 	v:${1:foo}
-snippet v scope: window
+	@@scope: window
 	w:${1:foo}
 snippet vglobal
 	let g:${1:foo} = ${2:val}
 snippet vs
 	let ${1:foo} = "${2:val}"
-snippet vset scope: buffer
+snippet vset
+	@@scope: buffer
 	let b:${1:foo} = ${2:val}
-snippet vset scope: function
-	let l:${1:foo} = ${2:val}
-snippet vset scope: global
+	@@scope: global
 	let g:${1:foo} = ${2:val}
-snippet vset scope: script
+	@@scope: function
+	let l:${1:foo} = ${2:val}
+	@@scope: script
 	let s:${1:foo} = ${2:val}
-snippet vset scope: tab
+	@@scope: tab
 	let t:${1:foo} = ${2:val}
-snippet vset scope: window
+	@@scope: window
 	let w:${1:foo} = ${2:val}
 snippet vx
 	exists("${1:foo}")
-snippet wh
-	while ${1:condition}
-		${2:"}
-	endw
 #}}}
 # > Vim custom snippets {{{
 snippet guard

@@ -5,7 +5,7 @@ snippet tdyt Jan 01, 1900 00:00:00
 snippet tdyl January 01, 1900
 	`strftime("%B %d, %Y")`
 snippet tdylt January 01, 1900 00:00:00
-	`strftime("%B %d, %Y %T")`
+	`strftime("%B %d, %Y %X")`
 snippet date 1900.01.01
 	`strftime("%Y.%m.%d")`
 snippet datetime 1900.01.01 00:00:00
@@ -14,6 +14,8 @@ snippet time 00:00:00
 	`strftime("%T")`
 snippet dt
 	`strftime("%Y.%m.%d %T")`
+snippet idate
+	`strftime("%Y%m%d")`
 snippet DB
 	Dan Barrese
 snippet DRB
@@ -25,10 +27,10 @@ snippet dan
 	Dan Barrese (danbarrese.com)
 snippet ^
 	▲ 
-snippet >
-	▶ 
+snippet >>
+	▸ 
 snippet v
-	▼ 
+	▾ 
 snippet <
 	◀ 
 snippet box
@@ -52,6 +54,22 @@ snippet cmd
 #option key
 snippet opt
 	⌥
+snippet shift
+	⇧
+snippet tab
+	⇥
+snippet h1
+	# ${1}
+	-------------------------------------------------------------------------------
+snippet h2
+	## ${1}
+	---------------------------------------------------------------------------
+snippet h3
+	### ${1}
+	-----------------------------------------------------------------------
+snippet h4
+	#### ${1}
+	-------------------------------------------------------------------
 ########################################################
 # @@multi vvv
 snippet ttt cancel
@@ -75,12 +93,133 @@ snippet ttt 5x5
 	${16:-}   ${17:-}   ${18:-}   ${19:-}   ${20:-}
 # @@multi ^^^
 ########################################################
+########################################################
+# @@trustwave vvv
+snippet jiraitem
+	# id
+	url
+	desc
+	`strftime("%Y.%m.%d")`
+
+	## TODO
+	-------------------------------------------------------------------------------
+	[ ] ...
+	[ ] update projects from svn
+	[ ] test locally
+	[ ] commit to svn
+	[ ] mark as ready for test
+	[ ] jenkins build
+	[ ] deploy to test
+	[ ] mark as deployed to test
+
+	## NOTES
+	-------------------------------------------------------------------------------
+	
+
+snippet EW
+	Eric Woerner
+snippet ES
+	Eric Snorteland
+snippet AL
+	Alex Lopez
+snippet LP
+	Larry Podmolik
+snippet DBUSS
+	Donavon Buss
+snippet ccm
+	common-customer-module
+snippet cda
+	common-domain-api
+snippet ssv
+	security-service
+snippet cdsv
+	common-domain-service
+snippet cssv
+	common-search-elastic-service
+snippet ngssv
+	ng-security-service
+snippet pc
+	portal-core
+snippet twe
+	trustwave-external
+snippet twp
+	trustwave-parent
+snippet build-flex-components
+	flex-components VERSION
+		[ ] Rev minor version? ${1:???}.
+		[ ] Jenkins build #???
+snippet build-swf-container
+	swf-container VERSION
+		[ ] Rev minor version? ${1:???}.
+		[ ] Update from SVN.
+		[ ] Update trustwave-parent version.
+		[ ] Update swf-container build number.
+		[ ] Check in to SVN.
+		[ ] Deploy to Nexus from Eclipse.
+		[ ] Mark for deployment.
+snippet build-trustwave-parent
+	trustwave-parent VERSION
+		[ ] Rev minor version? ${1:???}.
+		[ ] Jenkins build #???
+snippet build-portal-core
+	portal-core VERSION
+		[ ] Rev minor version? ${1:???}.
+		[ ] Jenkins build #???
+		[ ] Mark for deployment.
+snippet build-portal-swc
+	portal-swc VERSION
+		[ ] Rev minor version? ${1:???}.
+		[ ] Jenkins build #???
+		[ ] build-trustwave-parent
+		[ ] build-swf-container
+	portal-core VERSION
+		[ ] Rev minor version? ${1:???}.
+		[ ] update portal-swc version if needed
+		[ ] Jenkins build #???
+		[ ] Mark for deployment.
+snippet build-api
+	???-api VERSION
+		[ ] Rev minor version? ${1:???}.
+		[ ] Update from SVN.
+		[ ] Check in to SVN.
+		[ ] Copy latest 1.x tag to new version (rev minor?)
+		[ ] Do 'mvn deploy' on local 1.x tag copy.
+		[ ] Jenkins build #???
+snippet build-service
+	???-service VERSION
+		[ ] Rev minor version? ${1:???}.
+		[ ] Update from SVN.
+		[ ] Update trustwave-parent version.
+		[ ] Update dependencies.
+		[ ] Build locally.
+		[ ] Check in to SVN.
+		[ ] Jenkins build #???
+		[ ] Mark for deployment.
+snippet hr
+	###############################################################################
+	####${1}###########################################################################
+	###############################################################################
+# @@trustwave ^^^
+########################################################
 snippet bm
 	${1:pagetitle}
 		${2:url} #added:`strftime("%Y.%m.%d")` #last:`strftime("%Y.%m.%d")` 1
 snippet filename
 	`expand('%:t')`
+snippet path
+	`expand('%:p')`
 snippet filepath
 	`escape(expand('%:p:h'), '\').escape(g:fs, '\').expand('%:t')`
 snippet filedir
 	`escape(expand('%:p:h'), '\')`
+snippet bannerg
+	[+ ${1} +]
+snippet bannery
+	[~ ${1} ~]
+snippet bannerr
+	[- ${1} -]
+# Markdown Image embed
+snippet mdimg
+	<img src="/Users/dbarrese/${1:somefile}" alt="${2}" style="width:${3:300px}; border:1px solid lightgray;"/>
+snippet modeline
+	%% vim: set ft=out:

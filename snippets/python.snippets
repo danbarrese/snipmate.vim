@@ -1,11 +1,46 @@
+# > Python 3 custom snippets {{{
+###############################################################################
+snippet #!
+	#!/usr/bin/python
+snippet property
+	def ${1:foo}():
+		doc = "${2:The $1 property.}"
+		def fget(self):
+			${3:return self._$1}
+		def fset(self, value):
+			${4:self._$1 = value}
+snippet ifmain
+	if __name__ == '__main__':
+		${1:main()}
+snippet _
+	__${1:init}__${2}
+snippet rf
+	return False
+snippet rt
+	return True
+snippet ds
+	"""${1}"""
+snippet s
+	self.
+snippet eqne
+	def __eq__(self, other):
+		${1:pass}
+
+	def __ne__(self, other):
+		return not self.__eq__(other)
+snippet eq
+	def __eq__(self, other):
+		${1:pass}
+snippet ns
+	+ "${1}"${2}
+#}}}
 # > PYTHON 3 language agnostic snippets {{{
 ###############################################################################
-snippet and
-	and 
-snippet ar
-	${1:ar} = [${2:csv}]
 snippet aradd
 	${1:ar}.append(${2:val})
+snippet archoose1
+	import random
+	random.choice(${1:[0,1})
 snippet arcon
 	${2:needle} in ${1:ar}
 snippet arconcat
@@ -18,12 +53,13 @@ snippet arget
 	${1:ar}[0]
 snippet arintersect
 	${1:ar1} & ${2:ar2}
-snippet ariter val
+snippet ariter
+	@@val
 	for ${2:e} in ${1:ar}:
-		${3:#}
-snippet ariter val+i
+	    ${3:#}
+	@@val+i
 	for i, e in enumerate(${1:ar}):
-		${2:#}
+	    ${2:#}
 snippet arlen
 	len(${1:ar})
 snippet arlit
@@ -39,6 +75,8 @@ snippet arreduce
 	reduce(lambda x, y: ${2:operation}, ${1:ar}, ${3:baseCase})
 snippet arrem
 	${1:ar}.pop(${2:0})
+snippet arrev
+	reversed(${1:[1,2,3]})
 snippet arset
 	${1:ar} = ${2:val}
 snippet arshuffle
@@ -52,75 +90,65 @@ snippet arsplat
 	${1:fun}(${2:args, }*${3:ar})
 snippet arunion
 	${1:ar1} | ${2:ar2}
-snippet br
-	break
+snippet cl
+	class ${1:ClassName}(${2:object}):
+	    """${3:docstring for $1}"""
+	    def __init__(self, ${4:arg}):
+	        ${5:super($1, self).__init__()}
+	        self.$4 = $4
+	        ${6}
 snippet ccsleep
 	# import time
 	time.sleep(${1:1.0})
 snippet ccstart
 	class ${1:myThreadClass}(threading.Thread):
 	   def run(self):
-		   ${2:time.sleep(1.0)}
-	
+	       ${2:time.sleep(1.0)}
 	${3:thr} = $1()
 	$3.start()
 snippet ccto
 	# import signal, time
 	class Timeout(Exception): pass
-	
 	def timeout_handler(signo, fm):
-		raise Timeout()
-	
+	    raise Timeout()
 	signal.signal(signal.SIGALRM,
-		timeout_handler)
-	
+	    timeout_handler)
 	try:
-		signal.alarm(1)
-		time.sleep(2)
+	    signal.alarm(1)
+	    time.sleep(2)
 	except Timeout:
-		pass
+	    pass
 	signal.alarm(0)
 snippet ccwait
 	${1:thr}.join()
-snippet cl
-	class ${1:ClassName}(${2:object}):
-		"""${3:docstring for $1}"""
-		def __init__(self, ${4:arg}):
-			${5:super($1, self).__init__()}
-			self.$4 = $4
-			${6}
-snippet cli
-	import argparse
-	parser = argparse.ArgumentParser(description='DESCRIPTION')
-	parser.add_argument('--int', '-i', metavar='I', type=int, nargs=1,
-						dest='integer', default=[0],
-						help='HELP')
-	parser.add_argument('--str', '-s', metavar='S', type=str, nargs=1,
-						dest='string', default=[None],
-						help='HELP')
-	parser.add_argument('--bool', dest='boolean', action='store_true',
-						help='HELP')
-	parser.set_defaults(boolean=True)
-	args = parser.parse_args()
-	
-	my_int = args.integer[0]
-	my_string = args.string[0]
-	my_boolean = args.boolean
-snippet cont
-	continue
-snippet d
-	# 
-snippet decxml
-	from xml.dom.minidom import parseString
-	document = parseString(${1:xmlString}).documentElement
-	for $2 in document.getElementsByTagName('${2:tagName}')]):
-		${3:pass}
-snippet dml
-	'''
-	${1}
-	'''
-snippet dsm
-	${1:dsm} = { ${2:'t':1, 'f':0} }
+snippet ei
+	elif ${1}:
+	    ${2:pass}
+snippet el
+	else:
+	    ${1:pass}
+snippet if
+	if ${1:condition}:
+	    ${2:pass}
+snippet ife
+	if ${1:condition}:
+	    ${2:pass}
+	else:
+	    ${3:pass}
+snippet ifei
+	if ${1:condition1}:
+	    ${3:pass}
+	elif ${2:condition2}:
+	    ${4:pass}
+	else:
+	    ${5:pass}
+snippet ifet
+	${2:true} if ${1:condition} else ${3:false}
+snippet sw
+	NA
+snippet unl
+	if not ${1:condition}:
+	    ${2:action}
 snippet dsmadd
 	${1:dsm}[${2:key}] = ${3}
 snippet dsmget
@@ -129,11 +157,13 @@ snippet dsmhaskey
 	${2:key} in ${1:dsm}
 snippet dsmiter
 	for key, val in ${1:dsm}.items():
-		${2:#}
+	    ${2:#}
 snippet dsmkeys
 	list(${1:dsm}.keys())
 snippet dsmlen
 	len(${1:dsm})
+snippet dsmlit
+	${1:dsm} = { ${2:'t':1, 'f':0} }
 snippet dsmrem
 	del ${1:dsm}[${2:key}]
 snippet dsmsor
@@ -141,6 +171,15 @@ snippet dsmsor
 	sorted(${1:dsm}.iteritems(), key=itemgetter(${2:0}))
 snippet dsmvals
 	list(${1:dsm}.values())
+snippet tnow
+	# import datetime
+	${1:now} = datetime.datetime.now()
+snippet d
+	# 
+snippet dml
+	'''
+	${1}
+	'''
 snippet dstart
 	# Name: ${1:name}
 	# Version: ${2:0.01}
@@ -151,40 +190,53 @@ snippet dstart
 	#   `strftime("%Y.%m.%d")` [$2][DRB] Initial version.
 	# Sources/References:
 	# - None
-snippet e
-	== 
-snippet ei
-	elif ${1}:
-		${2:pass}
-snippet el
+	
+snippet decjson
+	json.loads(${1:jsonString})
+snippet decurl
+	urllib.parse.unquote(${1:params})
+snippet decxml
+	from xml.dom.minidom import parseString
+	document = parseString(${1:xmlString}).documentElement
+	for $2 in document.getElementsByTagName('${2:tagName}')]):
+	    ${3:pass}
+snippet encjson
+	json.dumps(${1:fooString})
+snippet encurl
+	urllib.parse.quote(${1:params})
+snippet xdef
+	class ${1:MyException}(Exception):
+	    def __init__(self):
+	        super($1, self).__init__('bam!')
+snippet xfi
+	finally:
+	    ${1:pass #always executes}
+snippet xh
+	try:
+	    ${1:pass}
+	except ${2:Exception} as ${3:e}:
+	    ${4:pass #handles exception}
 	else:
-		${1:pass}
-snippet email
-	#import smtplib
-	#import locale
-	#from email.mime.text import MIMEText
-	encoding = locale.getpreferredencoding()
-	from_addr = "${1:from@here.com}"
-	to_addr = "${2:to@there.com}"
-	smtp_servername = "#{3:smtp.server.com}"
-	subject = ${4:"Subject"}
-	body = ${5:"This is the message."}
-	message = MIMEText(body, _charset=encoding)
-	message["From"] = from_addr
-	message["To"] = to_addr
-	message["Subject"] = subject
-	server = smtplib.SMTP(smtp_servername)
-	server.sendmail(from_addr, to_addr, message.as_string())
-snippet en
-	is None
-snippet eo
-	== 
-snippet fa
-	False
+	    ${5:pass}
+	finally:
+	    ${6:pass #always executes}
+snippet xr
+	raise ${1:Exception}(${2:'msg'})
+snippet filr
+	lines = [line.rstrip('\n') for line in open(${1:"foo.txt"})]
+	# BUFFERED:
+	# import io
+	# with io.open("results.1.out") as f:
+	#     print(sum(line.count('"_id"') for line in f))
+	
+snippet filw
+	output = open(${1:"file.out"}, 'w')
+	output.write(${2:"foo"})
+	output.close()
 snippet fn
-	def ${1:fun}(`indent('.') ? 'self' : ''`${2}):
-		"""${3: }"""
-		${4:pass}
+	def ${1:fun}(${2:'self'}):
+	    """${3: }"""
+	    ${4:pass}
 snippet fnanamed
 	${1:arg}=${2:val}
 snippet fnaref
@@ -193,86 +245,106 @@ snippet fncall
 	${1:fun}(${2:args})
 snippet fnclosure
 	def counter():
-		i = 0
-		def closure():
-			nonlocal i
-			i += 1
-			return i
-		return counter
+	    i = 0
+	    def closure():
+	        nonlocal i
+	        i += 1
+	        return i
+	    return counter
 	foo = make_counter()
 snippet fndecorator
 	def ${1:logcall}(f):
-		def wrapper(*a, **opts):
-			print('before ' + f.__name__)
-			f(*a, **opts)
-			print('after ' + f.__name__)
-		return wrapper
-	
+	    def wrapper(*a, **opts):
+	        print('before ' + f.__name__)
+	        f(*a, **opts)
+	        print('after ' + f.__name__)
+	    return wrapper
 	@$1
 	def square(x):
-		return x * x
-snippet fnld
-	lambda ${1:x, y}: ${2:body}
-snippet fnldcall
-	${1:fun}(${2:args})
+	    return x * x
+snippet fnn
+	def ${1:fun}(${2:'self'}):
+	    """${3: }"""
+	    ${4:pass}
 snippet fnpdefault
 	${1:param}=${2:default}
 snippet fnpnamed
 	${1:param}=${2:default}
+snippet fnpopt
+	${1:paramname}=${2:None}
 snippet fnpvar
 	*${1:arg}
+snippet htget
+	# import urllib.request
+	url = ${1:'localhost:8080'}
+	req = urllib.request.Request(url)
+	resp = urllib.request.urlopen(req)
+	status = resp.status
+	resp_content = resp.read().decode('utf8')
+snippet htpost
+	# import urllib.request
+	url = ${1:'localhost:8080'}
+	params = json.dumps(${2:json_data}).encode('utf8')
+	req = urllib.request.Request(url, data=params, headers={'content-type': 'application/json'})
+	resp = urllib.request.urlopen(req)
+	status = resp.status
+	resp_content = resp.read().decode('utf8')
+snippet fa
+	False
+snippet nl
+	None
+snippet re
+	return 
+snippet rn
+	return None
+snippet tr
+	True
+snippet br
+	break
+snippet cont
+	continue
+snippet for
+	for ${1:n} in range(${2}):
+	    ${3:pass}
 snippet fore
 	for ${1:beer} in ${2:wall}:
-		${3:pass}
-snippet free
-	NO
-snippet gt
-	> 
-snippet gte
-	>= 
-snippet if
-	if ${1:condition}:
-		${2:pass}
-snippet ife
-	if ${1:condition}:
-		${2:pass}
-	else:
-		${3:pass}
-snippet ifei
-	if ${1:condition}:
-		${3:pass}
-	elif ${2:condition}:
-		${4:pass}
-	else:
-		${5:pass}
-snippet ifet
-	${2:true} if ${1:condition} else ${3:false}
+	    ${3:pass}
+snippet wh
+	while ${1:condition}:
+	    ${2:pass}
+snippet argc
+	import sys
+	len(sys.argv)
+snippet argv
+	sys.argv
+snippet cli
+	import argparse
+	parser = argparse.ArgumentParser(description='DESCRIPTION')
+	parser.add_argument('--int', '-i', metavar='I', type=int, nargs=1,
+	                    dest='integer', default=[0],
+	                    help='HELP')
+	parser.add_argument('--str', '-s', metavar='S', type=str, nargs=1,
+	                    dest='string', default=[None],
+	                    help='HELP')
+	parser.add_argument('--bool', dest='boolean', action='store_true',
+	                    help='HELP')
+	parser.set_defaults(boolean=True)
+	args = parser.parse_args()
+	my_int = args.integer[0]
+	my_string = args.string[0]
+	my_boolean = args.boolean
+snippet fnld
+	lambda ${1:x, y}: ${2:body}
+snippet fnldcall
+	${1:fun}(${2:args})
 snippet in
 	import 
-snippet lt
-	< 
-snippet lte
-	<= 
-snippet me
-	-= 
-snippet n
-	+ 
 snippet nabs
 	abs(${1})
 snippet ndivf
 	${1:x} / ${2:y}
 snippet ndivi
 	${1:x} // ${2:y}
-snippet ne
-	!= 
-snippet neo
-	!= 
-snippet nl
-	None
-snippet nn
-	is not None
-snippet not
-	not 
 snippet npow
 	${1:base} ** ${2:exp}
 snippet nrandf
@@ -293,20 +365,42 @@ snippet nvalf
 	float(${1})
 snippet nvali
 	int(${1})
+snippet and
+	and 
+snippet e
+	== 
+snippet eo
+	== 
+snippet gt
+	> 
+snippet gte
+	>= 
+snippet lt
+	< 
+snippet lte
+	<= 
+snippet me
+	-= 
+snippet n
+	+ 
+snippet ne
+	!= 
+snippet neo
+	!= 
+snippet not
+	not 
 snippet or
 	or 
-snippet p
-	print(${1})
 snippet pe
 	+= 
+snippet p
+	print(${1})
 snippet pf
 	'${1:%s %d %f}' % (${2:'str', 10, 3.14})
 snippet pp
 	print("${1}")
-snippet re
-	return 
 snippet rxg
-	${1:regex} = '(\d{4})-(\d{2})-(\d{2})'
+	${1:regex} = '(d{4})-(d{2})-(d{2})'
 	groups = re.search($1, ${2:'2010-06-03'})
 	yr, mo, dy = groups.groups()
 snippet rxm
@@ -317,18 +411,26 @@ snippet scap
 	# import string
 	${1:str}.capitalize()
 	string.capwords($1)
+snippet schoose1
+	import random
+	random.choice(${1:'01'})
+snippet scon
+	${1:'a'} in ${2:str}
 snippet se
 	x
 snippet sidx
 	${1:str}.find(${2:needle})
 snippet sidxr
 	${1:str}.rfind(${2:needle})
+snippet siter
+	for c in iter(${1:'foo'}):
+	    ${2:pass}
 snippet sjoin
 	' '.join(${1:ar})
 snippet slen
 	len(${1:str})
 snippet slit
-	${1:'don\t say "no"'}
+	${1:'don\'t say "no"'}
 snippet slower
 	${1:str}.lower()
 snippet sml
@@ -355,115 +457,58 @@ snippet supper
 	${1:str}.upper()
 snippet sval
 	str(${1})
-snippet sw
-	NA
-snippet tnow
-	# import datetime
-	${1:now} = datetime.datetime.now()
-snippet tr
-	True
-snippet unl
-	if not ${1:condition}:
-		${2:action}
+snippet en
+	is None
+snippet nn
+	is not None
+snippet free
+	NO
 snippet v
 	EMPTY
+snippet var
+	${1:ar} = [${2:csv}]
 snippet vb
 	${1:b} = ${2:true}
 snippet vc
 	${1:FOO_BAR} = ${2}
+snippet vd
+	${1:foo} = ${2}
+snippet vdyn
+	${1:foo} = ${2}
+snippet vf
+	${1:foo} = ${2}
+snippet vg
+	${1:foo} = ${2}
 snippet vglobal
 	${1:foo} = ${2}
 	def access_global():
-		global $1
+	    global $1
+snippet vi
+	${1:foo} = ${2}
 snippet vis
 	'{${1:foo}}'.format(**locals())
 snippet vld
 	${1:foo} = ${2:fun}
-snippet vll
+snippet vlo
+	${1:foo} = ${2}
+snippet vm
+	${1:dsm} = { ${2:'t':1, 'f':0} }
+snippet vn
+	${1:foo} = ${2}
+snippet vpar
 	${1:foo}, ${2:bar} = ${3:csv}
 snippet vr
 	${1:foo} = re.compile('${2}')
+snippet vs
+	${1:foo} = ${2}
+snippet vsl
+	${1:foo} = ${2}
 snippet vswap
 	$${1:foo}, $${2:bar} = $2, $1
+snippet vt
+	${1:foo} = ${2}
 snippet vv
 	${1:foo} = ${2}
-snippet wh
-	while ${1:condition}:
-		${2:pass}
-snippet xdef
-	class ${1:MyException}(Exception):
-		def __init__(self):
-			super($1, self).__init__('bam!')
-snippet xfi
-	finally:
-		${1:pass #always executes}
-snippet xh
-	try:
-		${1:pass}
-	except ${2:Exception} as ${3:e}:
-		${4:pass #handles exception}
-	else:
-		${5:pass}
-	finally:
-		${6:pass #always executes}
-snippet xr
-	raise ${1:Exception}(${2:'msg'})
-snippet dsmlit
-	@LINK{dsm}
-snippet vd
-	@LINK{vv}
-snippet vf
-	@LINK{vv}
-snippet vg
-	@LINK{vv}
-snippet vi
-	@LINK{vv}
-snippet vl
-	@LINK{vv}
-snippet vn
-	@LINK{vv}
-snippet vs
-	@LINK{vv}
-snippet vset
-	@LINK{vv}
-snippet vsl
-	@LINK{vv}
-snippet vt
-	@LINK{vv}
-#}}}
-# > Python 3 custom snippets {{{
-###############################################################################
-snippet #!
-	#!/usr/bin/python
-snippet property
-	def ${1:foo}():
-		doc = "${2:The $1 property.}"
-		def fget(self):
-			${3:return self._$1}
-		def fset(self, value):
-			${4:self._$1 = value}
-snippet ifmain
-	if __name__ == '__main__':
-		${1:main()}
-snippet _
-	__${1:init}__${2}
-snippet rf
-	return False
-snippet rt
-	return True
-snippet ds
-	$LINK{sml}
-snippet s
-	self.
-snippet eqne
-	def __eq__(self, other):
-		${1:pass}
-
-	def __ne__(self, other):
-		return not self.__eq__(other)
-snippet eq
-	def __eq__(self, other):
-		${1:pass}
-snippet ns
-	+ "${1}"${2}
+snippet email
+	TODO
 #}}}
