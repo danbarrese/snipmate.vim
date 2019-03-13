@@ -95,110 +95,96 @@ snippet ttt 5x5
 ########################################################
 ########################################################
 # @@trustwave vvv
-snippet jiraitem
-	# id
-	url
-	desc
-	`strftime("%Y.%m.%d")`
-
-	## TODO
-	-------------------------------------------------------------------------------
-	[ ] ...
-	[ ] update projects from svn
-	[ ] test locally
-	[ ] commit to svn
-	[ ] mark as ready for test
-	[ ] jenkins build
-	[ ] deploy to test
-	[ ] mark as deployed to test
-
-	## NOTES
-	-------------------------------------------------------------------------------
-	
-
-snippet EW
-	Eric Woerner
-snippet ES
-	Eric Snorteland
-snippet AL
-	Alex Lopez
-snippet LP
-	Larry Podmolik
-snippet DBUSS
-	Donavon Buss
+snippet audsv
+	audit-service
+snippet auisv
+	assets-ui-service
+snippet balsv
+	ballistics-service
+snippet bsv
+	ballistics-service
 snippet ccm
 	common-customer-module
+snippet cdasv
+	common-data-asset-service
 snippet cda
 	common-domain-api
-snippet ssv
-	security-service
 snippet cdsv
 	common-domain-service
+snippet cgsv
+	content-glass-ui-service
+snippet cmsv
+	customer-merge-service
 snippet cssv
 	common-search-elastic-service
+snippet cuasv
+	customer-user-access-service
+snippet dlsv
+	document-locker-service
+snippet dsopcsv
+	dsop-common-service
+snippet esbapi
+	enterprise-service-bus-api
+snippet esbsv
+	enterprise-service-bus-service
+snippet filexsv
+	file-exchange-service
+snippet filxsv
+	file-exchange-service
+snippet fuisv
+	findings-ui-service
+snippet lmssv
+	lms-integration-service
+snippet locsv
+	locale-service
+snippet logsv
+	logging-service
+snippet migsv
+	migration-service
+snippet ngmsv
+	ng-metrics-service
 snippet ngssv
 	ng-security-service
-snippet pc
-	portal-core
+snippet nsv
+	notification-service
+snippet pcicsv
+	pci-common-service
+snippet pcsv
+	portal-core-service
+snippet pmetsv
+	portal-metric-service
+snippet pmsv
+	portal-message-service
+snippet pnsv
+	portal-notification-service
+snippet pssv
+	property-set-service
+snippet rdsv
+	reference-data-service
+snippet secsv
+	security-service
+snippet sessv
+	session-service
+snippet snapi
+	servicenow-api
+snippet snesv
+	servicenow-external-service
+snippet snsv
+	servicenow-service
+snippet snu
+	service-now-util
+snippet ssosv
+	single-sign-on-service
+snippet ssv
+	security-service
+snippet suisv
+	support-ui-service
+snippet susv
+	support-ui-service
 snippet twe
 	trustwave-external
 snippet twp
 	trustwave-parent
-snippet build-flex-components
-	flex-components VERSION
-		[ ] Rev minor version? ${1:???}.
-		[ ] Jenkins build #???
-snippet build-swf-container
-	swf-container VERSION
-		[ ] Rev minor version? ${1:???}.
-		[ ] Update from SVN.
-		[ ] Update trustwave-parent version.
-		[ ] Update swf-container build number.
-		[ ] Check in to SVN.
-		[ ] Deploy to Nexus from Eclipse.
-		[ ] Mark for deployment.
-snippet build-trustwave-parent
-	trustwave-parent VERSION
-		[ ] Rev minor version? ${1:???}.
-		[ ] Jenkins build #???
-snippet build-portal-core
-	portal-core VERSION
-		[ ] Rev minor version? ${1:???}.
-		[ ] Jenkins build #???
-		[ ] Mark for deployment.
-snippet build-portal-swc
-	portal-swc VERSION
-		[ ] Rev minor version? ${1:???}.
-		[ ] Jenkins build #???
-		[ ] build-trustwave-parent
-		[ ] build-swf-container
-	portal-core VERSION
-		[ ] Rev minor version? ${1:???}.
-		[ ] update portal-swc version if needed
-		[ ] Jenkins build #???
-		[ ] Mark for deployment.
-snippet build-api
-	???-api VERSION
-		[ ] Rev minor version? ${1:???}.
-		[ ] Update from SVN.
-		[ ] Check in to SVN.
-		[ ] Copy latest 1.x tag to new version (rev minor?)
-		[ ] Do 'mvn deploy' on local 1.x tag copy.
-		[ ] Jenkins build #???
-snippet build-service
-	???-service VERSION
-		[ ] Rev minor version? ${1:???}.
-		[ ] Update from SVN.
-		[ ] Update trustwave-parent version.
-		[ ] Update dependencies.
-		[ ] Build locally.
-		[ ] Check in to SVN.
-		[ ] Jenkins build #???
-		[ ] Mark for deployment.
-snippet hr
-	###############################################################################
-	####${1}###########################################################################
-	###############################################################################
 # @@trustwave ^^^
 ########################################################
 snippet bm
@@ -218,8 +204,5 @@ snippet bannery
 	[~ ${1} ~]
 snippet bannerr
 	[- ${1} -]
-# Markdown Image embed
-snippet mdimg
-	<img src="/Users/dbarrese/${1:somefile}" alt="${2}" style="width:${3:300px}; border:1px solid lightgray;"/>
 snippet modeline
 	%% vim: set ft=out:

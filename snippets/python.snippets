@@ -33,6 +33,13 @@ snippet eq
 		${1:pass}
 snippet ns
 	+ "${1}"${2}
+snippet statplothist
+	import numpy as np
+	import matplotlib.pyplot as plt
+	data1 = [1,2]
+	data2 = [2,3]
+	plt.hist([data1, data2], stacked=True, color=['r', 'b'])
+	plt.show()
 #}}}
 # > PYTHON 3 language agnostic snippets {{{
 ###############################################################################
